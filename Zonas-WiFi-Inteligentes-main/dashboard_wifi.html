@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard WiFi Inteligente - Tiempo Real</title>
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <style>
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      margin: 20px; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: #333; 
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    h1 { 
+      margin-bottom: 8px; 
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-size: 2.5em;
+    }
+    .meta { 
+      color: rgba(255,255,255,0.9); 
+      margin-bottom:25px; 
+      font-size: 1.1em;
+    }
+    .grid { 
+      display:grid; 
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
+      gap: 20px; 
+    }
+    .card { 
+      background:white; 
+      border-radius:15px; 
+      padding:20px; 
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1); 
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .full { grid-column: 1 / -1; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .stat-label {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+    .status-online { color: #10b981; }
+    .status-offline { color: #ef4444; }
+    .status-dormant { color: #f59e0b; }
+    .refresh-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-bottom: 20px;
+      transition: opacity 0.3s ease;
+    }
+    .refresh-btn:hover {
+      opacity: 0.8;
+    }
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📡 Dashboard WiFi Inteligente</h1>
+    <div class="meta">Monitoreo en tiempo real de zonas WiFi - Hackathon Colombia 5.0</div>
+    
+    <button class="refresh-btn" onclick="loadData()">🔄 Actualizar Datos</button>
+    
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-number" id="totalAPs">-</div>
+        <div class="stat-label">Total Puntos de Acceso</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="onlineAPs">-</div>
+        <div class="stat-label">APs Online</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="totalClients">-</div>
+        <div class="stat-label">Clientes Activos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="totalUsage">-</div>
+        <div class="stat-label">Uso Total (GB)</div>
+      </div>
+    </div>
+    
+    <div class="grid">
+      <div class="card"><div id="ap_status" class="loading">Cargando datos...</div></div>
+      <div class="card"><div id="events_cat" class="loading">Cargando datos...</div></div>
+      <div class="card"><div id="top_clients_ap" class="loading">Cargando datos...</div></div>
+      <div class="card"><div id="usage_by_ap" class="loading">Cargando datos...</div></div>
+      <div class="card full"><div id="hourly_events" class="loading">Cargando datos...</div></div>
+      <div class="card"><div id="device_types" class="loading">Cargando datos...</div></div>
+      <div class="card"><div id="connection_trends" class="loading">Cargando datos...</div></div>
+      <div class="card full"><div id="ap_details_table" class="loading">Cargando datos...</div></div>
+    </div>
+  </div>
+
+<script>
+let apData = [];
+let metricsData = [];
+let clientsData = [];
+let eventsData = [];
+
+async function loadCSV(url) {
+  try {
+    const response = await fetch(url);
+    const text = await response.text();
+    
+    // Parse CSV manually
+    const lines = text.split('\n').filter(line => line.trim());
+    const headers = lines[0].split(',').map(h => h.trim());
+    
+    const data = [];
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',').map(v => v.trim());
+      const row = {};
+      headers.forEach((header, index) => {
+        row[header] = values[index] || '';
+      });
+      data.push(row);
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error loading CSV:', error);
+    return [];
+  }
+}
+
+async function loadData() {
+  try {
+    // Load all CSV files
+    [apData, metricsData, clientsData, eventsData] = await Promise.all([
+      loadCSV('access_points_curated.csv'),
+      loadCSV('ap_hourly_metrics_curated.csv'),
+      loadCSV('clients_curated.csv'),
+      loadCSV('network_events_curated.csv')
+    ]);
+    
+    updateDashboard();
+  } catch (error) {
+    console.error('Error loading data:', error);
+    document.querySelectorAll('.loading').forEach(el => {
+      el.innerHTML = 'Error al cargar datos';
+    });
+  }
+}
+
+function updateDashboard() {
+  updateStats();
+  updateAPStatus();
+  updateEventsCategory();
+  updateTopClientsAP();
+  updateUsageByAP();
+  updateHourlyEvents();
+  updateDeviceTypes();
+  updateConnectionTrends();
+  updateAPDetailsTable();
+}
+
+function updateStats() {
+  const totalAPs = apData.length;
+  const onlineAPs = apData.filter(ap => ap.status === 'online').length;
+  const totalClients = clientsData.filter(c => c.status === 'Online').length;
+  const totalUsageGB = (clientsData.reduce((sum, c) => sum + parseFloat(c.usage_mb || 0), 0) / 1024).toFixed(1);
+  
+  document.getElementById('totalAPs').textContent = totalAPs;
+  document.getElementById('onlineAPs').textContent = onlineAPs;
+  document.getElementById('totalClients').textContent = totalClients;
+  document.getElementById('totalUsage').textContent = totalUsageGB;
+}
+
+function updateAPStatus() {
+  const statusCount = {
+    online: apData.filter(ap => ap.status === 'online').length,
+    offline: apData.filter(ap => ap.status === 'offline').length,
+    dormant: apData.filter(ap => ap.status === 'dormant').length
+  };
+  
+  Plotly.newPlot('ap_status', [{
+    type:'bar',
+    x:Object.keys(statusCount),
+    y:Object.values(statusCount),
+    marker: {
+      color: ['#10b981', '#ef4444', '#f59e0b']
+    }
+  }], {
+    title:'Estado de Puntos de Acceso',
+    yaxis: { title: 'Cantidad' }
+  });
+}
+
+function updateEventsCategory() {
+  const eventCategories = {};
+  eventsData.forEach(event => {
+    const category = event.event_category || 'Unknown';
+    eventCategories[category] = (eventCategories[category] || 0) + 1;
+  });
+  
+  Plotly.newPlot('events_cat', [{
+    type:'pie',
+    labels:Object.keys(eventCategories),
+    values:Object.values(eventCategories),
+    hole: 0.4
+  }], {
+    title:'Distribución por Categoría de Evento'
+  });
+}
+
+function updateTopClientsAP() {
+  const clientCountByAP = {};
+  clientsData.forEach(client => {
+    if (client.status === 'Online') {
+      const ap = client.ap_name || 'Unknown';
+      clientCountByAP[ap] = (clientCountByAP[ap] || 0) + 1;
+    }
+  });
+  
+  const sorted = Object.entries(clientCountByAP)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
+  
+  Plotly.newPlot('top_clients_ap', [{
+    type:'bar',
+    x:sorted.map(s => s[1]),
+    y:sorted.map(s => s[0]),
+    orientation:'h',
+    marker: { color: '#667eea' }
+  }], {
+    title:'Top 10 AP por Clientes Conectados',
+    xaxis: { title: 'Clientes Conectados' }
+  });
+}
+
+function updateUsageByAP() {
+  const usageByAP = {};
+  clientsData.forEach(client => {
+    const ap = client.ap_name || 'Unknown';
+    const usage = parseFloat(client.usage_mb || 0);
+    usageByAP[ap] = (usageByAP[ap] || 0) + usage;
+  });
+  
+  const sorted = Object.entries(usageByAP)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
+  
+  Plotly.newPlot('usage_by_ap', [{
+    type:'bar',
+    x:sorted.map(s => s[0]),
+    y:sorted.map(s => (s[1] / 1024).toFixed(2)),
+    marker: { color: '#764ba2' }
+  }], {
+    title:'Top 10 AP por Uso Acumulado (GB)',
+    xaxis: { 
+      title: 'Punto de Acceso',
+      tickangle: -45 
+    },
+    yaxis: { title: 'Uso (GB)' }
+  });
+}
+
+function updateHourlyEvents() {
+  const hourlyData = {};
+  metricsData.forEach(metric => {
+    const hour = new Date(metric.timestamp_hour).getHours();
+    hourlyData[hour] = (hourlyData[hour] || 0) + parseInt(metric.total_events || 0);
+  });
+  
+  const hours = Array.from({length: 24}, (_, i) => i);
+  const events = hours.map(h => hourlyData[h] || 0);
+  
+  Plotly.newPlot('hourly_events', [{
+    type:'scatter',
+    mode:'lines+markers',
+    x:hours,
+    y:events,
+    line: { color: '#667eea', width: 3 }
+  }], {
+    title:'Eventos por Hora del Día',
+    xaxis: { title: 'Hora del Día' },
+    yaxis: { title: 'Total de Eventos' }
+  });
+}
+
+function updateDeviceTypes() {
+  const deviceTypes = {};
+  clientsData.forEach(client => {
+    const type = client.device_type || 'Unknown';
+    deviceTypes[type] = (deviceTypes[type] || 0) + 1;
+  });
+  
+  const sorted = Object.entries(deviceTypes)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+  
+  Plotly.newPlot('device_types', [{
+    type:'bar',
+    x:sorted.map(s => s[0]),
+    y:sorted.map(s => s[1]),
+    marker: { color: '#10b981' }
+  }], {
+    title:'Tipos de Dispositivos Conectados',
+    xaxis: { 
+      title: 'Tipo de Dispositivo',
+      tickangle: -45 
+    },
+    yaxis: { title: 'Cantidad' }
+  });
+}
+
+function updateConnectionTrends() {
+  const trends = {};
+  metricsData.forEach(metric => {
+    const date = metric.timestamp_hour.split(' ')[0];
+    if (!trends[date]) {
+      trends[date] = { connections: 0, disconnections: 0 };
+    }
+    trends[date].connections += parseInt(metric.total_connections || 0);
+    trends[date].disconnections += parseInt(metric.total_disconnections || 0);
+  });
+  
+  const dates = Object.keys(trends).sort();
+  const connections = dates.map(d => trends[d].connections);
+  const disconnections = dates.map(d => trends[d].disconnections);
+  
+  Plotly.newPlot('connection_trends', [
+    {
+      type:'scatter',
+      mode:'lines+markers',
+      x:dates,
+      y:connections,
+      name:'Conexiones',
+      line: { color: '#10b981' }
+    },
+    {
+      type:'scatter',
+      mode:'lines+markers',
+      x:dates,
+      y:disconnections,
+      name:'Desconexiones',
+      line: { color: '#ef4444' }
+    }
+  ], {
+    title:'Tendencias de Conexión',
+    xaxis: { title: 'Fecha' },
+    yaxis: { title: 'Cantidad' }
+  });
+}
+
+function updateAPDetailsTable() {
+  const tableHTML = `
+    <h3>Detalles de Puntos de Acceso</h3>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+          <tr style="background: #f3f4f6;">
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">AP Nombre</th>
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Estado</th>
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">IP Local</th>
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Clientes</th>
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Uso (MB)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${apData.slice(0, 10).map(ap => {
+            const clients = clientsData.filter(c => c.ap_name === ap.ap_name && c.status === 'Online').length;
+            const usage = clientsData
+              .filter(c => c.ap_name === ap.ap_name)
+              .reduce((sum, c) => sum + parseFloat(c.usage_mb || 0), 0)
+              .toFixed(2);
+            
+            const statusColor = ap.status === 'online' ? '#10b981' : 
+                              ap.status === 'offline' ? '#ef4444' : '#f59e0b';
+            
+            return `
+              <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 8px;">${ap.ap_name}</td>
+                <td style="padding: 8px;">
+                  <span style="color: ${statusColor}; font-weight: bold;">
+                    ${ap.status.toUpperCase()}
+                  </span>
+                </td>
+                <td style="padding: 8px;">${ap.local_ip || 'N/A'}</td>
+                <td style="padding: 8px;">${clients}</td>
+                <td style="padding: 8px;">${usage}</td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+  
+  document.getElementById('ap_details_table').innerHTML = tableHTML;
+}
+
+// Auto-refresh every 30 seconds
+setInterval(loadData, 30000);
+
+// Load data on page load
+loadData();
+</script>
+</body>
+</html>

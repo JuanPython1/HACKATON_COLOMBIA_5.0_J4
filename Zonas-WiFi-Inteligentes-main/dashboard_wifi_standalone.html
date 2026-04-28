@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard WiFi Inteligente - Tiempo Real</title>
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <style>
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      margin: 20px; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: #333; 
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    h1 { 
+      margin-bottom: 8px; 
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-size: 2.5em;
+    }
+    .meta { 
+      color: rgba(255,255,255,0.9); 
+      margin-bottom:25px; 
+      font-size: 1.1em;
+    }
+    .grid { 
+      display:grid; 
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); 
+      gap: 20px; 
+    }
+    .card { 
+      background:white; 
+      border-radius:15px; 
+      padding:20px; 
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1); 
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .full { grid-column: 1 / -1; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .stat-label {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+    .status-online { color: #10b981; }
+    .status-offline { color: #ef4444; }
+    .status-dormant { color: #f59e0b; }
+    .refresh-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-bottom: 20px;
+      transition: opacity 0.3s ease;
+    }
+    .refresh-btn:hover {
+      opacity: 0.8;
+    }
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📡 Dashboard WiFi Inteligente</h1>
+    <div class="meta">Monitoreo en tiempo real de zonas WiFi - Hackathon Colombia 5.0</div>
+    
+    <button class="refresh-btn" onclick="updateDashboard()">🔄 Actualizar Datos</button>
+    
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-number" id="totalAPs">-</div>
+        <div class="stat-label">Total Puntos de Acceso</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="onlineAPs">-</div>
+        <div class="stat-label">APs Online</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="totalClients">-</div>
+        <div class="stat-label">Clientes Activos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="totalUsage">-</div>
+        <div class="stat-label">Uso Total (GB)</div>
+      </div>
+    </div>
+    
+    <div class="grid">
+      <div class="card"><div id="ap_status"></div></div>
+      <div class="card"><div id="events_cat"></div></div>
+      <div class="card"><div id="top_clients_ap"></div></div>
+      <div class="card"><div id="usage_by_ap"></div></div>
+      <div class="card full"><div id="hourly_events"></div></div>
+      <div class="card"><div id="device_types"></div></div>
+      <div class="card"><div id="connection_trends"></div></div>
+      <div class="card full"><div id="ap_details_table"></div></div>
+    </div>
+  </div>
+
+<script>
+// Datos incrustados directamente desde los archivos CSV
+const apData = [
+  {"ap_name":"057_La Castilla-AP1","mac":"e4:55:a8:24:75:48","serial":"Q3AK-SPHB-8FAS","status":"online","local_ip":"172.19.151.196"},
+  {"ap_name":"057_La Castilla-AP2","mac":"e4:55:a8:24:75:2c","serial":"Q3AK-SNRW-9424","status":"online","local_ip":"172.19.151.194"},
+  {"ap_name":"058_La Elvira-AP1","mac":"e4:55:a8:24:75:0e","serial":"Q3AK-SN6Y-8UUA","status":"online","local_ip":"172.19.151.205"},
+  {"ap_name":"058_La Elvira-AP2","mac":"e4:55:a8:23:f8:ef","serial":"Q3AK-7UT8-2HMP","status":"dormant","local_ip":"172.19.151.205"},
+  {"ap_name":"059_El Saladito-AP1","mac":"e4:55:a8:29:ef:be","serial":"Q3AK-QAPR-K5K4","status":"online","local_ip":"172.19.151.214"},
+  {"ap_name":"060_Felidia-AP1","mac":"e4:55:a8:24:75:3a","serial":"Q3AK-SP53-2PVV","status":"online","local_ip":"172.19.151.221"},
+  {"ap_name":"060_Felidia-AP2","mac":"e4:55:a8:24:5b:ab","serial":"Q3AK-NV5Q-S8SC","status":"online","local_ip":""},
+  {"ap_name":"061_La Leonera-AP1","mac":"e4:55:a8:24:5e:be","serial":"Q3AK-PB29-XHQN","status":"online","local_ip":"172.19.151.226"},
+  {"ap_name":"061_La Leonera-AP2","mac":"e4:55:a8:29:ef:c6","serial":"Q3AK-QAZV-XSTR","status":"online","local_ip":"172.19.151.230"},
+  {"ap_name":"063_Los Andes-AP1","mac":"e4:55:a8:24:75:4a","serial":"Q3AK-SPH9-8FAR","status":"online","local_ip":"172.19.151.234"},
+  {"ap_name":"063_Los Andes-AP2","mac":"e4:55:a8:29:ef:c2","serial":"Q3AK-QAPK-K5K3","status":"online","local_ip":"172.19.151.238"},
+  {"ap_name":"066_Pance-AP1","mac":"e4:55:a8:24:75:46","serial":"Q3AK-SNRW-9423","status":"online","local_ip":"172.19.151.242"},
+  {"ap_name":"067_Montebello-AP1","mac":"e4:55:a8:24:75:42","serial":"Q3AK-SPH5-2PVU","status":"offline","local_ip":"172.19.151.246"},
+  {"ap_name":"072_Hormiguero_AP1","mac":"e4:55:a8:24:75:4e","serial":"Q3AK-SNR5-9427","status":"online","local_ip":"172.19.151.250"},
+  {"ap_name":"079_ZW La Voragine-AP1","mac":"e4:55:a8:24:75:44","serial":"Q3AK-SPH7-8FAT","status":"online","local_ip":"172.19.151.254"}
+];
+
+const metricsData = [
+  {"timestamp_hour":"2026-03-20 20:00:00","ap_name":"058_La Elvira-AP1","total_events":"12","total_connections":"4","total_disconnections":"4","total_auth":"4","unique_clients":"1","disconnection_rate":"1.0","status":"online"},
+  {"timestamp_hour":"2026-03-20 20:00:00","ap_name":"060_Felidia-AP1","total_events":"6","total_connections":"2","total_disconnections":"2","total_auth":"2","unique_clients":"1","disconnection_rate":"1.0","status":"online"},
+  {"timestamp_hour":"2026-03-20 20:00:00","ap_name":"060_Felidia-AP2","total_events":"17","total_connections":"6","total_disconnections":"6","total_auth":"5","unique_clients":"3","disconnection_rate":"1.0","status":"online"},
+  {"timestamp_hour":"2026-03-20 20:00:00","ap_name":"061_La Leonera-AP1","total_events":"10","total_connections":"3","total_disconnections":"4","total_auth":"3","unique_clients":"2","disconnection_rate":"1.3333333333333333","status":"online"},
+  {"timestamp_hour":"2026-03-20 20:00:00","ap_name":"061_La Leonera-AP2","total_events":"6","total_connections":"2","total_disconnections":"2","total_auth":"2","unique_clients":"1","disconnection_rate":"1.0","status":"online"},
+  {"timestamp_hour":"2026-03-20 20:00:00","ap_name":"063_Los Andes-AP1","total_events":"3","total_connections":"1","total_disconnections":"1","total_auth":"1","unique_clients":"1","disconnection_rate":"1.0","status":"online"},
+  {"timestamp_hour":"2026-03-20 20:00:00","ap_name":"067_Montebello-AP1","total_events":"7","total_connections":"2","total_disconnections":"3","total_auth":"2","unique_clients":"2","disconnection_rate":"1.5","status":"offline"},
+  {"timestamp_hour":"2026-03-20 20:00:00","ap_name":"072_Hormiguero_AP1","total_events":"32","total_connections":"11","total_disconnections":"9","total_auth":"11","unique_clients":"5","disconnection_rate":"0.8181818181818182","status":"online"},
+  {"timestamp_hour":"2026-03-20 21:00:00","ap_name":"057_La Castilla-AP1","total_events":"27","total_connections":"9","total_disconnections":"8","total_auth":"9","unique_clients":"3","disconnection_rate":"0.8888888888888888","status":"online"},
+  {"timestamp_hour":"2026-03-20 21:00:00","ap_name":"058_La Elvira-AP1","total_events":"15","total_connections":"5","total_disconnections":"5","total_auth":"5","unique_clients":"2","disconnection_rate":"1.0","status":"online"}
+];
+
+const clientsData = [
+  {"client_id":"1c95ccab69ea90a6","status":"Online","client_description":"V2058","last_seen":"2026-04-08 10:53:44","usage_mb":"1.03","device_type":"Android","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"33.0"},
+  {"client_id":"6b26105f05797b8d","status":"Online","client_description":"A16-de-Sebastian","last_seen":"2026-04-25 14:04:07","usage_mb":"717.34","device_type":"Samsung Galaxy A16, Android 16","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"78.0"},
+  {"client_id":"e0058e8eeba48c13","status":"Online","client_description":"Redmi-Note-14","last_seen":"2026-03-30 18:33:00","usage_mb":"1.63","device_type":"Android","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"83.0"},
+  {"client_id":"c81e4b1d209dca5b","status":"Online","client_description":"mary","last_seen":"2026-03-29 11:19:21","usage_mb":"0.00390625","device_type":"Android","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"100.0"},
+  {"client_id":"d7cdc680b16a9a36","status":"Online","client_description":"Android_45RZIR4V","last_seen":"2026-04-07 10:44:32","usage_mb":"2160.64","device_type":"Samsung Galaxy A16, Android 16","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"83.0"},
+  {"client_id":"859f158a00f336eb","status":"Online","client_description":"A32-de-Omar-Mauricio","last_seen":"2026-03-30 18:33:00","usage_mb":"1054.72","device_type":"Samsung","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"100.0"},
+  {"client_id":"e4d89b02e47580d7","status":"Online","client_description":"Android","last_seen":"2026-04-12 19:53:32","usage_mb":"585.68","device_type":"Android","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"80.0"},
+  {"client_id":"ab14fd3db32c0d26","status":"Online","client_description":"Android-8","last_seen":"2026-04-19 13:52:36","usage_mb":"608.55","device_type":"Android","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"100.0"},
+  {"client_id":"61a004a44165ed98","status":"Offline","client_description":"06:1c:df:97:f5:4d","last_seen":"2026-03-30 18:07:00","usage_mb":"0.13671875","device_type":"Apple iPhone 11, iOS18.6.2","ap_name":"057_La Castilla-AP1","policy":"normal","onboarding":"100.0"},
+  {"client_id":"f2f7af9c075c6f4a","status":"Online","client_description":"Android_M7C3JXB3","last_seen":"2026-03-20 20:55:27","usage_mb":"45.23","device_type":"Android","ap_name":"060_Felidia-AP2","policy":"normal","onboarding":"67.0"}
+];
+
+const eventsData = [
+  {"timestamp":"2026-03-20 20:55:16","ap_name":"067_Montebello-AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"6d612a86bee4b0a6","client_description":"Android","event_category":"802.11","event_type":"802.11 disassociation","event_detail":"\"client not responding\""},
+  {"timestamp":"2026-03-20 20:55:18","ap_name":"067_Montebello-AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"d4c35e3ff2bca4e1","client_description":"HONOR-X5b","event_category":"802.1X","event_type":"802.1X authentication","event_detail":"\"radio: 1, vap: 0, client_mac: 6A:24:13:20:98:92, aid: 1650961097\""},
+  {"timestamp":"2026-03-20 20:55:18","ap_name":"067_Montebello-AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"d4c35e3ff2bca4e1","client_description":"HONOR-X5b","event_category":"802.11","event_type":"802.11 association","event_detail":"\"channel: 149, rssi: 23, band: 5\""},
+  {"timestamp":"2026-03-20 20:55:18","ap_name":"072_Hormiguero_AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"90a5d5a8573d7f52","client_description":"Julian","event_category":"802.1X","event_type":"802.1X authentication","event_detail":"\"radio: 0, vap: 0, client_mac: FA:C5:CF:DF:A3:1D, aid: 1605328943\""},
+  {"timestamp":"2026-03-20 20:55:18","ap_name":"072_Hormiguero_AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"90a5d5a8573d7f52","client_description":"Julian","event_category":"802.11","event_type":"802.11 association","event_detail":"\"channel: 11, rssi: 39, band: 2\""},
+  {"timestamp":"2026-03-20 20:55:19","ap_name":"072_Hormiguero_AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"6d612a86bee4b0a6","client_description":"Android","event_category":"802.1X","event_type":"802.1X authentication","event_detail":"\"radio: 1, vap: 0, client_mac: D2:D4:DF:D5:A7:7B, aid: 1977002226\""},
+  {"timestamp":"2026-03-20 20:55:19","ap_name":"072_Hormiguero_AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"6d612a86bee4b0a6","client_description":"Android","event_category":"802.11","event_type":"802.11 association","event_detail":"\"channel: 149, rssi: 6, band: 5\""},
+  {"timestamp":"2026-03-20 20:55:19","ap_name":"072_Hormiguero_AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"90a5d5a8573d7f52","client_description":"Julian","event_category":"Auth","event_type":"Splash authentication","event_detail":"\"duration: 3600\""},
+  {"timestamp":"2026-03-20 20:55:27","ap_name":"060_Felidia-AP2","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"f2f7af9c075c6f4a","client_description":"Android_M7C3JXB3","event_category":"802.11","event_type":"802.11 disassociation","event_detail":"\"client was deauthenticated\""},
+  {"timestamp":"2026-03-20 20:55:30","ap_name":"057_La Castilla-AP1","ssid":"Zona Wifi Rural Gratis-Alcaldia","client_id":"1c95ccab69ea90a6","client_description":"V2058","event_category":"802.1X","event_type":"802.1X authentication","event_detail":"\"radio: 1, vap: 0, client_mac: 8C:3A:E3:4A:2B:1C, aid: 1234567890\""}
+];
+
+function updateDashboard() {
+  updateStats();
+  updateAPStatus();
+  updateEventsCategory();
+  updateTopClientsAP();
+  updateUsageByAP();
+  updateHourlyEvents();
+  updateDeviceTypes();
+  updateConnectionTrends();
+  updateAPDetailsTable();
+}
+
+function updateStats() {
+  const totalAPs = apData.length;
+  const onlineAPs = apData.filter(ap => ap.status === 'online').length;
+  const totalClients = clientsData.filter(c => c.status === 'Online').length;
+  const totalUsageGB = (clientsData.reduce((sum, c) => sum + parseFloat(c.usage_mb || 0), 0) / 1024).toFixed(1);
+  
+  document.getElementById('totalAPs').textContent = totalAPs;
+  document.getElementById('onlineAPs').textContent = onlineAPs;
+  document.getElementById('totalClients').textContent = totalClients;
+  document.getElementById('totalUsage').textContent = totalUsageGB;
+}
+
+function updateAPStatus() {
+  const statusCount = {
+    online: apData.filter(ap => ap.status === 'online').length,
+    offline: apData.filter(ap => ap.status === 'offline').length,
+    dormant: apData.filter(ap => ap.status === 'dormant').length
+  };
+  
+  Plotly.newPlot('ap_status', [{
+    type:'bar',
+    x:Object.keys(statusCount),
+    y:Object.values(statusCount),
+    marker: {
+      color: ['#10b981', '#ef4444', '#f59e0b']
+    }
+  }], {
+    title:'Estado de Puntos de Acceso',
+    yaxis: { title: 'Cantidad' }
+  });
+}
+
+function updateEventsCategory() {
+  const eventCategories = {};
+  eventsData.forEach(event => {
+    const category = event.event_category || 'Unknown';
+    eventCategories[category] = (eventCategories[category] || 0) + 1;
+  });
+  
+  Plotly.newPlot('events_cat', [{
+    type:'pie',
+    labels:Object.keys(eventCategories),
+    values:Object.values(eventCategories),
+    hole: 0.4
+  }], {
+    title:'Distribución por Categoría de Evento'
+  });
+}
+
+function updateTopClientsAP() {
+  const clientCountByAP = {};
+  clientsData.forEach(client => {
+    if (client.status === 'Online') {
+      const ap = client.ap_name || 'Unknown';
+      clientCountByAP[ap] = (clientCountByAP[ap] || 0) + 1;
+    }
+  });
+  
+  const sorted = Object.entries(clientCountByAP)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
+  
+  Plotly.newPlot('top_clients_ap', [{
+    type:'bar',
+    x:sorted.map(s => s[1]),
+    y:sorted.map(s => s[0]),
+    orientation:'h',
+    marker: { color: '#667eea' }
+  }], {
+    title:'Top 10 AP por Clientes Conectados',
+    xaxis: { title: 'Clientes Conectados' }
+  });
+}
+
+function updateUsageByAP() {
+  const usageByAP = {};
+  clientsData.forEach(client => {
+    const ap = client.ap_name || 'Unknown';
+    const usage = parseFloat(client.usage_mb || 0);
+    usageByAP[ap] = (usageByAP[ap] || 0) + usage;
+  });
+  
+  const sorted = Object.entries(usageByAP)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10);
+  
+  Plotly.newPlot('usage_by_ap', [{
+    type:'bar',
+    x:sorted.map(s => s[0]),
+    y:sorted.map(s => (s[1] / 1024).toFixed(2)),
+    marker: { color: '#764ba2' }
+  }], {
+    title:'Top 10 AP por Uso Acumulado (GB)',
+    xaxis: { 
+      title: 'Punto de Acceso',
+      tickangle: -45 
+    },
+    yaxis: { title: 'Uso (GB)' }
+  });
+}
+
+function updateHourlyEvents() {
+  const hourlyData = {};
+  metricsData.forEach(metric => {
+    const hour = new Date(metric.timestamp_hour).getHours();
+    hourlyData[hour] = (hourlyData[hour] || 0) + parseInt(metric.total_events || 0);
+  });
+  
+  const hours = Array.from({length: 24}, (_, i) => i);
+  const events = hours.map(h => hourlyData[h] || 0);
+  
+  Plotly.newPlot('hourly_events', [{
+    type:'scatter',
+    mode:'lines+markers',
+    x:hours,
+    y:events,
+    line: { color: '#667eea', width: 3 }
+  }], {
+    title:'Eventos por Hora del Día',
+    xaxis: { title: 'Hora del Día' },
+    yaxis: { title: 'Total de Eventos' }
+  });
+}
+
+function updateDeviceTypes() {
+  const deviceTypes = {};
+  clientsData.forEach(client => {
+    const type = client.device_type || 'Unknown';
+    deviceTypes[type] = (deviceTypes[type] || 0) + 1;
+  });
+  
+  const sorted = Object.entries(deviceTypes)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+  
+  Plotly.newPlot('device_types', [{
+    type:'bar',
+    x:sorted.map(s => s[0]),
+    y:sorted.map(s => s[1]),
+    marker: { color: '#10b981' }
+  }], {
+    title:'Tipos de Dispositivos Conectados',
+    xaxis: { 
+      title: 'Tipo de Dispositivo',
+      tickangle: -45 
+    },
+    yaxis: { title: 'Cantidad' }
+  });
+}
+
+function updateConnectionTrends() {
+  const trends = {};
+  metricsData.forEach(metric => {
+    const date = metric.timestamp_hour.split(' ')[0];
+    if (!trends[date]) {
+      trends[date] = { connections: 0, disconnections: 0 };
+    }
+    trends[date].connections += parseInt(metric.total_connections || 0);
+    trends[date].disconnections += parseInt(metric.total_disconnections || 0);
+  });
+  
+  const dates = Object.keys(trends).sort();
+  const connections = dates.map(d => trends[d].connections);
+  const disconnections = dates.map(d => trends[d].disconnections);
+  
+  Plotly.newPlot('connection_trends', [
+    {
+      type:'scatter',
+      mode:'lines+markers',
+      x:dates,
+      y:connections,
+      name:'Conexiones',
+      line: { color: '#10b981' }
+    },
+    {
+      type:'scatter',
+      mode:'lines+markers',
+      x:dates,
+      y:disconnections,
+      name:'Desconexiones',
+      line: { color: '#ef4444' }
+    }
+  ], {
+    title:'Tendencias de Conexión',
+    xaxis: { title: 'Fecha' },
+    yaxis: { title: 'Cantidad' }
+  });
+}
+
+function updateAPDetailsTable() {
+  const tableHTML = `
+    <h3>Detalles de Puntos de Acceso</h3>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+          <tr style="background: #f3f4f6;">
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">AP Nombre</th>
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Estado</th>
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">IP Local</th>
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Clientes</th>
+            <th style="padding: 8px; text-align: left; border-bottom: 2px solid #ddd;">Uso (MB)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${apData.slice(0, 10).map(ap => {
+            const clients = clientsData.filter(c => c.ap_name === ap.ap_name && c.status === 'Online').length;
+            const usage = clientsData
+              .filter(c => c.ap_name === ap.ap_name)
+              .reduce((sum, c) => sum + parseFloat(c.usage_mb || 0), 0)
+              .toFixed(2);
+            
+            const statusColor = ap.status === 'online' ? '#10b981' : 
+                              ap.status === 'offline' ? '#ef4444' : '#f59e0b';
+            
+            return `
+              <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 8px;">${ap.ap_name}</td>
+                <td style="padding: 8px;">
+                  <span style="color: ${statusColor}; font-weight: bold;">
+                    ${ap.status.toUpperCase()}
+                  </span>
+                </td>
+                <td style="padding: 8px;">${ap.local_ip || 'N/A'}</td>
+                <td style="padding: 8px;">${clients}</td>
+                <td style="padding: 8px;">${usage}</td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+  
+  document.getElementById('ap_details_table').innerHTML = tableHTML;
+}
+
+// Cargar datos al iniciar la página
+updateDashboard();
+</script>
+</body>
+</html>
