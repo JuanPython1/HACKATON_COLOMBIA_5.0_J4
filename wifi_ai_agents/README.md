@@ -9,6 +9,8 @@ Sistema desarrollado para el Hackathon Colombia 5.0 que implementa tres agentes 
 ```
 wifi_ai_agents/
 ├── main.py                    # Orquestador principal del sistema
+├── api.py                     # Servidor FastAPI para chatbot web
+├── chat.html                  # Frontend web del chatbot
 ├── agents/
 │   ├── operative_agent.py     # Agente 1: Detección de anomalías y órdenes de trabajo
 │   ├── conversational_agent.py # Agente 2: Q&A en lenguaje natural
@@ -19,7 +21,8 @@ wifi_ai_agents/
 │   ├── work_orders.json      # Órdenes de trabajo generadas
 │   └── investment_recommendations.json  # Recomendaciones de inversión
 ├── dashboard.html            # Dashboard visual para el jurado
-└── requirements.txt         # Dependencias (pandas, numpy)
+├── README_FRONTEND.md        # Documentación del chatbot frontend
+└── requirements.txt         # Dependencias (pandas, numpy, fastapi, uvicorn)
 ```
 
 ## Los 3 Agentes de IA
@@ -77,11 +80,22 @@ wifi_ai_agents/
 
 ## Cómo Ejecutar
 
+### Modo CLI (Demostración completa)
 ```bash
 cd wifi_ai_agents
 source venv/bin/activate
 python main.py
 ```
+
+### Modo Chatbot Web
+```bash
+cd wifi_ai_agents
+pip install -r requirements.txt
+python -m uvicorn api:app --reload --port 8000
+```
+Luego abre `http://localhost:8000` en el navegador.
+
+El chatbot responde las 5 preguntas guía del hackathon de forma interactiva.
 
 ## Entregables para el Jurado
 

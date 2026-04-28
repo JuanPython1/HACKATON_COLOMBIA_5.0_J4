@@ -7,9 +7,9 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.data_processor import WiFiDataProcessor
-from agents.conversational_agent import ConversationalAgent
-from agents.strategic_agent import StrategicAgent
+from wifi_ai_agents.utils.data_processor import WiFiDataProcessor
+from wifi_ai_agents.agents.conversational_agent import ConversationalAgent
+from wifi_ai_agents.agents.strategic_agent import StrategicAgent
 
 app = FastAPI(title="WiFi AI Agents API")
 

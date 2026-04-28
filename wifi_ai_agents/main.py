@@ -2,10 +2,10 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.data_processor import WiFiDataProcessor
-from agents.operative_agent import OperativeAgent
-from agents.conversational_agent import ConversationalAgent
-from agents.strategic_agent import StrategicAgent
+from wifi_ai_agents.utils.data_processor import WiFiDataProcessor
+from wifi_ai_agents.agents.operative_agent import OperativeAgent
+from wifi_ai_agents.agents.conversational_agent import ConversationalAgent
+from wifi_ai_agents.agents.strategic_agent import StrategicAgent
 from datetime import datetime
 
 class WiFiAIAgentSystem:
@@ -14,7 +14,7 @@ class WiFiAIAgentSystem:
     para optimizar las Zonas WiFi de Cali.
     """
     
-    def __init__(self, data_path="../Zonas-WiFi-Inteligentes-main"):
+    def __init__(self, data_path="../Context/Zonas-WiFi-Inteligentes-main"):
         print("🚀 Inicializando Sistema de Agentes de IA para Zonas WiFi...\n")
         
         # Inicializar procesador de datos

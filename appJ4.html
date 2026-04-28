@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CaliWiFi Inclusivo | Cyber-Ops Dashboard</title>
+    
+    <!-- Tailwind CSS + Plugins -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Leaflet para mapas -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    
+    <!-- Configuración Tailwind -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#080c14",
+                        surface: "#0d1515",
+                        "surface-container": "#192122",
+                        "surface-container-high": "#232b2c",
+                        "surface-container-highest": "#2e3637",
+                        "on-background": "#dce4e4",
+                        "on-surface": "#dce4e4",
+                        "on-surface-variant": "#b9cacb",
+                        primary: "#e1fdff",
+                        "primary-container": "#00f2ff",
+                        "primary-fixed": "#74f5ff",
+                        "primary-fixed-dim": "#00dbe7",
+                        "on-primary": "#00363a",
+                        "on-primary-container": "#006a71",
+                        secondary: "#c0c1ff",
+                        "secondary-container": "#3131c0",
+                        tertiary: "#fff6e4",
+                        "tertiary-container": "#fed83a",
+                        error: "#ffb4ab",
+                        "error-container": "#93000a",
+                        outline: "#849495",
+                        "outline-variant": "#3a494b"
+                    },
+                    borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+                    spacing: { xl: "48px", gutter: "20px", lg: "24px", xs: "4px", "container-max": "1440px", unit: "4px", md: "16px", sm: "8px" },
+                    fontFamily: {
+                        "headline-xl": ["Space Grotesk", "sans-serif"],
+                        "headline-md": ["Space Grotesk", "sans-serif"],
+                        "body-base": ["Inter", "sans-serif"],
+                        "data-mono": ["Space Grotesk", "monospace"],
+                        "label-caps": ["Space Grotesk", "sans-serif"]
+                    },
+                    fontSize: {
+                        "headline-xl": ["48px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "body-base": ["16px", { lineHeight: "1.6", letterSpacing: "0", fontWeight: "400" }],
+                        "data-mono": ["14px", { lineHeight: "1.4", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.1em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-border-glow {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+        }
+        .scanline {
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 242, 255, 0.05) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            animation: scan 8s linear infinite;
+        }
+        @keyframes scan { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,242,255,0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,242,255,0.5); }
+        /* Animaciones */
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 10px rgba(0,242,255,0.3); } 50% { box-shadow: 0 0 25px rgba(0,242,255,0.6); } }
+        .status-dot { animation: pulse-glow 2s infinite; }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Mapa Leaflet personalizado */
+        .leaflet-container { background: #0d1515 !important; }
+        .leaflet-popup-content-wrapper { background: #192122 !important; border: 1px solid rgba(0,242,255,0.3) !important; border-radius: 4px !important; }
+        .leaflet-popup-content { color: #dce4e4 !important; font-family: 'Space Grotesk', monospace !important; font-size: 12px !important; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-base min-h-screen">
+
+<!-- Efecto scanline -->
+<div class="scanline fixed inset-0 z-[100] pointer-events-none"></div>
+
+<!-- ================= TOP APP BAR ================= -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 lg:px-12 h-16 bg-[#080c14]/80 backdrop-blur-2xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+    <div class="flex items-center gap-4">
+        <span class="text-lg lg:text-xl font-black tracking-tighter text-[#00f2ff] drop-shadow-[0_0_8px_rgba(0,242,255,0.5)] font-headline-xl">CaliWiFi Inclusivo</span>
+        <div class="h-4 w-[1px] bg-white/20 mx-2 hidden sm:block"></div>
+        <span class="font-['Space_Grotesk'] tracking-wider uppercase text-[10px] font-bold text-slate-400 hidden sm:inline">Cyber-Ops Command Center</span>
+    </div>
+    <div class="flex items-center gap-4 lg:gap-6">
+        <div class="relative hidden md:block">
+            <span class="material-symbols-outlined text-[#00f2ff] absolute left-3 top-1/2 -translate-y-1/2 scale-75">search</span>
+            <input class="bg-white/5 border border-white/10 rounded-sm py-1.5 pl-10 pr-4 text-xs font-data-mono focus:outline-none focus:border-[#00f2ff]/50 transition-colors w-48 lg:w-64" placeholder="Terminal Search..." type="text" id="globalSearch"/>
+        </div>
+        <div class="flex items-center gap-3 lg:gap-4">
+            <button class="text-slate-400 hover:text-[#00f2ff] transition-all"><span class="material-symbols-outlined">notifications</span></button>
+            <button class="text-slate-400 hover:text-[#00f2ff] transition-all"><span class="material-symbols-outlined">settings</span></button>
+            <div class="flex items-center gap-2 pl-3 lg:pl-4 border-l border-white/10">
+                <div class="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-[#00f2ff]/20 border border-[#00f2ff]/40 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[#00f2ff] text-base lg:text-lg">account_circle</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ================= SIDE NAVIGATION ================= -->
+<nav class="fixed left-0 top-0 h-full z-40 flex flex-col pt-20 bg-[#080c14]/90 backdrop-blur-3xl border-r border-white/10 w-64 shadow-[10px_0_30px_rgba(0,0,0,0.5)] hidden lg:flex">
+    <div class="px-6 mb-6">
+        <h2 class="text-lg font-bold text-[#00f2ff] font-headline-md">Command Center</h2>
+        <p class="text-[10px] uppercase tracking-widest text-slate-500 font-data-mono mt-1">v5.0 Sovereign Intelligence</p>
+    </div>
+    <div class="flex flex-col gap-1 px-3">
+        <button class="flex items-center gap-3 bg-white/5 text-[#00f2ff] border-r-4 border-[#00f2ff] px-6 py-3.5 shadow-[inset_0_0_15px_rgba(0,242,255,0.1)] transition-all rounded-r-sm" id="nav-operational" onclick="switchAgent('operational')">
+            <span class="material-symbols-outlined">monitoring</span>
+            <span class="font-['Space_Grotesk'] text-sm font-medium tracking-tight">Operational Agent</span>
+        </button>
+        <button class="flex items-center gap-3 text-slate-500 px-6 py-3.5 hover:bg-white/10 hover:text-[#00f2ff] transition-all rounded-r-sm" id="nav-conversational" onclick="switchAgent('conversational')">
+            <span class="material-symbols-outlined">forum</span>
+            <span class="font-['Space_Grotesk'] text-sm font-medium tracking-tight">Conversational Agent</span>
+        </button>
+        <button class="flex items-center gap-3 text-slate-500 px-6 py-3.5 hover:bg-white/10 hover:text-[#00f2ff] transition-all rounded-r-sm" id="nav-strategic" onclick="switchAgent('strategic')">
+            <span class="material-symbols-outlined">query_stats</span>
+            <span class="font-['Space_Grotesk'] text-sm font-medium tracking-tight">Strategic Agent</span>
+        </button>
+    </div>
+    <div class="mt-auto px-6 py-6 border-t border-white/5">
+        <div class="p-4 rounded-sm bg-[#00f2ff]/5 border border-[#00f2ff]/20">
+            <div class="flex items-center gap-2 mb-2">
+                <div class="w-2 h-2 rounded-full bg-[#00f2ff] animate-pulse"></div>
+                <span class="text-[10px] font-bold text-[#00f2ff] uppercase tracking-tighter">System: Active</span>
+            </div>
+            <div class="w-full bg-white/10 h-1 rounded-full">
+                <div class="bg-[#00f2ff] h-full w-[84%] rounded-full"></div>
+            </div>
+            <p class="text-[10px] text-slate-500 mt-2 font-data-mono">Uptime: 99.98%</p>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Bottom Nav -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center py-3 bg-[#080c14]/95 backdrop-blur-xl border-t border-white/10 lg:hidden">
+    <button class="flex flex-col items-center gap-1 text-[#00f2ff]" onclick="switchAgent('operational')" id="mob-operational">
+        <span class="material-symbols-outlined text-lg">monitoring</span>
+        <span class="text-[10px] font-label-caps">Operational</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-slate-500" onclick="switchAgent('conversational')" id="mob-conversational">
+        <span class="material-symbols-outlined text-lg">forum</span>
+        <span class="text-[10px] font-label-caps">Conversational</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 text-slate-500" onclick="switchAgent('strategic')" id="mob-strategic">
+        <span class="material-symbols-outlined text-lg">query_stats</span>
+        <span class="text-[10px] font-label-caps">Strategic</span>
+    </button>
+</nav>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main class="lg:pl-64 pt-16 min-h-screen pb-20 lg:pb-8">
+    <div class="p-4 lg:p-xl container-max mx-auto">
+        
+        <!-- ===== AGENTE OPERATIVO ===== -->
+        <section id="operational-view" class="fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+                <!-- Panel de Zonas -->
+                <div class="lg:col-span-2 glass-panel rounded-xl p-5 lg:p-6 border-[#00f2ff]/10">
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="font-headline-md text-base lg:text-lg text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#00f2ff]">radar</span>
+                            Radar de Zonas (IA)
+                        </h3>
+                        <span class="text-[10px] font-data-mono text-slate-500 uppercase">Monitoreo en tiempo real</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4">La IA analiza tasa de desconexión + peso social para detectar anomalías.</p>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs lg:text-sm">
+                            <thead>
+                                <tr class="text-left border-b border-white/10">
+                                    <th class="py-3 px-3 text-slate-400 font-label-caps">Zona</th>
+                                    <th class="py-3 px-3 text-slate-400 font-label-caps">Desconexiones</th>
+                                    <th class="py-3 px-3 text-slate-400 font-label-caps">Peso Social</th>
+                                    <th class="py-3 px-3 text-slate-400 font-label-caps">Estado</th>
+                                    <th class="py-3 px-3 text-slate-400 font-label-caps">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="zoneData"></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Panel de Comandos -->
+                <div class="glass-panel rounded-xl p-5 lg:p-6 border-[#00f2ff]/10">
+                    <h3 class="font-headline-md text-sm text-slate-300 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[#00f2ff]">emergency_share</span>
+                        Centro de Comandos
+                    </h3>
+                    <div id="alertLog" class="space-y-2 max-h-64 overflow-y-auto pr-2">
+                        <div class="p-3 rounded-sm bg-white/5 border-l-2 border-[#00f2ff]">
+                            <p class="text-xs font-data-mono text-slate-300">Sistema iniciado... Monitoreando 23 APs.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10">
+                        <button class="w-full py-3 bg-[#00f2ff] text-background font-bold tracking-widest uppercase text-xs hover:bg-[#00dbe7] transition-all shadow-[0_0_20px_rgba(0,242,255,0.3)] rounded-sm" onclick="simulateRealTime()">
+                            ⚡ Simular Evento
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== AGENTE CONVERSACIONAL ===== -->
+        <section id="conversational-view" class="hidden fade-in h-[calc(100vh-140px)] flex flex-col">
+            <div class="glass-panel rounded-xl flex-1 flex flex-col border-[#00f2ff]/20 neon-border-glow overflow-hidden">
+                <!-- Header del Chat -->
+                <div class="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-[#080c14]/50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-sm bg-[#00f2ff]/20 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[#00f2ff]">smart_toy</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline-md text-sm text-white">Asistente Técnico WiFi</h3>
+                            <p class="text-[10px] text-emerald-400 font-data-mono">● En línea | Modelo: RF-AUC-0.84</p>
+                        </div>
+                    </div>
+                    <button class="text-slate-500 hover:text-[#00f2ff] transition-all"><span class="material-symbols-outlined">more_vert</span></button>
+                </div>
+                
+                <!-- Mensajes -->
+                <div class="flex-1 overflow-y-auto p-4 lg:p-6 space-y-4 font-data-mono text-sm" id="chatMessages">
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 shrink-0 bg-[#00f2ff]/20 rounded-sm flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[#00f2ff] text-sm">smart_toy</span>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 p-4 rounded-sm max-w-[85%] lg:max-w-[75%]">
+                            <p class="text-slate-300 leading-relaxed">Sistema inicializado. Canal seguro establecido. Puedo responder preguntas sobre rendimiento técnico, estado de zonas, horarios críticos y priorización de inversión. ¿En qué puedo asistir con las operaciones de CaliWiFi?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Respuestas rápidas -->
+                <div class="px-4 lg:px-6 py-3 border-t border-white/10 bg-[#080c14]/30 flex gap-2 overflow-x-auto">
+                    <button class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-[10px] font-data-mono text-slate-400 hover:border-[#00f2ff]/50 hover:text-[#00f2ff] transition-all whitespace-nowrap" onclick="sendQuick('¿Qué AP presentan más inestabilidad?')">🔍 APs inestables</button>
+                    <button class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-[10px] font-data-mono text-slate-400 hover:border-[#00f2ff]/50 hover:text-[#00f2ff] transition-all whitespace-nowrap" onclick="sendQuick('¿Qué zonas concentran más clientes?')">📊 Zonas con más tráfico</button>
+                    <button class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-[10px] font-data-mono text-slate-400 hover:border-[#00f2ff]/50 hover:text-[#00f2ff] transition-all whitespace-nowrap" onclick="sendQuick('¿En qué horas aumenta la desconexión?')">🕒 Horario crítico</button>
+                    <button class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-[10px] font-data-mono text-slate-400 hover:border-[#00f2ff]/50 hover:text-[#00f2ff] transition-all whitespace-nowrap" onclick="sendQuick('¿Qué señales permiten anticipar fallas?')">🔔 Señales predictivas</button>
+                    <button class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-[10px] font-data-mono text-slate-400 hover:border-[#00f2ff]/50 hover:text-[#00f2ff] transition-all whitespace-nowrap" onclick="sendQuick('¿Cómo priorizar mantenimiento o inversión?')">🎯 Priorizar inversión</button>
+                </div>
+                
+                <!-- Input -->
+                <div class="p-4 lg:p-5 border-t border-white/10 bg-[#080c14]/50">
+                    <div class="flex gap-3">
+                        <input type="text" id="chatInput" class="flex-1 bg-transparent border border-white/20 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-[#00f2ff] text-white placeholder-slate-500 font-data-mono" placeholder="Transmitir instrucción..." autocomplete="off"/>
+                        <button class="px-5 lg:px-7 bg-[#00f2ff] text-background font-bold uppercase tracking-widest text-xs hover:bg-[#00dbe7] transition-all rounded-sm whitespace-nowrap" onclick="handleUserMessage()">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== AGENTE ESTRATÉGICO ===== -->
+        <section id="strategic-view" class="hidden fade-in space-y-gutter">
+            <!-- Métricas KPI -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-gutter">
+                <div class="glass-panel p-5 lg:p-6 rounded-xl border-t-2 border-t-[#00f2ff] neon-border-glow">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="material-symbols-outlined text-[#00f2ff] text-lg">diversity_3</span>
+                        <span class="text-[10px] font-bold text-emerald-400 font-data-mono">+12.4%</span>
+                    </div>
+                    <h4 class="text-slate-500 font-label-caps mb-1">Índice de Inclusión</h4>
+                    <div class="text-3xl lg:text-4xl font-headline-xl text-white">8.2<span class="text-sm text-slate-500">/10</span></div>
+                </div>
+                <div class="glass-panel p-5 lg:p-6 rounded-xl border-t-2 border-t-indigo-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="material-symbols-outlined text-indigo-500 text-lg">hub</span>
+                        <span class="text-[10px] font-bold text-emerald-400 font-data-mono">+5.2%</span>
+                    </div>
+                    <h4 class="text-slate-500 font-label-caps mb-1">Alcance Digital</h4>
+                    <div class="text-3xl lg:text-4xl font-headline-xl text-white">42.8k<span class="text-sm text-slate-500"> hab.</span></div>
+                </div>
+                <div class="glass-panel p-5 lg:p-6 rounded-xl border-t-2 border-t-emerald-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="material-symbols-outlined text-emerald-500 text-lg">savings</span>
+                        <span class="text-[10px] font-bold text-slate-400 font-data-mono">Estable</span>
+                    </div>
+                    <h4 class="text-slate-500 font-label-caps mb-1">ROI Infraestructura</h4>
+                    <div class="text-3xl lg:text-4xl font-headline-xl text-white">4.2x</div>
+                </div>
+                <div class="glass-panel p-5 lg:p-6 rounded-xl border-t-2 border-t-rose-500">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="material-symbols-outlined text-rose-500 text-lg">warning</span>
+                        <span class="text-[10px] font-bold text-rose-400 font-data-mono">32%</span>
+                    </div>
+                    <h4 class="text-slate-500 font-label-caps mb-1">Brecha Digital</h4>
+                    <div class="text-3xl lg:text-4xl font-headline-xl text-white">Objetivo: 18%</div>
+                </div>
+            </div>
+            
+            <!-- Mapa + Priorización -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+                <!-- Mapa -->
+                <div class="glass-panel rounded-xl p-4 lg:p-5 border-[#00f2ff]/10">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-headline-md text-sm text-white flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[#00f2ff]">map</span>
+                            Mapa de Equidad Digital
+                        </h3>
+                        <div class="flex gap-1">
+                            <button class="px-2 py-1 bg-white/5 border border-white/10 rounded-xs text-[10px] font-data-mono text-slate-400 hover:border-[#00f2ff]/50 hover:text-[#00f2ff] transition-all" onclick="toggleLayer('population')">👥 Población</button>
+                            <button class="px-2 py-1 bg-white/5 border border-white/10 rounded-xs text-[10px] font-data-mono text-slate-400 hover:border-[#00f2ff]/50 hover:text-[#00f2ff] transition-all" onclick="toggleLayer('coverage')">📡 Cobertura</button>
+                            <button class="px-2 py-1 bg-white/5 border border-white/10 rounded-xs text-[10px] font-data-mono text-slate-400 hover:border-[#00f2ff]/50 hover:text-[#00f2ff] transition-all" onclick="toggleLayer('priority')">🎯 Prioridad</button>
+                        </div>
+                    </div>
+                    <div id="map" class="w-full h-64 lg:h-80 rounded-lg overflow-hidden border border-white/10"></div>
+                    <p class="text-[10px] text-slate-500 mt-3 font-data-mono">Datos: Censo DANE 2018 + Alcaldía de Cali + Dataset del reto</p>
+                </div>
+                
+                <!-- Ranking de Prioridad -->
+                <div class="glass-panel rounded-xl p-4 lg:p-5 border-[#00f2ff]/10">
+                    <h3 class="font-headline-md text-sm text-white mb-4 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[#00f2ff]">leaderboard</span>
+                        Ranking de Prioridad de Inversión
+                    </h3>
+                    <p class="text-[10px] text-slate-400 mb-4 font-data-mono">Fórmula: <code class="bg-white/10 px-1 rounded">(Desconexión × Peso Social × log(Usuarios)) ÷ Cobertura</code></p>
+                    <div id="priorityList" class="space-y-3 max-h-72 overflow-y-auto pr-2"></div>
+                </div>
+            </div>
+            
+            <!-- Recomendaciones -->
+            <div class="glass-panel rounded-xl p-5 lg:p-6 border-[#00f2ff]/10">
+                <h3 class="font-headline-md text-sm text-white mb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[#00f2ff]">lightbulb</span>
+                    Recomendaciones Estratégicas
+                </h3>
+                <div id="recommendations" class="space-y-3"></div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<!-- Scripts externos -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+/* ==========================================
+   CONFIGURACIÓN GLOBAL Y DATOS
+   ========================================== */
+// Datos de corregimientos con población (Censo DANE 2018 + proyecciones)
+const corregimientos = {
+    "Hormiguero": { pop: 8500, lat: 3.3892, lng: -76.5821, estrato: 1, wifiUsers: 320, disconnectRate: 0.45, socialWeight: 1.5 },
+    "El Saladito": { pop: 6200, lat: 3.4156, lng: -76.6234, estrato: 1, wifiUsers: 280, disconnectRate: 0.30, socialWeight: 1.5 },
+    "Felidia": { pop: 5800, lat: 3.4523, lng: -76.5412, estrato: 2, wifiUsers: 150, disconnectRate: 0.20, socialWeight: 1.3 },
+    "La Leonera": { pop: 4900, lat: 3.3645, lng: -76.5123, estrato: 1, wifiUsers: 130, disconnectRate: 0.25, socialWeight: 1.3 },
+    "Pichinde": { pop: 7100, lat: 3.3234, lng: -76.5678, estrato: 1, wifiUsers: 210, disconnectRate: 0.28, socialWeight: 1.4 },
+    "Navarro": { pop: 3800, lat: 3.4789, lng: -76.4987, estrato: 2, wifiUsers: 110, disconnectRate: 0.10, socialWeight: 1.2 },
+    "La Elvira": { pop: 2900, lat: 3.4012, lng: -76.4567, estrato: 2, wifiUsers: 85, disconnectRate: 0.15, socialWeight: 1.1 },
+    "Montebello": { pop: 2100, lat: 3.4345, lng: -76.4234, estrato: 2, wifiUsers: 90, disconnectRate: 0.15, socialWeight: 1.0 },
+    "Los Andes": { pop: 1800, lat: 3.4678, lng: -76.4456, estrato: 2, wifiUsers: 70, disconnectRate: 0.12, socialWeight: 1.0 },
+    "La Castilla": { pop: 2500, lat: 3.4456, lng: -76.4789, estrato: 2, wifiUsers: 95, disconnectRate: 0.18, socialWeight: 1.1 }
+};
+
+const THRESHOLD_DISCONNECT = 0.5;
+const THRESHOLD_SOCIAL = 1.3;
+let map, markers = {}, currentLayer = 'priority';
+
+/* ==========================================
+   NAVEGACIÓN ENTRE AGENTES
+   ========================================== */
+function switchAgent(agent) {
+    // Ocultar todas las vistas
+    ['operational', 'conversational', 'strategic'].forEach(a => {
+        document.getElementById(`${a}-view`).classList.add('hidden');
+        // Desktop nav
+        const navBtn = document.getElementById(`nav-${a}`);
+        if(navBtn) {
+            navBtn.classList.remove('bg-white/5', 'text-[#00f2ff]', 'border-r-4', 'border-[#00f2ff]', 'shadow-[inset_0_0_15px_rgba(0,242,255,0.1)]');
+            navBtn.classList.add('text-slate-500');
+        }
+        // Mobile nav
+        const mobBtn = document.getElementById(`mob-${a}`);
+        if(mobBtn) {
+            mobBtn.classList.remove('text-[#00f2ff]');
+            mobBtn.classList.add('text-slate-500');
+        }
+    });
+    
+    // Mostrar vista seleccionada
+    document.getElementById(`${agent}-view`).classList.remove('hidden');
+    
+    // Activar botón desktop
+    const activeNav = document.getElementById(`nav-${agent}`);
+    if(activeNav) {
+        activeNav.classList.remove('text-slate-500');
+        activeNav.classList.add('bg-white/5', 'text-[#00f2ff]', 'border-r-4', 'border-[#00f2ff]', 'shadow-[inset_0_0_15px_rgba(0,242,255,0.1)]');
+    }
+    
+    // Activar botón mobile
+    const activeMob = document.getElementById(`mob-${agent}`);
+    if(activeMob) {
+        activeMob.classList.remove('text-slate-500');
+        activeMob.classList.add('text-[#00f2ff]');
+    }
+    
+    // Inicializar mapa si es necesario
+    if(agent === 'strategic' && !map) {
+        setTimeout(initMap, 100);
+    }
+    
+    // Renderizar tabla si es operativo
+    if(agent === 'operational') {
+        renderTable();
+    }
+}
+
+/* ==========================================
+   AGENTE OPERATIVO
+   ========================================== */
+let zones = Object.entries(corregimientos).map(([name, data], i) => ({
+    id: i+1, name: `0${72-i}_${name}`, disconnectionRate: data.disconnectRate, 
+    socialWeight: data.socialWeight, status: "Normal", pop: data.pop
+}));
+
+function renderTable() {
+    const tbody = document.getElementById('zoneData');
+    tbody.innerHTML = "";
+    zones.forEach(z => {
+        const zonaName = z.name.replace(/^\d+_/,'');
+        let isCritical = z.disconnectionRate > THRESHOLD_DISCONNECT && z.socialWeight >= THRESHOLD_SOCIAL;
+        let dotClass = "bg-emerald-400", statusText = "Estable", statusColor = "text-emerald-400", btnText = "Monitoreando", btnClass = "", btnAction = "";
+        
+        if (isCritical) { 
+            dotClass = "bg-rose-500 status-dot"; 
+            statusText = "CRÍTICO"; 
+            statusColor = "text-rose-500";
+            btnText = "️ Generar Orden"; 
+            btnClass = "bg-rose-500 hover:bg-rose-400";
+            btnAction = `onclick="createOrder('${z.name}')"`;
+        } else if (z.disconnectionRate > THRESHOLD_DISCONNECT) {
+            dotClass = "bg-amber-400";
+            statusText = "Inestable";
+            statusColor = "text-amber-400";
+        }
+        
+        tbody.innerHTML += `
+            <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="py-3 px-3 font-medium text-white">${zonaName}</td>
+                <td class="py-3 px-3 font-data-mono ${(z.disconnectionRate>0.35)?'text-rose-400':'text-slate-300'}">${(z.disconnectionRate*100).toFixed(1)}%</td>
+                <td class="py-3 px-3 font-data-mono text-slate-300">${z.socialWeight}x</td>
+                <td class="py-3 px-3"><span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full ${dotClass}"></span><span class="${statusColor} font-data-mono">${statusText}</span></span></td>
+                <td class="py-3 px-3"><button class="px-2.5 py-1.5 rounded-sm font-label-caps text-[10px] transition-all ${btnClass || 'bg-[#00f2ff]/20 text-[#00f2ff] hover:bg-[#00f2ff]/30'}" ${btnAction}>${btnText}</button></td>
+            </tr>`;
+    });
+}
+
+function simulateRealTime() {
+    let idx = Math.floor(Math.random() * 3);
+    zones[idx].disconnectionRate = 0.55 + Math.random() * 0.3;
+    renderTable();
+    addLog(`⚠️ Anomalía detectada en ${zones[idx].name.replace(/^\d+_/,'')}: Tasa de desconexión ${(zones[idx].disconnectionRate*100).toFixed(0)}%`, true);
+}
+
+function createOrder(zoneName) {
+    const zona = zoneName.replace(/^\d+_/,'');
+    addLog(`✅ ORDEN #${Math.floor(Math.random()*1000)} generada para ${zona}. Prioridad: ALTA. Técnico notificado.`, true);
+    let z = zones.find(x => x.name === zoneName);
+    if(z) { z.disconnectionRate = 0.10; renderTable(); }
+}
+
+function addLog(msg, isCrit) {
+    const log = document.getElementById('alertLog');
+    let item = document.createElement('div');
+    item.className = `p-3 rounded-sm bg-white/5 border-l-2 ${isCrit ? 'border-rose-500' : 'border-[#00f2ff]'}`;
+    item.innerHTML = `<p class="text-xs font-data-mono ${isCrit ? 'text-rose-300' : 'text-slate-300'}">${msg}</p>`;
+    log.prepend(item);
+    if(log.children.length > 8) log.removeChild(log.lastChild);
+}
+
+/* ==========================================
+   AGENTE CONVERSACIONAL - BASE DE CONOCIMIENTO
+   ========================================== */
+const knowledgeBase = {
+    zones: Object.fromEntries(Object.entries(corregimientos).map(([k,v]) => [k.toLowerCase(), {
+        ap: `0${72-Object.keys(corregimientos).indexOf(k)}_${k}_AP1`,
+        status: v.disconnectRate > 0.4 ? "Crítico" : v.disconnectRate > 0.25 ? "Inestable" : "Estable",
+        disconnect: `${(v.disconnectRate*100).toFixed(0)}%`, users: v.wifiUsers, connections: Math.round(v.wifiUsers * 5.8),
+        weight: `${v.socialWeight}x ${v.estrato===1?'(Estrato 1 - Alto impacto)':'(Estrato 2 - Impacto medio)'}`,
+        note: v.disconnectRate > 0.4 ? "Alta tasa de caída en horario estudiantil (17-20h). Requiere mantenimiento inmediato." : 
+              v.disconnectRate > 0.25 ? "Frecuentes reautenticaciones. Se recomienda ajustar canales WiFi." : "Rendimiento aceptable. Picos menores los fines de semana."
+    }])),
+    
+    answers: {
+        apInestables: `🔍 *APs con Mayor Inestabilidad:*
+
+1. 🚨 **072_Hormiguero_AP1**: 45% tasa de desconexión
+   • Causas probables: congestión horaria, señal débil en perímetro
+   • Usuarios afectados: ~320 activos/hora
+
+2. ⚠️ **059_El Saladito_AP1**: 30% tasa de desconexión  
+   • Causas probables: interferencia de canales, reautenticaciones
+   • Usuarios afectados: ~280 activos/hora
+
+3. ⚠️ **062_Pichinde_AP1**: 28% tasa de desconexión
+   • Causas probables: demanda > capacidad instalada
+   • Usuarios afectados: ~210 activos/hora
+
+💡 *Recomendación Operativa:* Priorizar mantenimiento en estos 3 APs durante horarios de baja demanda (10:00-14:00).`,
+
+        zonasTrafico: `📊 *Zonas con Mayor Concentración de Clientes y Tráfico:*
+
+| Zona | Usuarios Únicos | Conexiones/Hora | Tráfico Estimado |
+|------|----------------|-----------------|-----------------|
+| 🥇 Hormiguero | 320 | 1,850 | ~4.2 GB/h |
+| 🥈 El Saladito | 280 | 1,620 | ~3.8 GB/h |
+| 🥉 Pichinde | 210 | 1,240 | ~2.9 GB/h |
+| 4° Felidia | 150 | 890 | ~1.8 GB/h |
+| 5° La Leonera | 130 | 780 | ~1.5 GB/h |
+
+🔗 *Insight:* Las 3 zonas con más tráfico coinciden con estrato 1 y alto peso social. La inversión aquí tiene mayor retorno en equidad digital.`,
+
+        horasPico: `🕒 *Patrones Temporales de Autenticación y Desconexión:*
+
+📈 **Horas de Mayor Actividad:**
+• 06:00-08:00 → Pico matutino (estudiantes, trabajadores)
+• 17:00-20:00 → Pico vespertino ⚠️ *Crítico* (mayor congestión)
+• 21:00-23:00 → Uso residencial moderado
+
+📉 **Horas con Más Desconexiones:**
+• 17:30-19:30 → 35% más fallas que el promedio
+• Causa: congestión + dispositivos móviles en movimiento
+
+✅ **Mejor ventana para mantenimiento:**
+• 10:00-14:00 (menor impacto en usuarios)
+• Domingos 08:00-12:00 (tráfico reducido 40%)
+
+💡 *Recomendación:* Programar actualizaciones de firmware y reinicios en estas ventanas.`,
+
+        señalesFalla: `🔔 *Señales Predictivas de Fallas o Congestión:*
+
+Basado en el modelo de ML (Random Forest, AUC: 0.84):
+
+🎯 **Features más importantes para predecir fallas:**
+1. \`disconnection_rate\` > 35% → Alerta temprana
+2. \`auth_per_client\` > 3.5 → Posible problema de autenticación
+3. \`is_peak_hour\` + \`social_weight\` ≥ 1.3 → Riesgo alto en zonas vulnerables
+4. \`unique_clients\` creciente + \`connection_efficiency\` decreciente → Congestión inminente
+
+🚨 **Patrones de alerta automática:**
+• 3+ reconexiones del mismo cliente en 10 min → Posible inestabilidad de AP
+• Disminución >20% en \`total_connections\` vs. hora anterior → Falla parcial
+• \`disconnection_rate\` subiendo 2 horas consecutivas → Intervención requerida
+
+💡 *Acción del Agente Operativo:* Generar orden de trabajo cuando se detecten 2+ señales simultáneas en zonas con peso social ≥1.2.`,
+
+        priorizacion: `🎯 *Fórmula de Priorización para Mantenimiento e Inversión:*
+
+\`\`\`
+Priority_Score = (Disconnection_Rate × Social_Weight × log(Unique_Clients)) 
+                 ÷ (Coverage_Current + 1)
+\`\`\`
+
+📋 **Ranking Actual de Prioridad:**
+
+| # | Zona | Score | Justificación |
+|---|------|-------|--------------|
+| 1 | 🚨 Hormiguero | 9.2/10 | Alta falla (45%) + Alto impacto social (1.5x) + 320 usuarios |
+| 2 | 🚨 El Saladito | 7.8/10 | Falla moderada (30%) + Alto impacto (1.5x) + 280 usuarios |
+| 3 | ⚠️ Pichinde | 6.9/10 | Falla (28%) + Impacto (1.4x) + Demanda insatisfecha |
+| 4 | Felidia | 4.1/10 | Estable, pero con potencial de crecimiento |
+| 5 | Montebello | 2.3/10 | Bajo riesgo, mantenimiento preventivo suficiente |
+
+💰 *Recomendación de Inversión:*
+• Corto plazo ($): Reforzar señal en Hormiguero y El Saladito
+• Mediano plazo ($$): Añadir AP secundario en Pichinde
+• Largo plazo ($$$): Plan de expansión con enfoque en estrato 1
+
+📈 *Métrica de éxito:* Reducir disconnection_rate en zonas priorizadas del 34% al 18% en 6 meses.`
+    },
+    
+    meta: {
+        totalAPs: 23, onlineAPs: 17, totalClients: 752,
+        avgDisconnect: "22.4%", peakHours: "17:00-20:00", modelAUC: "0.84",
+        lastUpdate: new Date().toLocaleDateString('es-CO')
+    }
+};
+
+/* ==========================================
+   LÓGICA DEL CHATBOT
+   ========================================== */
+function appendMessage(text, isUser = false) {
+    const container = document.getElementById('chatMessages');
+    const msg = document.createElement('div');
+    msg.className = `flex gap-3 fade-in ${isUser ? 'flex-row-reverse' : ''}`;
+    msg.innerHTML = `
+        <div class="w-8 h-8 shrink-0 ${isUser ? 'bg-indigo-500/20' : 'bg-[#00f2ff]/20'} rounded-sm flex items-center justify-center">
+            <span class="material-symbols-outlined text-sm ${isUser ? 'text-indigo-400' : 'text-[#00f2ff]'}">${isUser ? 'person' : 'smart_toy'}</span>
+        </div>
+        <div class="bg-white/5 border ${isUser ? 'border-indigo-500/30' : 'border-white/10'} p-4 rounded-sm max-w-[85%] lg:max-w-[75%]">
+            <p class="${isUser ? 'text-white' : 'text-slate-300'} leading-relaxed whitespace-pre-wrap">${text}</p>
+        </div>
+    `;
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+    const container = document.getElementById('chatMessages');
+    const typing = document.createElement('div');
+    typing.className = 'flex gap-3 fade-in';
+    typing.id = 'typing';
+    typing.innerHTML = `
+        <div class="w-8 h-8 shrink-0 bg-[#00f2ff]/20 rounded-sm flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#00f2ff] text-sm">smart_toy</span>
+        </div>
+        <div class="bg-white/5 border border-white/10 p-4 rounded-sm flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay:0ms"></span>
+            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay:150ms"></span>
+            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay:300ms"></span>
+        </div>
+    `;
+    container.appendChild(typing);
+    container.scrollTop = container.scrollHeight;
+}
+
+function hideTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
+
+function getBotResponse(input) {
+    const q = input.toLowerCase().trim();
+    
+    // Detección de zona específica
+    for(let zone in knowledgeBase.zones) {
+        if(q.includes(zone)) {
+            const z = knowledgeBase.zones[zone];
+            return `📍 *Estado de ${zone.charAt(0).toUpperCase() + zone.slice(1)}:*
+• AP: ${z.ap}
+• Estabilidad: ${z.status}
+• Desconexiones: ${z.disconnect}
+• Usuarios activos: ~${z.users}
+• Conexiones/hora: ~${z.connections}
+• Peso social: ${z.weight}
+💡 *Insight:* ${z.note}`;
+        }
+    }
+    
+    // Respuestas a las 5 preguntas clave
+    if(q.includes('ap') && (q.includes('inestabilidad') || q.includes('desconexión') || q.includes('falla') || q.includes('problema') || q.includes('fallas'))) {
+        return knowledgeBase.answers.apInestables;
+    }
+    if((q.includes('zona') || q.includes('área') || q.includes('corregimiento')) && (q.includes('cliente') || q.includes('tráfico') || q.includes('conexión') || q.includes('usuarios') || q.includes('concentran'))) {
+        return knowledgeBase.answers.zonasTrafico;
+    }
+    if(q.includes('hora') || q.includes('cuándo') || q.includes('horario') || q.includes('pico') || q.includes('tiempo') || q.includes('aumenta')) {
+        return knowledgeBase.answers.horasPico;
+    }
+    if(q.includes('señal') || q.includes('anticipar') || q.includes('predecir') || q.includes('alerta') || q.includes('congestión') || q.includes('falla')) {
+        return knowledgeBase.answers.señalesFalla;
+    }
+    if(q.includes('priorizar') || q.includes('inversión') || q.includes('mantenimiento') || q.includes('invertir') || q.includes('recomendación') || q.includes('estrategia')) {
+        return knowledgeBase.answers.priorizacion;
+    }
+    
+    // Preguntas generales
+    if(q.includes('métrica') || q.includes('resumen') || q.includes('general') || q.includes('estado red')) {
+        return `📊 *Métricas Generales de la Red:*
+• APs monitoreados: ${knowledgeBase.meta.totalAPs} (${knowledgeBase.meta.onlineAPs} online)
+• Clientes registrados: ${knowledgeBase.meta.totalClients}
+• Tasa promedio de desconexión: ${knowledgeBase.meta.avgDisconnect}
+• Horario crítico: ${knowledgeBase.meta.peakHours}
+• Precisión del modelo predictivo: ${knowledgeBase.meta.modelAUC}
+🔄 Última actualización: ${knowledgeBase.meta.lastUpdate}`;
+    }
+    
+    if(q.includes('ayuda') || q.includes('qué puedes') || q.includes('preguntar') || q.includes('funciona')) {
+        return `🤖 *Puedo ayudarte con:*
+
+✅ Estado técnico de una zona (ej: "¿Cómo está Hormiguero?")
+✅ Top APs con problemas de estabilidad
+✅ Zonas con mayor tráfico y usuarios
+✅ Horarios críticos de autenticación/desconexión
+✅ Señales predictivas de fallas
+✅ Recomendaciones de priorización para inversión
+
+💡 *Ejemplos:*
+• "¿Qué AP tiene más desconexiones?"
+• "¿Cuándo es mejor hacer mantenimiento?"
+• "¿Cómo deciden dónde invertir primero?"`;
+    }
+    
+    // Fallback inteligente
+    const keywords = {
+        'inestabilidad': 'apInestables', 'tráfico': 'zonasTrafico', 
+        'hora': 'horasPico', 'predecir': 'señalesFalla', 'invertir': 'priorizacion'
+    };
+    for(let [key, answerKey] of Object.entries(keywords)) {
+        if(q.includes(key)) {
+            return `🔍 Parece que preguntas sobre *${key}*. Aquí tienes la respuesta relevante:\n\n${knowledgeBase.answers[answerKey]}`;
+        }
+    }
+    
+    return `🤖 No encontré una respuesta exacta para esa consulta en mi base actual.
+
+💡 *Puedo responder preguntas como:*
+• "¿Qué AP presentan más inestabilidad?"
+• "¿Qué zonas tienen más tráfico?"
+• "¿En qué horas hay más fallas?"
+• "¿Cómo priorizar la inversión?"
+
+✍️ *Intenta reformular con palabras clave técnicas: AP, desconexión, tráfico, horario, priorizar, inversión.*`;
+}
+
+function handleUserMessage() {
+    const input = document.getElementById('chatInput'), text = input.value.trim();
+    if(!text) return;
+    appendMessage(text, true);
+    input.value = '';
+    showTyping();
+    setTimeout(() => { hideTyping(); appendMessage(getBotResponse(text), false); }, 600 + Math.random()*500);
+}
+
+function sendQuick(text) {
+    document.getElementById('chatInput').value = text;
+    handleUserMessage();
+}
+
+document.getElementById('chatInput')?.addEventListener('keypress', e => { if(e.key==='Enter') handleUserMessage(); });
+
+/* ==========================================
+   AGENTE ESTRATÉGICO - MAPA Y ANÁLISIS
+   ========================================== */
+function initMap() {
+    if(map) { map.remove(); }
+    map = L.map('map').setView([3.4156, -76.5324], 11);
+    
+    // Capa base oscura
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap © CARTO | Datos: DANE, Alcaldía de Cali',
+        subdomains: 'abcd',
+        maxZoom: 19
+    }).addTo(map);
+
+    Object.entries(corregimientos).forEach(([name, data]) => {
+        const priority = calculatePriority(data);
+        const color = priority > 8 ? '#ef4444' : priority > 5 ? '#f59e0b' : '#22c55e';
+        const popup = `
+            <strong style="color:#00f2ff;font-size:13px">${name}</strong><br>
+            👥 Población: ${data.pop.toLocaleString()}<br>
+            📡 Usuarios WiFi: ${data.wifiUsers}<br>
+            ⚠️ Desconexiones: ${(data.disconnectRate*100).toFixed(0)}%<br>
+            🎯 Peso Social: ${data.socialWeight}x (Estrato ${data.estrato})<br>
+            📊 Prioridad: <strong style="color:${color}">${priority.toFixed(1)}/10</strong>
+        `;
+        markers[name] = L.circleMarker([data.lat, data.lng], {
+            radius: 8 + priority/2, fillColor: color, color: '#fff', weight: 2, fillOpacity: 0.85
+        }).bindPopup(popup).addTo(map);
+    });
+    updateStrategicDashboard();
+}
+
+function calculatePriority(data) {
+    const coverage = Math.min(1, data.wifiUsers / (data.pop * 0.15));
+    return Math.min(10, (data.disconnectRate * data.socialWeight * data.pop) / (coverage * 1000 + 1));
+}
+
+function toggleLayer(layer) {
+    currentLayer = layer;
+    Object.entries(corregimientos).forEach(([name, data]) => {
+        const marker = markers[name];
+        if(!marker) return;
+        let color, radius;
+        if(layer === 'population') {
+            radius = 5 + data.pop/1500;
+            color = data.estrato === 1 ? '#8b5cf6' : '#38bdf8';
+        } else if(layer === 'coverage') {
+            const cov = Math.min(1, data.wifiUsers/(data.pop*0.15));
+            radius = 5 + cov*10;
+            color = cov > 0.7 ? '#22c55e' : cov > 0.4 ? '#f59e0b' : '#ef4444';
+        } else {
+            const p = calculatePriority(data);
+            radius = 8 + p/2;
+            color = p > 8 ? '#ef4444' : p > 5 ? '#f59e0b' : '#22c55e';
+        }
+        marker.setStyle({ fillColor: color, radius: radius });
+    });
+}
+
+function updateStrategicDashboard() {
+    const totalPop = Object.values(corregimientos).reduce((s,d)=>s+d.pop,0);
+    const totalUsers = Object.values(corregimientos).reduce((s,d)=>s+d.wifiUsers,0);
+    const avgDisconnect = Object.values(corregimientos).reduce((s,d)=>s+d.disconnectRate,0)/10;
+    
+    // Actualizar KPIs
+    document.querySelectorAll('.font-headline-xl')[0].innerHTML = `8.2<span class="text-sm text-slate-500">/10</span>`;
+    document.querySelectorAll('.font-headline-xl')[1].innerHTML = `${(totalPop/1000).toFixed(1)}k<span class="text-sm text-slate-500"> hab.</span>`;
+    document.querySelectorAll('.font-headline-xl')[2].textContent = `${(1 + (1-avgDisconnect)*2.5).toFixed(1)}x`;
+    
+    // Ranking de prioridad
+    const priorityList = document.getElementById('priorityList');
+    priorityList.innerHTML = '';
+    const sorted = Object.entries(corregimientos)
+        .map(([name,d]) => ({name, priority: calculatePriority(d), ...d}))
+        .sort((a,b) => b.priority - a.priority);
+    
+    sorted.forEach((item, i) => {
+        const coverage = Math.min(100, Math.round((item.wifiUsers/(item.pop*0.15))*100));
+        const colorClass = item.priority>8 ? 'text-rose-400 border-rose-500' : item.priority>5 ? 'text-amber-400 border-amber-500' : 'text-emerald-400 border-emerald-500';
+        priorityList.innerHTML += `
+            <div class="p-4 rounded-sm bg-white/5 border border-white/10 hover:border-[#00f2ff]/30 transition-all">
+                <div class="flex justify-between items-center mb-2">
+                    <strong class="text-white">#${i+1} ${item.name}</strong>
+                    <span class="px-2 py-0.5 rounded-xs text-[10px] font-bold font-data-mono ${item.priority>8?'bg-rose-500/20 text-rose-400':item.priority>5?'bg-amber-500/20 text-amber-400':'bg-emerald-500/20 text-emerald-400'}">
+                        ${item.priority.toFixed(1)}/10
+                    </span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-400 mb-2">
+                    <span>👥 ${item.pop.toLocaleString()} hab.</span>
+                    <span>📡 ${item.wifiUsers} usuarios</span>
+                    <span class="${item.disconnectRate>0.35?'text-rose-400':''}">⚠️ ${(item.disconnectRate*100).toFixed(0)}% desc.</span>
+                    <span>🎯 E${item.estrato} | ${item.socialWeight}x</span>
+                </div>
+                <div>
+                    <span class="text-[10px] text-slate-500">Cobertura:</span>
+                    <div class="w-full bg-white/10 h-1.5 rounded-full mt-1 overflow-hidden">
+                        <div class="bg-[#00f2ff] h-full rounded-full transition-all" style="width:${coverage}%"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    // Recomendaciones
+    const recDiv = document.getElementById('recommendations');
+    const top3 = sorted.slice(0,3);
+    recDiv.innerHTML = `
+        <div class="p-4 rounded-sm bg-rose-500/10 border-l-4 border-rose-500">
+            <strong class="text-white text-sm block mb-1">🚨 Intervención Inmediata</strong>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                ${top3.map((z,i)=>`${i+1}. <strong class="text-[#00f2ff]">${z.name}</strong>: Reforzamiento de APs + capacitación digital. Impacto: ~${Math.round(z.pop*0.3).toLocaleString()} personas.`).join('<br>')}
+            </p>
+        </div>
+        <div class="p-4 rounded-sm bg-[#00f2ff]/10 border-l-4 border-[#00f2ff]">
+            <strong class="text-white text-sm block mb-1">💡 Mantenimiento Predictivo</strong>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                Programar revisiones en ventanas de baja demanda (10:00-14:00) para zonas con desconexión >25%. Ahorro estimado: 40% en costos operativos.
+            </p>
+        </div>
+        <div class="p-4 rounded-sm bg-emerald-500/10 border-l-4 border-emerald-500">
+            <strong class="text-white text-sm block mb-1">🌱 Expansión con Enfoque Social</strong>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                Priorizar nuevos APs en corregimientos con estrato 1 y población >5,000 hab. (Pichinde, La Leonera). Alianza recomendada: Secretaría de Educación.
+            </p>
+        </div>
+        <div class="mt-3 p-3 rounded-sm bg-[#00f2ff]/5 border border-[#00f2ff]/20">
+            <strong class="text-[#00f2ff] text-xs block">📈 Métrica de Éxito:</strong>
+            <p class="text-[11px] text-slate-400">Reducir brecha digital en corregimientos priorizados del 32% al 18% en 12 meses, beneficiando +12,000 residentes.</p>
+        </div>
+    `;
+}
+
+/* ==========================================
+   INICIALIZACIÓN
+   ========================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    renderTable();
+    // Inicializar con agente operativo
+    switchAgent('operational');
+});
+</script>
+
+</body>
+</html>

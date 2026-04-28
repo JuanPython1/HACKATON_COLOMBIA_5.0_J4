@@ -163,6 +163,36 @@ class StrategicAgent:
         }
         
         return contexts.get(zone, f'Zona {zone} - requiere evaluación de campo')
+
+    def get_ap_coordinates(self):
+        """Retorna coordenadas simuladas para los APs en Cali"""
+        # Coordenadas base para Cali, Colombia (aprox 3.4516, -76.5320)
+        coordinates = {
+            '072_Hormiguero_AP1': {'lat': 3.4516, 'lng': -76.5320, 'zone': 'Hormiguero'},
+            '072_Hormiguero_AP2': {'lat': 3.4520, 'lng': -76.5310, 'zone': 'Hormiguero'},
+            '059_El Saladito-AP1': {'lat': 3.4600, 'lng': -76.5400, 'zone': 'Saladito'},
+            '059_El Saladito-AP2': {'lat': 3.4605, 'lng': -76.5395, 'zone': 'Saladito'},
+            '060_Felidia-AP1': {'lat': 3.4700, 'lng': -76.5200, 'zone': 'Felidia'},
+            '060_Felidia-AP2': {'lat': 3.4705, 'lng': -76.5195, 'zone': 'Felidia'},
+            '061_La Leonera-AP1': {'lat': 3.4450, 'lng': -76.5500, 'zone': 'Leonera'},
+            '067_Montebello-AP1': {'lat': 3.4300, 'lng': -76.5600, 'zone': 'Montebello'},
+            '068_Golondrinas-AP1': {'lat': 3.4250, 'lng': -76.5700, 'zone': 'Golondrinas'},
+            '069_La Paz-AP1': {'lat': 3.4200, 'lng': -76.5800, 'zone': 'La Paz'},
+            '062_Pichinde-AP1': {'lat': 3.4100, 'lng': -76.6000, 'zone': 'Pichinde'},
+            '063_Pance-AP1': {'lat': 3.4000, 'lng': -76.6200, 'zone': 'Pance'},
+            '064_Navarro-AP1': {'lat': 3.4550, 'lng': -76.5100, 'zone': 'Navarro'},
+            '065_San Antonio-AP1': {'lat': 3.4580, 'lng': -76.5250, 'zone': 'San Antonio'},
+            '066_La Flora-AP1': {'lat': 3.4620, 'lng': -76.5350, 'zone': 'La Flora'},
+            '070_Villacarmelo-AP1': {'lat': 3.4650, 'lng': -76.5150, 'zone': 'Villacarmelo'},
+            '071_Terranova-AP1': {'lat': 3.4680, 'lng': -76.5450, 'zone': 'Terranova'},
+            '073_Yumbo-AP1': {'lat': 3.4800, 'lng': -76.5000, 'zone': 'Yumbo'},
+            '074_Puerto Mallarino-AP1': {'lat': 3.4900, 'lng': -76.4800, 'zone': 'Puerto Mallarino'},
+            '075_Ciudad Jardín-AP1': {'lat': 3.4400, 'lng': -76.5300, 'zone': 'Ciudad Jardín'},
+            '076_La Rivera-AP1': {'lat': 3.4350, 'lng': -76.5450, 'zone': 'La Rivera'},
+            '077_Limas-AP1': {'lat': 3.4280, 'lng': -76.5550, 'zone': 'Limas'},
+            '078_Cascajal-AP1': {'lat': 3.4150, 'lng': -76.5900, 'zone': 'Cascajal'}
+        }
+        return coordinates
     
     def generate_investment_report(self):
         """Genera reporte ejecutivo de inversión"""
