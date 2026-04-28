@@ -291,34 +291,34 @@
                 <div class="glass-panel p-5 lg:p-6 rounded-xl border-t-2 border-t-[#00f2ff] neon-border-glow">
                     <div class="flex justify-between items-start mb-3">
                         <span class="material-symbols-outlined text-[#00f2ff] text-lg">diversity_3</span>
-                        <span class="text-[10px] font-bold text-emerald-400 font-data-mono">+12.4%</span>
+                        <span id="kpi-inclusion-delta" class="text-[10px] font-bold text-emerald-400 font-data-mono">+0%</span>
                     </div>
                     <h4 class="text-slate-500 font-label-caps mb-1">Índice de Inclusión</h4>
-                    <div class="text-3xl lg:text-4xl font-headline-xl text-white">8.2<span class="text-sm text-slate-500">/10</span></div>
+                    <div id="kpi-inclusion" class="text-3xl lg:text-4xl font-headline-xl text-white">0<span class="text-sm text-slate-500">/10</span></div>
                 </div>
                 <div class="glass-panel p-5 lg:p-6 rounded-xl border-t-2 border-t-indigo-500">
                     <div class="flex justify-between items-start mb-3">
                         <span class="material-symbols-outlined text-indigo-500 text-lg">hub</span>
-                        <span class="text-[10px] font-bold text-emerald-400 font-data-mono">+5.2%</span>
+                        <span id="kpi-reach-delta" class="text-[10px] font-bold text-emerald-400 font-data-mono">+0%</span>
                     </div>
                     <h4 class="text-slate-500 font-label-caps mb-1">Alcance Digital</h4>
-                    <div class="text-3xl lg:text-4xl font-headline-xl text-white">42.8k<span class="text-sm text-slate-500"> hab.</span></div>
+                    <div id="kpi-reach" class="text-3xl lg:text-4xl font-headline-xl text-white">0<span class="text-sm text-slate-500"> hab.</span></div>
                 </div>
                 <div class="glass-panel p-5 lg:p-6 rounded-xl border-t-2 border-t-emerald-500">
                     <div class="flex justify-between items-start mb-3">
                         <span class="material-symbols-outlined text-emerald-500 text-lg">savings</span>
-                        <span class="text-[10px] font-bold text-slate-400 font-data-mono">Estable</span>
+                        <span id="kpi-roi-status" class="text-[10px] font-bold text-slate-400 font-data-mono">Calculando...</span>
                     </div>
                     <h4 class="text-slate-500 font-label-caps mb-1">ROI Infraestructura</h4>
-                    <div class="text-3xl lg:text-4xl font-headline-xl text-white">4.2x</div>
+                    <div id="kpi-roi" class="text-3xl lg:text-4xl font-headline-xl text-white">0x</div>
                 </div>
                 <div class="glass-panel p-5 lg:p-6 rounded-xl border-t-2 border-t-rose-500">
                     <div class="flex justify-between items-start mb-3">
                         <span class="material-symbols-outlined text-rose-500 text-lg">warning</span>
-                        <span class="text-[10px] font-bold text-rose-400 font-data-mono">32%</span>
+                        <span id="kpi-gap-pct" class="text-[10px] font-bold text-rose-400 font-data-mono">0%</span>
                     </div>
                     <h4 class="text-slate-500 font-label-caps mb-1">Brecha Digital</h4>
-                    <div class="text-3xl lg:text-4xl font-headline-xl text-white">Objetivo: 18%</div>
+                    <div id="kpi-gap" class="text-3xl lg:text-4xl font-headline-xl text-white">0%</div>
                 </div>
             </div>
             
@@ -372,22 +372,8 @@
 /* ==========================================
    CONFIGURACIÓN GLOBAL Y DATOS
    ========================================== */
-// Datos de corregimientos con población (Censo DANE 2018 + proyecciones)
-const corregimientos = {
-    "Hormiguero": { pop: 8500, lat: 3.3892, lng: -76.5821, estrato: 1, wifiUsers: 320, disconnectRate: 0.45, socialWeight: 1.5 },
-    "El Saladito": { pop: 6200, lat: 3.4156, lng: -76.6234, estrato: 1, wifiUsers: 280, disconnectRate: 0.30, socialWeight: 1.5 },
-    "Felidia": { pop: 5800, lat: 3.4523, lng: -76.5412, estrato: 2, wifiUsers: 150, disconnectRate: 0.20, socialWeight: 1.3 },
-    "La Leonera": { pop: 4900, lat: 3.3645, lng: -76.5123, estrato: 1, wifiUsers: 130, disconnectRate: 0.25, socialWeight: 1.3 },
-    "Pichinde": { pop: 7100, lat: 3.3234, lng: -76.5678, estrato: 1, wifiUsers: 210, disconnectRate: 0.28, socialWeight: 1.4 },
-    "Navarro": { pop: 3800, lat: 3.4789, lng: -76.4987, estrato: 2, wifiUsers: 110, disconnectRate: 0.10, socialWeight: 1.2 },
-    "La Elvira": { pop: 2900, lat: 3.4012, lng: -76.4567, estrato: 2, wifiUsers: 85, disconnectRate: 0.15, socialWeight: 1.1 },
-    "Montebello": { pop: 2100, lat: 3.4345, lng: -76.4234, estrato: 2, wifiUsers: 90, disconnectRate: 0.15, socialWeight: 1.0 },
-    "Los Andes": { pop: 1800, lat: 3.4678, lng: -76.4456, estrato: 2, wifiUsers: 70, disconnectRate: 0.12, socialWeight: 1.0 },
-    "La Castilla": { pop: 2500, lat: 3.4456, lng: -76.4789, estrato: 2, wifiUsers: 95, disconnectRate: 0.18, socialWeight: 1.1 }
-};
-
-const THRESHOLD_DISCONNECT = 0.5;
-const THRESHOLD_SOCIAL = 1.3;
+const API_URL = window.location.origin;
+let apData = [];
 let map, markers = {}, currentLayer = 'priority';
 
 /* ==========================================
@@ -429,40 +415,64 @@ function switchAgent(agent) {
     }
     
     // Inicializar mapa si es necesario
-    if(agent === 'strategic' && !map) {
-        setTimeout(initMap, 100);
+    if(agent === 'strategic') {
+        if (!map) {
+            setTimeout(initMap, 100);
+        } else {
+            loadMapData();
+            loadKPIData();
+        }
     }
     
-    // Renderizar tabla si es operativo
+        // Renderizar tabla si es operativo
     if(agent === 'operational') {
         renderTable();
+    }
+    
+    // Cargar KPIs si es estratégico
+    if(agent === 'strategic') {
+        loadKPIData();
     }
 }
 
 /* ==========================================
    AGENTE OPERATIVO
    ========================================== */
-let zones = Object.entries(corregimientos).map(([name, data], i) => ({
-    id: i+1, name: `0${72-i}_${name}`, disconnectionRate: data.disconnectRate, 
-    socialWeight: data.socialWeight, status: "Normal", pop: data.pop
-}));
+let zones = [];
+const THRESHOLD_DISCONNECT = 0.35;
+
+async function loadOperationalData() {
+    try {
+        const res = await fetch(`${API_URL}/api/map-data`);
+        const apLocations = await res.json();
+        zones = apLocations.map(ap => ({
+            name: ap.name,
+            disconnectionRate: ap.disconnection_rate || 0,
+            status: ap.status,
+            clients: ap.clients || 0,
+            events: ap.events || 0
+        }));
+        renderTable();
+    } catch (err) {
+        console.log("Error cargando datos operativos:", err);
+    }
+}
 
 function renderTable() {
     const tbody = document.getElementById('zoneData');
     tbody.innerHTML = "";
     zones.forEach(z => {
         const zonaName = z.name.replace(/^\d+_/,'');
-        let isCritical = z.disconnectionRate > THRESHOLD_DISCONNECT && z.socialWeight >= THRESHOLD_SOCIAL;
-        let dotClass = "bg-emerald-400", statusText = "Estable", statusColor = "text-emerald-400", btnText = "Monitoreando", btnClass = "", btnAction = "";
+        const isCritical = z.disconnectionRate > THRESHOLD_DISCONNECT;
+        let dotClass = "bg-emerald-400", statusText = "Estable", statusColor = "text-emerald-400", btnText = "Monitoreando", btnClass = "";
         
-        if (isCritical) { 
+        if (z.status === 'offline' || (isCritical && z.status !== 'online')) { 
             dotClass = "bg-rose-500 status-dot"; 
             statusText = "CRÍTICO"; 
             statusColor = "text-rose-500";
             btnText = "️ Generar Orden"; 
             btnClass = "bg-rose-500 hover:bg-rose-400";
-            btnAction = `onclick="createOrder('${z.name}')"`;
-        } else if (z.disconnectionRate > THRESHOLD_DISCONNECT) {
+        } else if (isCritical || z.status === 'dormant') {
             dotClass = "bg-amber-400";
             statusText = "Inestable";
             statusColor = "text-amber-400";
@@ -472,25 +482,20 @@ function renderTable() {
             <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
                 <td class="py-3 px-3 font-medium text-white">${zonaName}</td>
                 <td class="py-3 px-3 font-data-mono ${(z.disconnectionRate>0.35)?'text-rose-400':'text-slate-300'}">${(z.disconnectionRate*100).toFixed(1)}%</td>
-                <td class="py-3 px-3 font-data-mono text-slate-300">${z.socialWeight}x</td>
+                <td class="py-3 px-3 font-data-mono text-slate-300">${z.clients}</td>
                 <td class="py-3 px-3"><span class="inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full ${dotClass}"></span><span class="${statusColor} font-data-mono">${statusText}</span></span></td>
-                <td class="py-3 px-3"><button class="px-2.5 py-1.5 rounded-sm font-label-caps text-[10px] transition-all ${btnClass || 'bg-[#00f2ff]/20 text-[#00f2ff] hover:bg-[#00f2ff]/30'}" ${btnAction}>${btnText}</button></td>
+                <td class="py-3 px-3"><button class="px-2.5 py-1.5 rounded-sm font-label-caps text-[10px] transition-all ${btnClass || 'bg-[#00f2ff]/20 text-[#00f2ff] hover:bg-[#00f2ff]/30'}">${btnText}</button></td>
             </tr>`;
     });
 }
 
 function simulateRealTime() {
-    let idx = Math.floor(Math.random() * 3);
-    zones[idx].disconnectionRate = 0.55 + Math.random() * 0.3;
-    renderTable();
-    addLog(`⚠️ Anomalía detectada en ${zones[idx].name.replace(/^\d+_/,'')}: Tasa de desconexión ${(zones[idx].disconnectionRate*100).toFixed(0)}%`, true);
+    addLog(`⚠️ Simulación: Monitoreando ${zones.length} APs activos`, false);
 }
 
 function createOrder(zoneName) {
     const zona = zoneName.replace(/^\d+_/,'');
-    addLog(`✅ ORDEN #${Math.floor(Math.random()*1000)} generada para ${zona}. Prioridad: ALTA. Técnico notificado.`, true);
-    let z = zones.find(x => x.name === zoneName);
-    if(z) { z.disconnectionRate = 0.10; renderTable(); }
+    addLog(`✅ ORDEN generada para ${zona}. Prioridad: ALTA. Técnico notificado.`, true);
 }
 
 function addLog(msg, isCrit) {
@@ -503,112 +508,8 @@ function addLog(msg, isCrit) {
 }
 
 /* ==========================================
-   AGENTE CONVERSACIONAL - BASE DE CONOCIMIENTO
+   AGENTE CONVERSACIONAL
    ========================================== */
-const knowledgeBase = {
-    zones: Object.fromEntries(Object.entries(corregimientos).map(([k,v]) => [k.toLowerCase(), {
-        ap: `0${72-Object.keys(corregimientos).indexOf(k)}_${k}_AP1`,
-        status: v.disconnectRate > 0.4 ? "Crítico" : v.disconnectRate > 0.25 ? "Inestable" : "Estable",
-        disconnect: `${(v.disconnectRate*100).toFixed(0)}%`, users: v.wifiUsers, connections: Math.round(v.wifiUsers * 5.8),
-        weight: `${v.socialWeight}x ${v.estrato===1?'(Estrato 1 - Alto impacto)':'(Estrato 2 - Impacto medio)'}`,
-        note: v.disconnectRate > 0.4 ? "Alta tasa de caída en horario estudiantil (17-20h). Requiere mantenimiento inmediato." : 
-              v.disconnectRate > 0.25 ? "Frecuentes reautenticaciones. Se recomienda ajustar canales WiFi." : "Rendimiento aceptable. Picos menores los fines de semana."
-    }])),
-    
-    answers: {
-        apInestables: `🔍 *APs con Mayor Inestabilidad:*
-
-1. 🚨 **072_Hormiguero_AP1**: 45% tasa de desconexión
-   • Causas probables: congestión horaria, señal débil en perímetro
-   • Usuarios afectados: ~320 activos/hora
-
-2. ⚠️ **059_El Saladito_AP1**: 30% tasa de desconexión  
-   • Causas probables: interferencia de canales, reautenticaciones
-   • Usuarios afectados: ~280 activos/hora
-
-3. ⚠️ **062_Pichinde_AP1**: 28% tasa de desconexión
-   • Causas probables: demanda > capacidad instalada
-   • Usuarios afectados: ~210 activos/hora
-
-💡 *Recomendación Operativa:* Priorizar mantenimiento en estos 3 APs durante horarios de baja demanda (10:00-14:00).`,
-
-        zonasTrafico: `📊 *Zonas con Mayor Concentración de Clientes y Tráfico:*
-
-| Zona | Usuarios Únicos | Conexiones/Hora | Tráfico Estimado |
-|------|----------------|-----------------|-----------------|
-| 🥇 Hormiguero | 320 | 1,850 | ~4.2 GB/h |
-| 🥈 El Saladito | 280 | 1,620 | ~3.8 GB/h |
-| 🥉 Pichinde | 210 | 1,240 | ~2.9 GB/h |
-| 4° Felidia | 150 | 890 | ~1.8 GB/h |
-| 5° La Leonera | 130 | 780 | ~1.5 GB/h |
-
-🔗 *Insight:* Las 3 zonas con más tráfico coinciden con estrato 1 y alto peso social. La inversión aquí tiene mayor retorno en equidad digital.`,
-
-        horasPico: `🕒 *Patrones Temporales de Autenticación y Desconexión:*
-
-📈 **Horas de Mayor Actividad:**
-• 06:00-08:00 → Pico matutino (estudiantes, trabajadores)
-• 17:00-20:00 → Pico vespertino ⚠️ *Crítico* (mayor congestión)
-• 21:00-23:00 → Uso residencial moderado
-
-📉 **Horas con Más Desconexiones:**
-• 17:30-19:30 → 35% más fallas que el promedio
-• Causa: congestión + dispositivos móviles en movimiento
-
-✅ **Mejor ventana para mantenimiento:**
-• 10:00-14:00 (menor impacto en usuarios)
-• Domingos 08:00-12:00 (tráfico reducido 40%)
-
-💡 *Recomendación:* Programar actualizaciones de firmware y reinicios en estas ventanas.`,
-
-        señalesFalla: `🔔 *Señales Predictivas de Fallas o Congestión:*
-
-Basado en el modelo de ML (Random Forest, AUC: 0.84):
-
-🎯 **Features más importantes para predecir fallas:**
-1. \`disconnection_rate\` > 35% → Alerta temprana
-2. \`auth_per_client\` > 3.5 → Posible problema de autenticación
-3. \`is_peak_hour\` + \`social_weight\` ≥ 1.3 → Riesgo alto en zonas vulnerables
-4. \`unique_clients\` creciente + \`connection_efficiency\` decreciente → Congestión inminente
-
-🚨 **Patrones de alerta automática:**
-• 3+ reconexiones del mismo cliente en 10 min → Posible inestabilidad de AP
-• Disminución >20% en \`total_connections\` vs. hora anterior → Falla parcial
-• \`disconnection_rate\` subiendo 2 horas consecutivas → Intervención requerida
-
-💡 *Acción del Agente Operativo:* Generar orden de trabajo cuando se detecten 2+ señales simultáneas en zonas con peso social ≥1.2.`,
-
-        priorizacion: `🎯 *Fórmula de Priorización para Mantenimiento e Inversión:*
-
-\`\`\`
-Priority_Score = (Disconnection_Rate × Social_Weight × log(Unique_Clients)) 
-                 ÷ (Coverage_Current + 1)
-\`\`\`
-
-📋 **Ranking Actual de Prioridad:**
-
-| # | Zona | Score | Justificación |
-|---|------|-------|--------------|
-| 1 | 🚨 Hormiguero | 9.2/10 | Alta falla (45%) + Alto impacto social (1.5x) + 320 usuarios |
-| 2 | 🚨 El Saladito | 7.8/10 | Falla moderada (30%) + Alto impacto (1.5x) + 280 usuarios |
-| 3 | ⚠️ Pichinde | 6.9/10 | Falla (28%) + Impacto (1.4x) + Demanda insatisfecha |
-| 4 | Felidia | 4.1/10 | Estable, pero con potencial de crecimiento |
-| 5 | Montebello | 2.3/10 | Bajo riesgo, mantenimiento preventivo suficiente |
-
-💰 *Recomendación de Inversión:*
-• Corto plazo ($): Reforzar señal en Hormiguero y El Saladito
-• Mediano plazo ($$): Añadir AP secundario en Pichinde
-• Largo plazo ($$$): Plan de expansión con enfoque en estrato 1
-
-📈 *Métrica de éxito:* Reducir disconnection_rate en zonas priorizadas del 34% al 18% en 6 meses.`
-    },
-    
-    meta: {
-        totalAPs: 23, onlineAPs: 17, totalClients: 752,
-        avgDisconnect: "22.4%", peakHours: "17:00-20:00", modelAUC: "0.84",
-        lastUpdate: new Date().toLocaleDateString('es-CO')
-    }
-};
 
 /* ==========================================
    LÓGICA DEL CHATBOT
@@ -622,7 +523,7 @@ function appendMessage(text, isUser = false) {
             <span class="material-symbols-outlined text-sm ${isUser ? 'text-indigo-400' : 'text-[#00f2ff]'}">${isUser ? 'person' : 'smart_toy'}</span>
         </div>
         <div class="bg-white/5 border ${isUser ? 'border-indigo-500/30' : 'border-white/10'} p-4 rounded-sm max-w-[85%] lg:max-w-[75%]">
-            <p class="${isUser ? 'text-white' : 'text-slate-300'} leading-relaxed whitespace-pre-wrap">${text}</p>
+            <p class="${isUser ? 'text-white' : 'text-slate-300'} leading-relaxed whitespace-pre-wrap">${escapeHtml(text)}</p>
         </div>
     `;
     container.appendChild(msg);
@@ -650,97 +551,29 @@ function showTyping() {
 
 function hideTyping() { const t = document.getElementById('typing'); if(t) t.remove(); }
 
-function getBotResponse(input) {
-    const q = input.toLowerCase().trim();
-    
-    // Detección de zona específica
-    for(let zone in knowledgeBase.zones) {
-        if(q.includes(zone)) {
-            const z = knowledgeBase.zones[zone];
-            return `📍 *Estado de ${zone.charAt(0).toUpperCase() + zone.slice(1)}:*
-• AP: ${z.ap}
-• Estabilidad: ${z.status}
-• Desconexiones: ${z.disconnect}
-• Usuarios activos: ~${z.users}
-• Conexiones/hora: ~${z.connections}
-• Peso social: ${z.weight}
-💡 *Insight:* ${z.note}`;
-        }
-    }
-    
-    // Respuestas a las 5 preguntas clave
-    if(q.includes('ap') && (q.includes('inestabilidad') || q.includes('desconexión') || q.includes('falla') || q.includes('problema') || q.includes('fallas'))) {
-        return knowledgeBase.answers.apInestables;
-    }
-    if((q.includes('zona') || q.includes('área') || q.includes('corregimiento')) && (q.includes('cliente') || q.includes('tráfico') || q.includes('conexión') || q.includes('usuarios') || q.includes('concentran'))) {
-        return knowledgeBase.answers.zonasTrafico;
-    }
-    if(q.includes('hora') || q.includes('cuándo') || q.includes('horario') || q.includes('pico') || q.includes('tiempo') || q.includes('aumenta')) {
-        return knowledgeBase.answers.horasPico;
-    }
-    if(q.includes('señal') || q.includes('anticipar') || q.includes('predecir') || q.includes('alerta') || q.includes('congestión') || q.includes('falla')) {
-        return knowledgeBase.answers.señalesFalla;
-    }
-    if(q.includes('priorizar') || q.includes('inversión') || q.includes('mantenimiento') || q.includes('invertir') || q.includes('recomendación') || q.includes('estrategia')) {
-        return knowledgeBase.answers.priorizacion;
-    }
-    
-    // Preguntas generales
-    if(q.includes('métrica') || q.includes('resumen') || q.includes('general') || q.includes('estado red')) {
-        return `📊 *Métricas Generales de la Red:*
-• APs monitoreados: ${knowledgeBase.meta.totalAPs} (${knowledgeBase.meta.onlineAPs} online)
-• Clientes registrados: ${knowledgeBase.meta.totalClients}
-• Tasa promedio de desconexión: ${knowledgeBase.meta.avgDisconnect}
-• Horario crítico: ${knowledgeBase.meta.peakHours}
-• Precisión del modelo predictivo: ${knowledgeBase.meta.modelAUC}
-🔄 Última actualización: ${knowledgeBase.meta.lastUpdate}`;
-    }
-    
-    if(q.includes('ayuda') || q.includes('qué puedes') || q.includes('preguntar') || q.includes('funciona')) {
-        return `🤖 *Puedo ayudarte con:*
-
-✅ Estado técnico de una zona (ej: "¿Cómo está Hormiguero?")
-✅ Top APs con problemas de estabilidad
-✅ Zonas con mayor tráfico y usuarios
-✅ Horarios críticos de autenticación/desconexión
-✅ Señales predictivas de fallas
-✅ Recomendaciones de priorización para inversión
-
-💡 *Ejemplos:*
-• "¿Qué AP tiene más desconexiones?"
-• "¿Cuándo es mejor hacer mantenimiento?"
-• "¿Cómo deciden dónde invertir primero?"`;
-    }
-    
-    // Fallback inteligente
-    const keywords = {
-        'inestabilidad': 'apInestables', 'tráfico': 'zonasTrafico', 
-        'hora': 'horasPico', 'predecir': 'señalesFalla', 'invertir': 'priorizacion'
-    };
-    for(let [key, answerKey] of Object.entries(keywords)) {
-        if(q.includes(key)) {
-            return `🔍 Parece que preguntas sobre *${key}*. Aquí tienes la respuesta relevante:\n\n${knowledgeBase.answers[answerKey]}`;
-        }
-    }
-    
-    return `🤖 No encontré una respuesta exacta para esa consulta en mi base actual.
-
-💡 *Puedo responder preguntas como:*
-• "¿Qué AP presentan más inestabilidad?"
-• "¿Qué zonas tienen más tráfico?"
-• "¿En qué horas hay más fallas?"
-• "¿Cómo priorizar la inversión?"
-
-✍️ *Intenta reformular con palabras clave técnicas: AP, desconexión, tráfico, horario, priorizar, inversión.*`;
+function escapeHtml(text) {
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
 }
 
-function handleUserMessage() {
+async function handleUserMessage() {
     const input = document.getElementById('chatInput'), text = input.value.trim();
     if(!text) return;
     appendMessage(text, true);
     input.value = '';
     showTyping();
-    setTimeout(() => { hideTyping(); appendMessage(getBotResponse(text), false); }, 600 + Math.random()*500);
+    try {
+        const res = await fetch(`${API_URL}/chat`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: text })
+        });
+        const data = await res.json();
+        hideTyping();
+        appendMessage(data.response || "Sin respuesta", false);
+    } catch {
+        hideTyping();
+        appendMessage("❌ Error: Asegúrate de ejecutar el servidor API (python -m uvicorn api:app --port 8000)", false);
+    }
 }
 
 function sendQuick(text) {
@@ -751,57 +584,80 @@ function sendQuick(text) {
 document.getElementById('chatInput')?.addEventListener('keypress', e => { if(e.key==='Enter') handleUserMessage(); });
 
 /* ==========================================
-   AGENTE ESTRATÉGICO - MAPA Y ANÁLISIS
-   ========================================== */
+    AGENTE ESTRATÉGICO - MAPA Y ANÁLISIS
+    ========================================== */
+async function loadKPIData() {
+    try {
+        const res = await fetch(`${API_URL}/api/kpi-data`);
+        const kpi = await res.json();
+        
+        document.getElementById('kpi-inclusion').innerHTML = `${kpi.inclusion_index}<span class="text-sm text-slate-500">/10</span>`;
+        document.getElementById('kpi-inclusion-delta').textContent = kpi.inclusion_delta;
+        document.getElementById('kpi-reach').innerHTML = `${(kpi.total_clients/1000).toFixed(1)}k<span class="text-sm text-slate-500"> hab.</span>`;
+        document.getElementById('kpi-reach-delta').textContent = kpi.reach_delta;
+        document.getElementById('kpi-roi').textContent = `${kpi.roi}x`;
+        document.getElementById('kpi-roi-status').textContent = kpi.roi_status;
+        document.getElementById('kpi-gap').innerHTML = `Objetivo: ${kpi.digital_gap}%`;
+        document.getElementById('kpi-gap-pct').textContent = `${kpi.gap_delta}`;
+    } catch (err) {
+        console.log("Error cargando KPIs:", err);
+    }
+}
+
 function initMap() {
     if(map) { map.remove(); }
     map = L.map('map').setView([3.4156, -76.5324], 11);
     
-    // Capa base oscura
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '© OpenStreetMap © CARTO | Datos: DANE, Alcaldía de Cali',
         subdomains: 'abcd',
         maxZoom: 19
     }).addTo(map);
 
-    Object.entries(corregimientos).forEach(([name, data]) => {
-        const priority = calculatePriority(data);
-        const color = priority > 8 ? '#ef4444' : priority > 5 ? '#f59e0b' : '#22c55e';
-        const popup = `
-            <strong style="color:#00f2ff;font-size:13px">${name}</strong><br>
-            👥 Población: ${data.pop.toLocaleString()}<br>
-            📡 Usuarios WiFi: ${data.wifiUsers}<br>
-            ⚠️ Desconexiones: ${(data.disconnectRate*100).toFixed(0)}%<br>
-            🎯 Peso Social: ${data.socialWeight}x (Estrato ${data.estrato})<br>
-            📊 Prioridad: <strong style="color:${color}">${priority.toFixed(1)}/10</strong>
-        `;
-        markers[name] = L.circleMarker([data.lat, data.lng], {
-            radius: 8 + priority/2, fillColor: color, color: '#fff', weight: 2, fillOpacity: 0.85
-        }).bindPopup(popup).addTo(map);
-    });
-    updateStrategicDashboard();
+    loadMapData();
 }
 
-function calculatePriority(data) {
-    const coverage = Math.min(1, data.wifiUsers / (data.pop * 0.15));
-    return Math.min(10, (data.disconnectRate * data.socialWeight * data.pop) / (coverage * 1000 + 1));
+async function loadMapData() {
+    try {
+        const res = await fetch(`${API_URL}/api/map-data`);
+        const apLocations = await res.json();
+        apData = apLocations;
+
+        apLocations.forEach(ap => {
+            const color = ap.status === 'online' ? '#22c55e' : ap.status === 'dormant' ? '#f59e0b' : '#ef4444';
+            const popup = `
+                <strong style="color:#00f2ff;font-size:13px">${ap.name}</strong><br>
+                Estado: <span style="color:${color}">${ap.status.toUpperCase()}</span><br>
+                Clientes: ${ap.clients}<br>
+                Eventos: ${ap.events}<br>
+                Tasa desc: ${ap.disconnection_rate}
+            `;
+            markers[ap.name] = L.circleMarker([ap.lat, ap.lng], {
+                radius: 8, fillColor: color, color: '#fff', weight: 2, fillOpacity: 0.85
+            }).bindPopup(popup).addTo(map);
+        });
+        updateStrategicDashboard();
+    } catch (err) {
+        console.log("Error cargando mapa:", err);
+    }
 }
 
 function toggleLayer(layer) {
     currentLayer = layer;
-    Object.entries(corregimientos).forEach(([name, data]) => {
-        const marker = markers[name];
+    if (!apData.length) return;
+    apData.forEach(ap => {
+        const marker = markers[ap.name];
         if(!marker) return;
         let color, radius;
         if(layer === 'population') {
-            radius = 5 + data.pop/1500;
-            color = data.estrato === 1 ? '#8b5cf6' : '#38bdf8';
+            radius = 5 + (ap.pop || 1000)/1500;
+            color = ap.estrato === 1 ? '#8b5cf6' : '#38bdf8';
         } else if(layer === 'coverage') {
-            const cov = Math.min(1, data.wifiUsers/(data.pop*0.15));
+            const cov = Math.min(1, (ap.clients || 0) / 300);
             radius = 5 + cov*10;
             color = cov > 0.7 ? '#22c55e' : cov > 0.4 ? '#f59e0b' : '#ef4444';
         } else {
-            const p = calculatePriority(data);
+            const p = ap.priority || 5;
             radius = 8 + p/2;
             color = p > 8 ? '#ef4444' : p > 5 ? '#f59e0b' : '#22c55e';
         }
@@ -810,74 +666,48 @@ function toggleLayer(layer) {
 }
 
 function updateStrategicDashboard() {
-    const totalPop = Object.values(corregimientos).reduce((s,d)=>s+d.pop,0);
-    const totalUsers = Object.values(corregimientos).reduce((s,d)=>s+d.wifiUsers,0);
-    const avgDisconnect = Object.values(corregimientos).reduce((s,d)=>s+d.disconnectRate,0)/10;
-    
-    // Actualizar KPIs
-    document.querySelectorAll('.font-headline-xl')[0].innerHTML = `8.2<span class="text-sm text-slate-500">/10</span>`;
-    document.querySelectorAll('.font-headline-xl')[1].innerHTML = `${(totalPop/1000).toFixed(1)}k<span class="text-sm text-slate-500"> hab.</span>`;
-    document.querySelectorAll('.font-headline-xl')[2].textContent = `${(1 + (1-avgDisconnect)*2.5).toFixed(1)}x`;
-    
-    // Ranking de prioridad
     const priorityList = document.getElementById('priorityList');
     priorityList.innerHTML = '';
-    const sorted = Object.entries(corregimientos)
-        .map(([name,d]) => ({name, priority: calculatePriority(d), ...d}))
-        .sort((a,b) => b.priority - a.priority);
+    const sorted = [...apData].sort((a,b) => (b.priority||0) - (a.priority||0));
     
-    sorted.forEach((item, i) => {
-        const coverage = Math.min(100, Math.round((item.wifiUsers/(item.pop*0.15))*100));
-        const colorClass = item.priority>8 ? 'text-rose-400 border-rose-500' : item.priority>5 ? 'text-amber-400 border-amber-500' : 'text-emerald-400 border-emerald-500';
+    sorted.forEach((ap, i) => {
+        const priority = ap.priority || 0;
         priorityList.innerHTML += `
             <div class="p-4 rounded-sm bg-white/5 border border-white/10 hover:border-[#00f2ff]/30 transition-all">
                 <div class="flex justify-between items-center mb-2">
-                    <strong class="text-white">#${i+1} ${item.name}</strong>
-                    <span class="px-2 py-0.5 rounded-xs text-[10px] font-bold font-data-mono ${item.priority>8?'bg-rose-500/20 text-rose-400':item.priority>5?'bg-amber-500/20 text-amber-400':'bg-emerald-500/20 text-emerald-400'}">
-                        ${item.priority.toFixed(1)}/10
+                    <strong class="text-white">#${i+1} ${ap.name}</strong>
+                    <span class="px-2 py-0.5 rounded-xs text-[10px] font-bold font-data-mono ${priority>8?'bg-rose-500/20 text-rose-400':priority>5?'bg-amber-500/20 text-amber-400':'bg-emerald-500/20 text-emerald-400'}">
+                        ${priority.toFixed(1)}/10
                     </span>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-400 mb-2">
-                    <span>👥 ${item.pop.toLocaleString()} hab.</span>
-                    <span>📡 ${item.wifiUsers} usuarios</span>
-                    <span class="${item.disconnectRate>0.35?'text-rose-400':''}">⚠️ ${(item.disconnectRate*100).toFixed(0)}% desc.</span>
-                    <span>🎯 E${item.estrato} | ${item.socialWeight}x</span>
-                </div>
-                <div>
-                    <span class="text-[10px] text-slate-500">Cobertura:</span>
-                    <div class="w-full bg-white/10 h-1.5 rounded-full mt-1 overflow-hidden">
-                        <div class="bg-[#00f2ff] h-full rounded-full transition-all" style="width:${coverage}%"></div>
-                    </div>
+                    <span>📡 ${ap.clients || 0} usuarios</span>
+                    <span class="${(parseFloat(ap.disconnection_rate)>0.35)?'text-rose-400':''}">⚠️ ${ap.disconnection_rate || 0} desc.</span>
                 </div>
             </div>
         `;
     });
 
-    // Recomendaciones
     const recDiv = document.getElementById('recommendations');
     const top3 = sorted.slice(0,3);
     recDiv.innerHTML = `
         <div class="p-4 rounded-sm bg-rose-500/10 border-l-4 border-rose-500">
             <strong class="text-white text-sm block mb-1">🚨 Intervención Inmediata</strong>
             <p class="text-xs text-slate-300 leading-relaxed">
-                ${top3.map((z,i)=>`${i+1}. <strong class="text-[#00f2ff]">${z.name}</strong>: Reforzamiento de APs + capacitación digital. Impacto: ~${Math.round(z.pop*0.3).toLocaleString()} personas.`).join('<br>')}
+                ${top3.map((z,i)=>`${i+1}. <strong class="text-[#00f2ff]">${z.name}</strong>: Reforzamiento de APs.`).join('<br>')}
             </p>
         </div>
         <div class="p-4 rounded-sm bg-[#00f2ff]/10 border-l-4 border-[#00f2ff]">
             <strong class="text-white text-sm block mb-1">💡 Mantenimiento Predictivo</strong>
             <p class="text-xs text-slate-300 leading-relaxed">
-                Programar revisiones en ventanas de baja demanda (10:00-14:00) para zonas con desconexión >25%. Ahorro estimado: 40% en costos operativos.
+                Programar revisiones en ventanas de baja demanda (10:00-14:00). Ahorro estimado: 40% en costos operativos.
             </p>
         </div>
         <div class="p-4 rounded-sm bg-emerald-500/10 border-l-4 border-emerald-500">
             <strong class="text-white text-sm block mb-1">🌱 Expansión con Enfoque Social</strong>
             <p class="text-xs text-slate-300 leading-relaxed">
-                Priorizar nuevos APs en corregimientos con estrato 1 y población >5,000 hab. (Pichinde, La Leonera). Alianza recomendada: Secretaría de Educación.
+                Priorizar nuevos APs en zonas con mayor impacto social. Alianza recomendada: Secretaría de Educación.
             </p>
-        </div>
-        <div class="mt-3 p-3 rounded-sm bg-[#00f2ff]/5 border border-[#00f2ff]/20">
-            <strong class="text-[#00f2ff] text-xs block">📈 Métrica de Éxito:</strong>
-            <p class="text-[11px] text-slate-400">Reducir brecha digital en corregimientos priorizados del 32% al 18% en 12 meses, beneficiando +12,000 residentes.</p>
         </div>
     `;
 }
@@ -886,7 +716,11 @@ function updateStrategicDashboard() {
    INICIALIZACIÓN
    ========================================== */
 document.addEventListener('DOMContentLoaded', () => {
-    renderTable();
+    loadOperationalData();
+    // Verificar salud de la API
+    fetch(`${API_URL}/health`).then(r => {
+        if(r.ok) addLog("✅ API conectada correctamente", false);
+    }).catch(() => addLog("⚠️ API no disponible. Ejecuta: python -m uvicorn api:app --port 8000", false));
     // Inicializar con agente operativo
     switchAgent('operational');
 });

@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import json
+import re
 
 class StrategicAgent:
     """
@@ -165,33 +166,58 @@ class StrategicAgent:
         return contexts.get(zone, f'Zona {zone} - requiere evaluación de campo')
 
     def get_ap_coordinates(self):
-        """Retorna coordenadas simuladas para los APs en Cali"""
-        # Coordenadas base para Cali, Colombia (aprox 3.4516, -76.5320)
-        coordinates = {
-            '072_Hormiguero_AP1': {'lat': 3.4516, 'lng': -76.5320, 'zone': 'Hormiguero'},
-            '072_Hormiguero_AP2': {'lat': 3.4520, 'lng': -76.5310, 'zone': 'Hormiguero'},
-            '059_El Saladito-AP1': {'lat': 3.4600, 'lng': -76.5400, 'zone': 'Saladito'},
-            '059_El Saladito-AP2': {'lat': 3.4605, 'lng': -76.5395, 'zone': 'Saladito'},
-            '060_Felidia-AP1': {'lat': 3.4700, 'lng': -76.5200, 'zone': 'Felidia'},
-            '060_Felidia-AP2': {'lat': 3.4705, 'lng': -76.5195, 'zone': 'Felidia'},
-            '061_La Leonera-AP1': {'lat': 3.4450, 'lng': -76.5500, 'zone': 'Leonera'},
-            '067_Montebello-AP1': {'lat': 3.4300, 'lng': -76.5600, 'zone': 'Montebello'},
-            '068_Golondrinas-AP1': {'lat': 3.4250, 'lng': -76.5700, 'zone': 'Golondrinas'},
-            '069_La Paz-AP1': {'lat': 3.4200, 'lng': -76.5800, 'zone': 'La Paz'},
-            '062_Pichinde-AP1': {'lat': 3.4100, 'lng': -76.6000, 'zone': 'Pichinde'},
-            '063_Pance-AP1': {'lat': 3.4000, 'lng': -76.6200, 'zone': 'Pance'},
-            '064_Navarro-AP1': {'lat': 3.4550, 'lng': -76.5100, 'zone': 'Navarro'},
-            '065_San Antonio-AP1': {'lat': 3.4580, 'lng': -76.5250, 'zone': 'San Antonio'},
-            '066_La Flora-AP1': {'lat': 3.4620, 'lng': -76.5350, 'zone': 'La Flora'},
-            '070_Villacarmelo-AP1': {'lat': 3.4650, 'lng': -76.5150, 'zone': 'Villacarmelo'},
-            '071_Terranova-AP1': {'lat': 3.4680, 'lng': -76.5450, 'zone': 'Terranova'},
-            '073_Yumbo-AP1': {'lat': 3.4800, 'lng': -76.5000, 'zone': 'Yumbo'},
-            '074_Puerto Mallarino-AP1': {'lat': 3.4900, 'lng': -76.4800, 'zone': 'Puerto Mallarino'},
-            '075_Ciudad Jardín-AP1': {'lat': 3.4400, 'lng': -76.5300, 'zone': 'Ciudad Jardín'},
-            '076_La Rivera-AP1': {'lat': 3.4350, 'lng': -76.5450, 'zone': 'La Rivera'},
-            '077_Limas-AP1': {'lat': 3.4280, 'lng': -76.5550, 'zone': 'Limas'},
-            '078_Cascajal-AP1': {'lat': 3.4150, 'lng': -76.5900, 'zone': 'Cascajal'}
+        """Genera coordenadas para los APs basado en sus zonas reales"""
+        import re
+        # Zonas de Cali con coordenadas aproximadas
+        zone_coordinates = {
+            'La Castilla': {'lat': 3.4516, 'lng': -76.5320},
+            'La Elvira': {'lat': 3.4600, 'lng': -76.5400},
+            'El Saladito': {'lat': 3.4600, 'lng': -76.5400},
+            'Felidia': {'lat': 3.4700, 'lng': -76.5200},
+            'La Leonera': {'lat': 3.4450, 'lng': -76.5500},
+            'Montebello': {'lat': 3.4300, 'lng': -76.5600},
+            'Golondrinas': {'lat': 3.4250, 'lng': -76.5700},
+            'La Paz': {'lat': 3.4200, 'lng': -76.5800},
+            'Pichinde': {'lat': 3.4100, 'lng': -76.6000},
+            'Pance': {'lat': 3.4000, 'lng': -76.6200},
+            'Navarro': {'lat': 3.4550, 'lng': -76.5100},
+            'San Antonio': {'lat': 3.4580, 'lng': -76.5250},
+            'La Flora': {'lat': 3.4620, 'lng': -76.5350},
+            'Villacarmelo': {'lat': 3.4650, 'lng': -76.5150},
+            'Terranova': {'lat': 3.4680, 'lng': -76.5450},
+            'Yumbo': {'lat': 3.4800, 'lng': -76.5000},
+            'Puerto Mallarino': {'lat': 3.4900, 'lng': -76.4800},
+            'Ciudad Jardín': {'lat': 3.4400, 'lng': -76.5300},
+            'La Rivera': {'lat': 3.4350, 'lng': -76.5450},
+            'Limas': {'lat': 3.4280, 'lng': -76.5550},
+            'Cascajal': {'lat': 3.4150, 'lng': -76.5900},
+            'Hormiguero': {'lat': 3.4516, 'lng': -76.5320},
+            'Saladito': {'lat': 3.4600, 'lng': -76.5400},
         }
+        coordinates = {}
+        for idx, (_, ap) in enumerate(self.dp.aps_df.iterrows()):
+            ap_name = ap['ap_name']
+            match = re.search(r'^\d+_(.+?)-AP\d+', ap_name)
+            zone_name = match.group(1).replace('_', ' ') if match else ap_name
+            zone_found = None
+            for zone in zone_coordinates:
+                if zone.lower() in zone_name.lower():
+                    zone_found = zone
+                    break
+            if zone_found:
+                base_lat = zone_coordinates[zone_found]['lat']
+                base_lng = zone_coordinates[zone_found]['lng']
+            else:
+                base_lat = 3.4516
+                base_lng = -76.5320
+                zone_found = 'Cali Centro'
+            lat_offset = (idx % 10) * 0.001 - 0.005
+            lng_offset = ((idx // 10) % 10) * 0.001 - 0.005
+            coordinates[ap_name] = {
+                'lat': base_lat + lat_offset,
+                'lng': base_lng + lng_offset,
+                'zone': zone_found
+            }
         return coordinates
     
     def generate_investment_report(self):
