@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zonas WiFi Inteligentes - TEAM J4 - Dashboard</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      }
+      h1 {
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      .card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+      }
+      .card h3 {
+        margin-top: 0;
+        color: #667eea;
+      }
+      .metric {
+        font-size: 2em;
+        font-weight: bold;
+        color: #764ba2;
+      }
+      .status-online {
+        color: #28a745;
+      }
+      .status-offline {
+        color: #dc3545;
+      }
+      .status-dormant {
+        color: #ffc107;
+      }
+      .alert {
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+        background: #fff3cd;
+        border-left: 3px solid #ffc107;
+      }
+      .alert.critical {
+        background: #f8d7da;
+        border-left-color: #dc3545;
+      }
+      .order {
+        padding: 10px;
+        margin: 5px 0;
+        background: #d1ecf1;
+        border-left: 3px solid #17a2b8;
+        border-radius: 5px;
+      }
+      .badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-size: 0.8em;
+        font-weight: bold;
+      }
+      .badge-critical {
+        background: #dc3545;
+        color: white;
+      }
+      .badge-high {
+        background: #fd7e14;
+        color: white;
+      }
+      .badge-medium {
+        background: #ffc107;
+        color: black;
+      }
+      .badge-low {
+        background: #28a745;
+        color: white;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background: #667eea;
+        color: white;
+      }
+      tr:hover {
+        background: #f8f9fa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Zonas WiFi Inteligentes - TEAM J4</h1>
+      <p class="subtitle">Sistema de Agentes de IA - Colombia 5.0 Hackathon</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>📡 Estado de APs</h3>
+          <div class="metric" id="total-aps">23</div>
+          <p>
+            <span class="status-online">● Online: 17</span><br />
+            <span class="status-dormant">● Dormant: 3</span><br />
+            <span class="status-offline">● Offline: 3</span>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>⚠️ Alertas Activas</h3>
+          <div class="metric" id="total-alerts">6</div>
+          <p>
+            <span class="badge badge-critical">3 Críticas</span>
+            <span class="badge badge-high">2 Altas</span>
+            <span class="badge badge-medium">1 Media</span>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>📋 Órdenes de Trabajo</h3>
+          <div class="metric" id="total-orders">6</div>
+          <p>
+            <span class="badge badge-critical">3 Críticas</span><br />
+            <span class="badge badge-medium">2 Medias</span>
+            <span class="badge badge-low">1 Baja</span>
+          </p>
+        </div>
+      </div>
+
+      <h2>🔧 Agente Operativo - Alertas Recientes</h2>
+      <div class="alert critical">
+        <strong>CRÍTICO:</strong> AP 067_Montebello-AP1 está OFFLINE
+      </div>
+      <div class="alert critical">
+        <strong>CRÍTICO:</strong> AP 068_Golondrinas-AP1 está OFFLINE
+      </div>
+      <div class="alert critical">
+        <strong>CRÍTICO:</strong> AP 069_La Paz-AP1 está OFFLINE
+      </div>
+      <div class="alert">
+        <strong>ALTO:</strong> AP 072_Hormiguero_AP1 tiene tasa de desconexión
+        1.74
+      </div>
+      <div class="alert">
+        <strong>ALTO:</strong> AP 059_El Saladito-AP1 tiene tasa de desconexión
+        1.40
+      </div>
+
+      <h2>📋 Órdenes de Trabajo Generadas</h2>
+      <div class="order">
+        <strong>WO-0001 [CRÍTICO]</strong> - Visita técnica urgente - AP
+        067_Montebello-AP1 offline<br />
+        <small>Tiempo estimado: 2.0 hrs | Requiere técnico en sitio</small>
+      </div>
+      <div class="order">
+        <strong>WO-0002 [CRÍTICO]</strong> - Visita técnica urgente - AP
+        068_Golondrinas-AP1 offline<br />
+        <small>Tiempo estimado: 2.0 hrs | Requiere técnico en sitio</small>
+      </div>
+      <div class="order">
+        <strong>WO-0003 [CRÍTICO]</strong> - Visita técnica urgente - AP 069_La
+        Paz-AP1 offline<br />
+        <small>Tiempo estimado: 2.0 hrs | Requiere técnico en sitio</small>
+      </div>
+
+      <h2>💰 Agente Estratégico - Prioridad de Inversión</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>AP</th>
+            <th>Score</th>
+            <th>Estado</th>
+            <th>Nivel</th>
+            <th>Presupuesto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>072_Hormiguero_AP1</td>
+            <td>15.23</td>
+            <td><span class="status-online">Online</span></td>
+            <td><span class="badge badge-high">HIGH</span></td>
+            <td>$3,000,000 - $5,000,000</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>067_Montebello-AP1</td>
+            <td>12.45</td>
+            <td><span class="status-offline">Offline</span></td>
+            <td><span class="badge badge-critical">CRITICAL</span></td>
+            <td>$3,000,000 - $5,000,000</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>059_El Saladito-AP1</td>
+            <td>10.89</td>
+            <td><span class="status-online">Online</span></td>
+            <td><span class="badge badge-high">HIGH</span></td>
+            <td>$3,000,000 - $5,000,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>💬 Agente Conversacional</h2>
+      <div class="card">
+        <p><strong>Pregunta:</strong> ¿Qué AP presentan más inestabilidad?</p>
+        <p>
+          <strong>Respuesta:</strong> Los APs con mayor tasa de desconexión son
+          072_Hormiguero_AP1 (1.74), 067_Montebello-AP1 (2.0), y 059_El
+          Saladito-AP1 (1.40). Adicionalmente, 3 APs están completamente
+          offline.
+        </p>
+      </div>
+
+      <div class="card" style="margin-top: 20px; background: #e7f3ff">
+        <h3>🎯 Resumen para el Jurado</h3>
+        <ul>
+          <li>
+            <strong>Problema:</strong> 23 APs en Cali con 3 offline, 3 dormant,
+            y alta tasa de desconexiones
+          </li>
+          <li>
+            <strong>Solución:</strong> 3 Agentes de IA autónomos que detectan
+            anomalías, responden consultas y recomiendan inversiones
+          </li>
+          <li>
+            <strong>Impacto:</strong> Reducción de tiempo de detección de fallas
+            de días a minutos
+          </li>
+          <li>
+            <strong>Inversión estimada:</strong> $30,000,000 COP para
+            modernización completa
+          </li>
+          <li>
+            <strong>ROI:</strong> 6-12 meses con mejora en calidad de servicio
+          </li>
+        </ul>
+      </div>
+
+      <p style="text-align: center; color: #666; margin-top: 30px">
+        Sistema desarrollado para el Hackathon Colombia 5.0 - Zonas WiFi
+        Inteligentes
+      </p>
+    </div>
+  </body>
+</html>

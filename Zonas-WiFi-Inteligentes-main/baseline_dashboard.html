@@ -1,0 +1,61 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Baseline Dashboard - Zonas WiFi Inteligentes</title>
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; background:#fafafa; color:#222; }
+    h1 { margin-bottom: 6px; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background:white; border:1px solid #ddd; border-radius:10px; padding:16px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+    .full { grid-column: 1 / -1; }
+    .meta { color:#555; margin-bottom:20px; }
+  </style>
+</head>
+<body>
+  <h1>Baseline Dashboard</h1>
+  <div class="meta">Paquete base para hackathon – Zonas WiFi Inteligentes</div>
+  <div class="grid">
+    <div class="card"><div id="ap_status"></div></div>
+    <div class="card"><div id="events_cat"></div></div>
+    <div class="card"><div id="top_clients_ap"></div></div>
+    <div class="card"><div id="usage_by_ap"></div></div>
+    <div class="card full"><div id="hourly_events"></div></div>
+  </div>
+<script>
+Plotly.newPlot('ap_status', [{
+  type:'bar',
+  x:["dormant", "offline", "online"],
+  y:[3, 3, 17]
+}], {title:'Estado de puntos de acceso'});
+
+Plotly.newPlot('events_cat', [{
+  type:'pie',
+  labels:["802.11", "802.1X", "Auth"],
+  values:[710, 271, 19]
+}], {title:'Distribución por categoría de evento'});
+
+Plotly.newPlot('top_clients_ap', [{
+  type:'bar',
+  x:[89, 83, 60, 57, 42, 26, 22, 20, 18, 17],
+  y:["060_Felidia-AP1", "066_Pance-AP1", "067_Montebello-AP1", "060_Felidia-AP2", "072_Hormiguero_AP1", "063_Los Andes-AP2", "061_La Leonera-AP1", "057_La Castilla-AP1", "059_El Saladito-AP1", "079_ZW La Voragine-AP1"],
+  orientation:'h'
+}], {title:'Top 10 AP por clientes reportados', yaxis:{automargin:true}});
+
+Plotly.newPlot('usage_by_ap', [{
+  type:'bar',
+  x:["066_Pance-AP1", "057_La Castilla-AP1", "060_Felidia-AP1", "067_Montebello-AP1", "063_Los Andes-AP1", "060_Felidia-AP2", "057_La Castilla-AP2", "079_ZW La Voragine-AP1", "072_Hormiguero_AP1", "063_Los Andes-AP2"],
+  y:[14768.94, 6641.1, 6544.96, 3866.25, 3730.22, 3491.12, 2430.49, 1958.05, 1407.53, 1166.72]
+}], {title:'Top 10 AP por uso acumulado (MB)', xaxis:{tickangle:-35}});
+
+Plotly.newPlot('hourly_events', [{
+  type:'scatter',
+  mode:'lines+markers',
+  x:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+  y:[22, 44, 24, 19, 4, 4, 5, 20, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 91, 722, 35, 1]
+}], {title:'Eventos por hora del día', xaxis:{title:'Hora'}, yaxis:{title:'Eventos'}});
+</script>
+</body>
+</html>

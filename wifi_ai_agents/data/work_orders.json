@@ -1,0 +1,360 @@
+[
+  {
+    "order_id": "WO-0001",
+    "timestamp": "2026-04-28T12:33:23.396422",
+    "ap_name": "058_La Elvira-AP2",
+    "priority": "CRITICAL",
+    "action": "SITE_VISIT_REQUIRED",
+    "description": "Visita t\u00e9cnica urgente - AP 058_La Elvira-AP2 offline",
+    "steps": [
+      "Verificar conexi\u00f3n el\u00e9ctrica",
+      "Revisar cableado de red",
+      "Reiniciar equipo f\u00edsicamente",
+      "Verificar configuraci\u00f3n de red",
+      "Reportar estado al finalizar"
+    ],
+    "estimated_time_hours": 2.0,
+    "requires_technician": true
+  },
+  {
+    "order_id": "WO-0002",
+    "timestamp": "2026-04-28T12:33:23.396469",
+    "ap_name": "067_Montebello-AP1",
+    "priority": "CRITICAL",
+    "action": "SITE_VISIT_REQUIRED",
+    "description": "Visita t\u00e9cnica urgente - AP 067_Montebello-AP1 offline",
+    "steps": [
+      "Verificar conexi\u00f3n el\u00e9ctrica",
+      "Revisar cableado de red",
+      "Reiniciar equipo f\u00edsicamente",
+      "Verificar configuraci\u00f3n de red",
+      "Reportar estado al finalizar"
+    ],
+    "estimated_time_hours": 2.0,
+    "requires_technician": true
+  },
+  {
+    "order_id": "WO-0003",
+    "timestamp": "2026-04-28T12:33:23.396505",
+    "ap_name": "068_Golondrinas-AP1",
+    "priority": "CRITICAL",
+    "action": "SITE_VISIT_REQUIRED",
+    "description": "Visita t\u00e9cnica urgente - AP 068_Golondrinas-AP1 offline",
+    "steps": [
+      "Verificar conexi\u00f3n el\u00e9ctrica",
+      "Revisar cableado de red",
+      "Reiniciar equipo f\u00edsicamente",
+      "Verificar configuraci\u00f3n de red",
+      "Reportar estado al finalizar"
+    ],
+    "estimated_time_hours": 2.0,
+    "requires_technician": true
+  },
+  {
+    "order_id": "WO-0004",
+    "timestamp": "2026-04-28T12:33:23.396539",
+    "ap_name": "069_La Paz-AP1",
+    "priority": "CRITICAL",
+    "action": "SITE_VISIT_REQUIRED",
+    "description": "Visita t\u00e9cnica urgente - AP 069_La Paz-AP1 offline",
+    "steps": [
+      "Verificar conexi\u00f3n el\u00e9ctrica",
+      "Revisar cableado de red",
+      "Reiniciar equipo f\u00edsicamente",
+      "Verificar configuraci\u00f3n de red",
+      "Reportar estado al finalizar"
+    ],
+    "estimated_time_hours": 2.0,
+    "requires_technician": true
+  },
+  {
+    "order_id": "WO-0005",
+    "timestamp": "2026-04-28T12:33:23.396571",
+    "ap_name": "070_La Buitrera-AP1",
+    "priority": "CRITICAL",
+    "action": "SITE_VISIT_REQUIRED",
+    "description": "Visita t\u00e9cnica urgente - AP 070_La Buitrera-AP1 offline",
+    "steps": [
+      "Verificar conexi\u00f3n el\u00e9ctrica",
+      "Revisar cableado de red",
+      "Reiniciar equipo f\u00edsicamente",
+      "Verificar configuraci\u00f3n de red",
+      "Reportar estado al finalizar"
+    ],
+    "estimated_time_hours": 2.0,
+    "requires_technician": true
+  },
+  {
+    "order_id": "WO-0006",
+    "timestamp": "2026-04-28T12:33:23.396604",
+    "ap_name": "071_Villacarmelo-AP1",
+    "priority": "CRITICAL",
+    "action": "SITE_VISIT_REQUIRED",
+    "description": "Visita t\u00e9cnica urgente - AP 071_Villacarmelo-AP1 offline",
+    "steps": [
+      "Verificar conexi\u00f3n el\u00e9ctrica",
+      "Revisar cableado de red",
+      "Reiniciar equipo f\u00edsicamente",
+      "Verificar configuraci\u00f3n de red",
+      "Reportar estado al finalizar"
+    ],
+    "estimated_time_hours": 2.0,
+    "requires_technician": true
+  },
+  {
+    "order_id": "WO-0007",
+    "timestamp": "2026-04-28T12:33:23.399486",
+    "ap_name": "057_La Castilla-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 057_La Castilla-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0008",
+    "timestamp": "2026-04-28T12:33:23.399520",
+    "ap_name": "057_La Castilla-AP2",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 057_La Castilla-AP2",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0009",
+    "timestamp": "2026-04-28T12:33:23.399547",
+    "ap_name": "058_La Elvira-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 058_La Elvira-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0010",
+    "timestamp": "2026-04-28T12:33:23.399592",
+    "ap_name": "059_El Saladito-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 059_El Saladito-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0011",
+    "timestamp": "2026-04-28T12:33:23.399617",
+    "ap_name": "060_Felidia-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 060_Felidia-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0012",
+    "timestamp": "2026-04-28T12:33:23.399642",
+    "ap_name": "060_Felidia-AP2",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 060_Felidia-AP2",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0013",
+    "timestamp": "2026-04-28T12:33:23.399666",
+    "ap_name": "061_La Leonera-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 061_La Leonera-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0014",
+    "timestamp": "2026-04-28T12:33:23.399692",
+    "ap_name": "061_La Leonera-AP2",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 061_La Leonera-AP2",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0015",
+    "timestamp": "2026-04-28T12:33:23.399716",
+    "ap_name": "062_Pichinde-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 062_Pichinde-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0016",
+    "timestamp": "2026-04-28T12:33:23.399741",
+    "ap_name": "062_Pichinde-AP2",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 062_Pichinde-AP2",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0017",
+    "timestamp": "2026-04-28T12:33:23.399765",
+    "ap_name": "063_Los Andes-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 063_Los Andes-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0018",
+    "timestamp": "2026-04-28T12:33:23.399790",
+    "ap_name": "063_Los Andes-AP2",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 063_Los Andes-AP2",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0019",
+    "timestamp": "2026-04-28T12:33:23.399815",
+    "ap_name": "063_Los Andes-AP3",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 063_Los Andes-AP3",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0020",
+    "timestamp": "2026-04-28T12:33:23.399840",
+    "ap_name": "066_Pance-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 066_Pance-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0021",
+    "timestamp": "2026-04-28T12:33:23.399954",
+    "ap_name": "072_Hormiguero_AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 072_Hormiguero_AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  },
+  {
+    "order_id": "WO-0022",
+    "timestamp": "2026-04-28T12:33:23.399978",
+    "ap_name": "073_Navarro-AP1",
+    "priority": "LOW",
+    "action": "MONITORING_INCREASED",
+    "description": "Incrementar monitoreo en 073_Navarro-AP1",
+    "steps": [
+      "Revisar m\u00e9tricas cada 15 minutos",
+      "Analizar patrones de tr\u00e1fico",
+      "Verificar estabilidad de se\u00f1al",
+      "Documentar comportamiento"
+    ],
+    "estimated_time_hours": 0.5,
+    "requires_technician": false
+  }
+]
