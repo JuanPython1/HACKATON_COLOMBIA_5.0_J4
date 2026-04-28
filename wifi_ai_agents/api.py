@@ -10,6 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from wifi_ai_agents.utils.data_processor import WiFiDataProcessor
 from wifi_ai_agents.agents.conversational_agent import ConversationalAgent
 from wifi_ai_agents.agents.strategic_agent import StrategicAgent
+from wifi_ai_agents.agents.operative_agent import OperativeAgent
 
 app = FastAPI(title="WiFi AI Agents API")
 
@@ -25,6 +26,7 @@ dp = WiFiDataProcessor(data_path)
 dp.load_data()
 conversational_agent = ConversationalAgent(dp)
 strategic_agent = StrategicAgent(dp)
+operative_agent = OperativeAgent(dp)
 
 class QueryRequest(BaseModel):
     query: str
@@ -77,7 +79,7 @@ async def get_map_data():
             'clients': int(metrics['total_unique_clients']) if metrics else 0,
             'events': int(metrics['avg_events']) if metrics else 0,
             'disconnection_rate': round(metrics['avg_disconnection_rate'], 2) if metrics else 0,
-            'priority': round(priority, 1)
+            'priority': round(priority, 1),
         })
     
     return JSONResponse(content=map_data)
@@ -125,4 +127,27 @@ async def get_kpi_data():
         'total_aps': total_aps,
         'online_aps': online_aps,
         'offline_aps': offline_aps
+    })
+
+@app.get("/api/alerts")
+async def get_alerts():
+    """Retorna alertas detectadas por el agente operativo usando ML"""
+    alerts = operative_agent.detect_real_time_anomalies()
+    return JSONResponse(content={
+        'total_alerts': len(alerts),
+        'critical_alerts': len([a for a in alerts if a['severity'] == 'CRITICAL']),
+        'high_alerts': len([a for a in alerts if a['severity'] == 'HIGH']),
+        'medium_alerts': len([a for a in alerts if a['severity'] == 'MEDIUM']),
+        'alerts': alerts
+    })
+
+@app.get("/api/work-orders")
+async def get_work_orders():
+    """Retorna órdenes de trabajo generadas automáticamente"""
+    alerts = operative_agent.detect_real_time_anomalies()
+    work_orders = operative_agent.generate_work_orders(alerts)
+    return JSONResponse(content={
+        'total_orders': len(work_orders),
+        'critical_orders': len([wo for wo in work_orders if wo['priority'] == 'CRITICAL']),
+        'orders': work_orders
     })

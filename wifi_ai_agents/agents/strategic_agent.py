@@ -3,23 +3,31 @@ import numpy as np
 from datetime import datetime
 import json
 import re
+from sklearn.cluster import KMeans
 
 class StrategicAgent:
     """
     Agente Estratégico: Genera recomendaciones de inversión
-    y mantenimiento basadas en datos geoespaciales y patrones de uso.
+    y mantenimiento basadas en datos geoespaciales, patrones de uso
+    y clustering ML (K-Means).
     """
     
     def __init__(self, data_processor):
         self.dp = data_processor
         self.recommendations = []
+        self.kmeans_model = None
+        self.zone_clusters = None
         
     def analyze_investment_priorities(self):
         """
         Analiza y retorna recomendaciones estratégicas de inversión.
+        Utiliza K-Means para segmentar zonas y asignar presupuestos.
         """
         scores = self.dp.get_investment_priority_score()
         ap_issues = self.dp.get_connectivity_issues()
+        
+        # Aplicar K-Means clustering
+        self._apply_kmeans_clustering(scores)
         
         recommendations = []
         
@@ -28,6 +36,9 @@ class StrategicAgent:
             status = ap['status']
             score = ap['priority_score']
             
+            # Obtener cluster asignado
+            cluster_id = self._get_ap_cluster(ap_name)
+            
             # Obtener issues de conectividad
             ap_issue = ap_issues[ap_issues['ap_name'] == ap_name]
             stability = ap_issue['stability'].iloc[0] if not ap_issue.empty else 'unknown'
@@ -35,25 +46,16 @@ class StrategicAgent:
             # Obtener métricas detalladas
             metrics = self.dp.get_ap_traffic_metrics(ap_name)
             
-            # Determinar nivel de inversión
-            if status in ['offline', 'dormant'] or score > 10:
-                investment_level = 'HIGH'
-                action = 'REPLACE_OR_MAJOR_UPGRADE'
-                budget_range = '$3,000,000 - $5,000,000 COP'
-            elif score > 5 or stability == 'unstable':
-                investment_level = 'MEDIUM'
-                action = 'OPTIMIZE_AND_EXPAND'
-                budget_range = '$1,500,000 - $3,000,000 COP'
-            else:
-                investment_level = 'LOW'
-                action = 'MAINTAIN_AND_MONITOR'
-                budget_range = '$500,000 - $1,500,000 COP'
+            # Determinar nivel de inversión usando ML + reglas
+            investment_level, action, budget_range = self._determine_investment_level_ml(
+                score, stability, status, cluster_id
+            )
             
             # Generar justificación
             justification = self._generate_justification(ap, metrics, stability)
             
-            # ROI estimate
-            roi_months = self._estimate_roi(score, metrics)
+            # ROI estimate usando cluster
+            roi_months = self._estimate_roi_ml(score, metrics, cluster_id)
             
             recommendation = {
                 'ap_name': ap_name,
@@ -63,6 +65,7 @@ class StrategicAgent:
                 'priority_score': ap['priority_score'],
                 'current_status': status,
                 'stability': stability,
+                'cluster_id': cluster_id,
                 'metrics': {
                     'avg_disconnection_rate': ap['avg_disconnection_rate'],
                     'total_clients': int(ap['total_clients']),
@@ -79,6 +82,56 @@ class StrategicAgent:
         
         self.recommendations = recommendations
         return recommendations
+    
+    def _apply_kmeans_clustering(self, scores_df):
+        """Aplica K-Means para segmentar APs en grupos de inversión"""
+        if len(scores_df) < 3:
+            self.zone_clusters = {ap: 0 for ap in scores_df['ap_name']}
+            return
+        
+        # Preparar features para clustering
+        features = scores_df[['priority_score', 'avg_disconnection_rate', 'total_clients']].copy()
+        features = features.fillna(0)
+        
+        # Normalizar
+        features_normalized = (features - features.mean()) / features.std()
+        features_normalized = features_normalized.fillna(0)
+        
+        # K-Means con 3 clusters (Low, Medium, High priority)
+        n_clusters = min(3, len(scores_df))
+        self.kmeans_model = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+        clusters = self.kmeans_model.fit_predict(features_normalized)
+        
+        self.zone_clusters = dict(zip(scores_df['ap_name'], clusters))
+    
+    def _get_ap_cluster(self, ap_name):
+        """Obtiene el cluster asignado a un AP"""
+        if self.zone_clusters is None:
+            return 0
+        return self.zone_clusters.get(ap_name, 0)
+    
+    def _determine_investment_level_ml(self, score, stability, status, cluster_id):
+        """Determina nivel de inversión usando ML + reglas de negocio"""
+        # Reglas absolutas (tienen prioridad)
+        if status in ['offline', 'dormant']:
+            return 'HIGH', 'REPLACE_OR_MAJOR_UPGRADE', '$3,000,000 - $5,000,000 COP'
+        
+        # Basado en cluster de ML
+        if cluster_id == 0:  # Cluster de alta prioridad
+            return 'HIGH', 'REPLACE_OR_MAJOR_UPGRADE', '$3,000,000 - $5,000,000 COP'
+        elif cluster_id == 1:  # Cluster de prioridad media
+            return 'MEDIUM', 'OPTIMIZE_AND_EXPAND', '$1,500,000 - $3,000,000 COP'
+        else:  # Cluster de baja prioridad
+            return 'LOW', 'MAINTAIN_AND_MONITOR', '$500,000 - $1,500,000 COP'
+    
+    def _estimate_roi_ml(self, score, metrics, cluster_id):
+        """Estima ROI basado en ML cluster"""
+        if cluster_id == 0:  # Alta prioridad
+            return 6
+        elif cluster_id == 1:  # Media prioridad
+            return 9
+        else:  # Baja prioridad
+            return 12
     
     def _generate_justification(self, ap, metrics, stability):
         """Genera justificación estratégica"""

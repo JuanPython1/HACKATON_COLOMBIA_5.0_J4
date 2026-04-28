@@ -1,21 +1,23 @@
 import pandas as pd
 from datetime import datetime
 import json
+from sklearn.ensemble import IsolationForest
 
 class OperativeAgent:
     """
-    Agente Operativo: Detecta anomalías en tiempo real y genera
-    órdenes de trabajo automáticas para mantenimiento.
+    Agente Operativo: Detecta anomalías en tiempo real usando
+    Isolation Forest y genera órdenes de trabajo automáticas.
     """
     
     def __init__(self, data_processor):
         self.dp = data_processor
         self.work_orders = []
         self.anomalies_detected = []
+        self.anomaly_model = IsolationForest(contamination=0.1, random_state=42)
         
     def detect_real_time_anomalies(self):
         """
-        Detecta anomalías actuales usando umbrales dinámicos.
+        Detecta anomalías actuales usando Isolation Forest ML.
         Retorna lista de alertas prioritarias (una por AP).
         """
         alerts = []
@@ -29,59 +31,100 @@ class OperativeAgent:
                 'severity': 'CRITICAL',
                 'type': 'AP_OFFLINE',
                 'description': f"AP {ap['ap_name']} está en estado {ap['status']}",
-                'metrics': {'status': ap['status']}
+                'metrics': {'status': ap['status']},
+                'detection_method': 'rule_based'
             }
             alerts.append(alert)
         
-        # 2. Detectar tasas de desconexión anómalas (agregado por AP)
+        # 2. Detección ML con Isolation Forest
+        ap_features = self._prepare_features_for_ml()
+        
+        if not ap_features.empty:
+            # Entrenar Isolation Forest
+            features = ap_features.drop('ap_name', axis=1)
+            self.anomaly_model.fit(features)
+            predictions = self.anomaly_model.predict(features)
+            scores = self.anomaly_model.decision_function(features)
+            
+            for idx, (_, row) in enumerate(ap_features.iterrows()):
+                ap_name = row['ap_name']
+                is_anomaly = predictions[idx] == -1
+                anomaly_score = scores[idx]
+                
+                # No duplicar si ya está offline
+                if ap_name in [a['ap_name'] for a in alerts]:
+                    continue
+                
+                if is_anomaly:
+                    severity = 'HIGH' if anomaly_score < -0.5 else 'MEDIUM'
+                    alert = {
+                        'timestamp': datetime.now().isoformat(),
+                        'ap_name': ap_name,
+                        'severity': severity,
+                        'type': 'ML_ANOMALY_DETECTED',
+                        'description': f"Anomalía ML detectada en {ap_name} (score: {anomaly_score:.3f})",
+                        'metrics': {
+                            'disconnection_rate': round(row['disconnection_rate'], 2),
+                            'total_disconnections': int(row['total_disconnections']),
+                            'unique_clients': int(row['unique_clients']),
+                            'anomaly_score': round(anomaly_score, 3)
+                        },
+                        'detection_method': 'isolation_forest'
+                    }
+                    alerts.append(alert)
+        
+        # 3. Detectar tasas de desconexión extremas (adicional)
         ap_avg_metrics = self.dp.metrics_df.groupby('ap_name').agg({
             'disconnection_rate': 'mean',
             'total_disconnections': 'sum',
             'total_connections': 'sum'
         }).reset_index()
         
-        high_disc_aps = ap_avg_metrics[ap_avg_metrics['disconnection_rate'] > 1.5]
+        high_disc_aps = ap_avg_metrics[ap_avg_metrics['disconnection_rate'] > 2.0]
         
         for _, row in high_disc_aps.iterrows():
-            # No duplicar si ya está offline
             if row['ap_name'] in [a['ap_name'] for a in alerts]:
                 continue
             alert = {
                 'timestamp': datetime.now().isoformat(),
                 'ap_name': row['ap_name'],
-                'severity': 'HIGH' if row['disconnection_rate'] > 2.0 else 'MEDIUM',
+                'severity': 'HIGH',
                 'type': 'HIGH_DISCONNECTION_RATE',
-                'description': f"AP {row['ap_name']} tiene tasa de desconexión promedio {row['disconnection_rate']:.2f}",
+                'description': f"AP {row['ap_name']} tiene tasa de desconexión crítica {row['disconnection_rate']:.2f}",
                 'metrics': {
                     'disconnection_rate': round(row['disconnection_rate'], 2),
                     'total_disconnections': int(row['total_disconnections']),
                     'total_connections': int(row['total_connections'])
-                }
-            }
-            alerts.append(alert)
-        
-        # 3. Detectar anomalías estadísticas (IQR) - agregado por AP
-        anomalies = self.dp.detect_anomalies_iqr()
-        anomalous_aps = anomalies.groupby('ap_name')['disconnection_rate'].mean().reset_index()
-        
-        for _, row in anomalous_aps.iterrows():
-            # No duplicar
-            if row['ap_name'] in [a['ap_name'] for a in alerts]:
-                continue
-            alert = {
-                'timestamp': datetime.now().isoformat(),
-                'ap_name': row['ap_name'],
-                'severity': 'MEDIUM',
-                'type': 'STATISTICAL_ANOMALY',
-                'description': f"Comportamiento anómalo detectado en {row['ap_name']}",
-                'metrics': {
-                    'disconnection_rate': round(row['disconnection_rate'], 2)
-                }
+                },
+                'detection_method': 'threshold'
             }
             alerts.append(alert)
         
         self.anomalies_detected = alerts
         return alerts
+    
+    def _prepare_features_for_ml(self):
+        """Prepara características para el modelo ML"""
+        ap_metrics = self.dp.metrics_df.groupby('ap_name').agg({
+            'disconnection_rate': 'mean',
+            'total_disconnections': 'sum',
+            'total_connections': 'sum',
+            'unique_clients': 'sum',
+            'total_events': 'sum'
+        }).reset_index()
+        
+        # Agregar estado del AP
+        ap_metrics = ap_metrics.merge(
+            self.dp.aps_df[['ap_name', 'status']], 
+            on='ap_name', 
+            how='left'
+        )
+        
+        # Encoding simple para status
+        status_map = {'online': 1, 'offline': 0, 'dormant': 0.5}
+        ap_metrics['status_encoded'] = ap_metrics['status'].map(status_map).fillna(0.5)
+        
+        return ap_metrics
     
     def generate_work_orders(self, alerts):
         """

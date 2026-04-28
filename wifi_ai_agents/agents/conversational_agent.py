@@ -1,30 +1,81 @@
 import re
 from datetime import datetime
+from sentence_transformers import SentenceTransformer, util
 
 class ConversationalAgent:
     """
     Agente Conversacional: Responde preguntas en lenguaje natural
     sobre el rendimiento técnico de las zonas WiFi.
+    Utiliza sentence-transformers para búsqueda semántica.
     """
     
     def __init__(self, data_processor):
         self.dp = data_processor
-        self.intents = {
-            'unstable_aps': ['inestable', 'inestabilidad', 'desconexión', 'desconexiones', 'fallas', 'falla', 'unstable', 'disconnection'],
-            'top_zones': ['zonas', 'concentran', 'clientes', 'tráfico', 'top', 'zones', 'clients', 'traffic'],
-            'peak_hours': ['horas', 'pico', 'aumenta', 'autenticación', 'desconexión', 'peak', 'hours'],
-            'failure_signals': ['señales', 'anticipar', 'fallas', 'congestión', 'signals', 'predict', 'failure'],
-            'investment': ['inversión', 'mantenimiento', 'priorizar', 'inversion', 'investment', 'maintenance'],
-            'ap_status': ['estado', 'status', 'online', 'offline', 'dormant', 'ap'],
-            'general': ['resumen', 'general', 'summary']
+        # Cargar modelo de embeddings gratuito (local)
+        self.model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+        
+        # Definir intenciones con ejemplos semánticos
+        self.intent_examples = {
+            'unstable_aps': [
+                '¿Qué AP presentan más inestabilidad?',
+                '¿Cuáles son los puntos de acceso más inestables?',
+                'APs con fallas de conexión',
+                'puntos con desconexiones frecuentes',
+                'zonas con problemas de estabilidad',
+                'dónde hay fallas de red'
+            ],
+            'top_zones': [
+                '¿Qué zonas concentran más clientes?',
+                'zonas con mayor tráfico',
+                'dónde hay más usuarios conectados',
+                'puntos con mayor demanda',
+                'zonas más concurridas'
+            ],
+            'peak_hours': [
+                '¿En qué horas aumenta la autenticación?',
+                'cuál es la hora pico de conexiones',
+                'horarios con más tráfico',
+                'cuándo hay más desconexiones',
+                'patrones por hora del día'
+            ],
+            'failure_signals': [
+                '¿Qué señales permiten anticipar fallas?',
+                'cómo predecir fallos de red',
+                'indicadores de congestión',
+                'señales de alerta temprana',
+                'cómo prever problemas'
+            ],
+            'investment': [
+                '¿Cómo priorizar mantenimiento?',
+                'cómo priorizar inversión',
+                'dónde invertir primero',
+                'orden de mantenimiento',
+                'presupuesto para reparaciones'
+            ],
+            'ap_status': [
+                'estado de los puntos de acceso',
+                'qué APs están online',
+                'estado general de la red',
+                'resumen de disponibilidad'
+            ],
+            'general': [
+                'resumen general',
+                'estado del sistema',
+                'información general de zonas WiFi',
+                'dashboard resumido'
+            ]
         }
+        
+        # Pre-calcular embeddings de ejemplos
+        self.intent_embeddings = {}
+        for intent, examples in self.intent_examples.items():
+            self.intent_embeddings[intent] = self.model.encode(examples, convert_to_tensor=True)
     
     def process_query(self, query):
         """
-        Procesa una consulta en lenguaje natural y retorna una respuesta.
+        Procesa una consulta en lenguaje natural usando búsqueda semántica.
         """
-        query_lower = query.lower()
-        intent = self._identify_intent(query_lower)
+        intent = self._identify_intent_semantic(query)
         
         if intent == 'unstable_aps':
             return self._answer_unstable_aps()
@@ -37,23 +88,33 @@ class ConversationalAgent:
         elif intent == 'investment':
             return self._answer_investment_priority()
         elif intent == 'ap_status':
-            return self._answer_ap_status(query_lower)
+            return self._answer_ap_status(query.lower())
         elif intent == 'general':
             return self._answer_general_summary()
         else:
             return self._answer_unknown(query)
     
-    def _identify_intent(self, query):
-        """Identifica la intención de la consulta basada en palabras clave"""
-        matches = {}
-        for intent, keywords in self.intents.items():
-            score = sum(1 for kw in keywords if kw in query)
-            if score > 0:
-                matches[intent] = score
+    def _identify_intent_semantic(self, query):
+        """Identifica la intención usando similitud semántica"""
+        query_embedding = self.model.encode(query, convert_to_tensor=True)
         
-        if matches:
-            return max(matches, key=matches.get)
-        return 'unknown'
+        best_intent = 'unknown'
+        best_score = 0.0
+        
+        for intent, examples_emb in self.intent_embeddings.items():
+            # Calcular similitud coseno promedio con los ejemplos
+            cos_scores = util.cos_sim(query_embedding, examples_emb)[0]
+            avg_score = cos_scores.mean().item()
+            
+            if avg_score > best_score:
+                best_score = avg_score
+                best_intent = intent
+        
+        # Umbral mínimo de confianza
+        if best_score < 0.3:
+            return 'unknown'
+        
+        return best_intent
     
     def _answer_unstable_aps(self):
         """Responde: ¿Qué AP presentan más inestabilidad o desconexiones?"""
