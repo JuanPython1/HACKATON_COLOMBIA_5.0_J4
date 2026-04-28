@@ -1,0 +1,533 @@
+client_id,status,client_description,last_seen,usage_mb,device_type,ap_name,policy,onboarding
+1c95ccab69ea90a6,Online,V2058,2026-03-30 18:33:00,1.03,Android,057_La Castilla-AP1,normal,33.0
+6b26105f05797b8d,Online,A16-de-Sebastian,2026-03-30 18:33:00,717.34,"Samsung Galaxy A16, Android 16",057_La Castilla-AP1,normal,78.0
+e0058e8eeba48c13,Online,Redmi-Note-14,2026-03-30 18:33:00,1.63,Android,057_La Castilla-AP1,normal,83.0
+c81e4b1d209dca5b,Online,mary,2026-03-30 18:33:00,0.00390625,Android,057_La Castilla-AP1,normal,100.0
+d7cdc680b16a9a36,Online,Android_45RZIR4V,2026-03-30 18:33:00,2160.64,"Samsung Galaxy A16, Android 16",057_La Castilla-AP1,normal,83.0
+859f158a00f336eb,Online,A32-de-Omar-Mauricio,2026-03-30 18:33:00,1054.72,Samsung,057_La Castilla-AP1,normal,100.0
+e4d89b02e47580d7,Online,Android,2026-03-30 18:33:00,585.68,Android,057_La Castilla-AP1,normal,80.0
+ab14fd3db32c0d26,Online,Android-8,2026-03-30 18:31:00,608.55,Android,057_La Castilla-AP1,normal,100.0
+61a004a44165ed98,Offline,06:1c:df:97:f5:4d,2026-03-30 18:07:00,0.13671875,"Apple iPhone 11, iOS18.6.2",057_La Castilla-AP1,normal,100.0
+080e06bea9ab1cf9,Offline,OPPO-A38,2026-03-30 18:01:00,550.26,Android,057_La Castilla-AP1,normal,78.0
+0c9b16ab991ee139,Offline,4a:1b:d5:1b:ba:26,2026-03-30 17:53:00,0.3544921875,Other,057_La Castilla-AP1,normal,100.0
+655b6059dfeb3b41,Offline,Android_RRN56KFV,2026-03-30 17:41:00,427.0,Samsung,057_La Castilla-AP1,normal,75.0
+5f18b4174c7ba28d,Offline,Android_FEKD9UNO,2026-03-30 17:22:00,0.0029296875,Android,057_La Castilla-AP1,normal,100.0
+8e1add76ebdc05fc,Offline,30:32:35:04:6a:04,2026-03-30 17:05:00,0.14453125,Generic Linux,057_La Castilla-AP1,normal,
+e123579c0475f066,Offline,MAO-LX9,2026-03-30 12:24:00,74.49,Android,057_La Castilla-AP1,normal,
+dc647ed5bd722907,Offline,A32-de-Julian-Andres,2026-03-30 12:12:00,226.78,Samsung,057_La Castilla-AP1,normal,
+2fba8ea5adb5220a,Offline,Redmi-10C,2026-03-30 10:06:00,0.357421875,Android,057_La Castilla-AP1,normal,
+5111e215b4ac5553,Offline,16:e0:d1:9d:e1:4f,2026-03-29 22:57:00,214.38,Apple iPhone,057_La Castilla-AP1,normal,
+2426ecca9a34ff68,Offline,Redmi-Note-11-Pro-5G,2026-03-29 20:54:00,17.57,Android,057_La Castilla-AP1,normal,
+85b8b43d5ab6a907,Offline,Redmi-Note-14S,2026-03-29 19:32:00,0.0283203125,Android,057_La Castilla-AP1,normal,
+9cb676c123722154,Online,TECNO-SPARK-40-Pro,2026-03-30 18:32:00,1239.04,Android,057_La Castilla-AP2,normal,96.0
+c6508db724f6a633,Offline,moto-g04s,2026-03-30 15:51:00,105.54,Other,057_La Castilla-AP2,normal,100.0
+ecbc5bb5f1535f4e,Offline,57cb048c-d9e2-4514-9296-a271d5a8efa6,2026-03-30 15:40:00,1085.44,Windows 10,057_La Castilla-AP2,normal,100.0
+0e04ed2716a645b5,Offline,REDMI-15C,2026-03-30 13:39:00,0.466796875,Android,057_La Castilla-AP2,normal,
+468ac4fc84b1d3b8,Offline,Android_HN9ABP95,2026-03-29 19:17:00,0.001953125,"Galaxy A17, Android 16",057_La Castilla-AP2,normal,
+aca24cb0aa761d10,Offline,ee:0f:c6:65:15:84,2026-03-30 18:24:00,100.62,Apple iPhone,058_La Elvira-AP1,normal,100.0
+6c47aacdc5f128c0,Offline,Android,2026-03-30 18:05:00,0.001953125,Android,058_La Elvira-AP1,normal,100.0
+5969d7c9fd56aec4,Offline,moto-g04,2026-03-30 17:20:00,0.0166015625,Android,058_La Elvira-AP1,normal,100.0
+edfbbe0291451969,Offline,DESKTOP-78OLLCB,2026-03-30 14:05:00,0.0927734375,Windows 10,058_La Elvira-AP1,normal,
+08b7167c514a2368,Offline,c6:8f:e6:f7:8e:65,2026-03-30 12:28:00,0.0205078125,Android,058_La Elvira-AP1,normal,
+ad585c3acaed7ec7,Offline,motorola-edge-50-fusion,2026-03-29 19:35:00,0.05859375,Android,058_La Elvira-AP1,normal,
+cc7a1b79ba2d7e65,Offline,Redmi-A2,2026-03-29 19:32:00,0.0009765625,Other,058_La Elvira-AP1,normal,
+b09e2be3a2896eec,Offline,Redmi-Note-14-Pro,2026-03-30 18:01:00,0.1513671875,Android,059_El Saladito-AP1,normal,50.0
+a01f8b777d8286a2,Offline,Redmi-10,2026-03-30 17:46:00,0.02734375,Android,059_El Saladito-AP1,normal,100.0
+c1890b76ad795300,Offline,ea:6f:7d:6b:bb:6a,2026-03-30 17:43:00,0.04296875,Other,059_El Saladito-AP1,normal,100.0
+67906d830592be3d,Offline,Android,2026-03-30 16:19:00,0.0029296875,Android,059_El Saladito-AP1,normal,100.0
+181f7b886d119b46,Offline,Android_19MT7JI7,2026-03-30 14:47:00,,Android,059_El Saladito-AP1,normal,
+c692d918cd6b1d36,Offline,Redmi-Note-10S,2026-03-30 14:47:00,,Android,059_El Saladito-AP1,normal,
+9ae8079798cfbc56,Offline,moto-g22,2026-03-30 14:47:00,,Android,059_El Saladito-AP1,normal,
+417ed4b67059e339,Offline,Redmi-12,2026-03-30 14:47:00,11.02,Android,059_El Saladito-AP1,normal,
+e15becf84bee142f,Offline,OPPO-A58,2026-03-30 13:23:00,194.55,Android,059_El Saladito-AP1,normal,
+b2b53309c6607777,Offline,7e:40:ee:53:55:b9,2026-03-30 13:21:00,0.0224609375,Android,059_El Saladito-AP1,normal,
+23c804fcde4f3215,Offline,moto-g04s,2026-03-30 11:47:00,38.17,Other,059_El Saladito-AP1,normal,
+5c3ab89cf7eda6eb,Offline,Redmi-Note-13,2026-03-30 10:07:00,0.080078125,Android,059_El Saladito-AP1,normal,
+7cb46efc6b3e6cce,Offline,moto-g15,2026-03-30 09:25:00,1.56,Android,059_El Saladito-AP1,normal,
+e991aa29dbd863bc,Offline,Redmi-Note-13,2026-03-30 05:32:00,0.0009765625,Android,059_El Saladito-AP1,normal,
+f57aee2bcad61b5c,Offline,Android,2026-03-30 04:40:00,0.0009765625,Android,059_El Saladito-AP1,normal,
+b52dc27998123282,Offline,Android,2026-03-29 21:16:00,0.03515625,Android,059_El Saladito-AP1,normal,
+48944b876a9ee9b1,Offline,Redmi-10C,2026-03-29 20:33:00,0.5771484375,Android,059_El Saladito-AP1,normal,
+1c6ac19615cf1b71,Offline,Android,2026-03-29 18:40:00,0.001953125,Android,059_El Saladito-AP1,normal,
+e2cf3acdfb088367,Online,Redmi-Note-14,2026-03-30 18:31:00,0.0009765625,Android,060_Felidia-AP1,normal,57.0
+b6313ea3f1ecb66d,Online,Redmi-Note-12S,2026-03-30 18:31:00,129.73,Android,060_Felidia-AP1,normal,90.0
+8d46f1780f3c2f5a,Online,HONOR-400-Lite,2026-03-30 18:31:00,84.61,Other,060_Felidia-AP1,normal,100.0
+51f337106c7a019a,Online,Android,2026-03-30 18:31:00,0.0087890625,Android,060_Felidia-AP1,normal,100.0
+701251cbd9b24174,Online,RDPM,2026-03-30 18:31:00,0.03515625,Android,060_Felidia-AP1,normal,71.0
+6bf8e59bab0038c2,Online,Redmi-Note-13,2026-03-30 18:31:00,2.43,Android,060_Felidia-AP1,normal,91.0
+fedde9287e9fc5e2,Online,OPPO-A57,2026-03-30 18:31:00,2795.52,Android,060_Felidia-AP1,normal,72.0
+5cab201fcad68628,Online,0e:ff:04:82:dc:94,2026-03-30 18:30:00,0.0341796875,Other,060_Felidia-AP1,normal,60.0
+b445a101e300e7c7,Offline,HONOR-Magic7-Lite,2026-03-30 18:27:00,1.35,Android,060_Felidia-AP1,normal,100.0
+8ef8db03389a76f2,Offline,moto-g04,2026-03-30 18:24:00,0.79296875,Android,060_Felidia-AP1,normal,85.0
+94e648cdbf8341fc,Offline,Android-2,2026-03-30 18:15:00,494.46,Android,060_Felidia-AP1,normal,75.0
+77e9304aa7b75aca,Offline,da:65:ab:05:5d:ed,2026-03-30 18:15:00,0.0029296875,Other,060_Felidia-AP1,normal,100.0
+d5efec7bee39177e,Offline,8e:66:7f:2b:7d:4b,2026-03-30 18:14:00,146.83,Other,060_Felidia-AP1,normal,50.0
+80fdd64b38837368,Offline,ae:99:50:ce:f9:70,2026-03-30 18:12:00,50.27,Apple iPhone,060_Felidia-AP1,normal,77.0
+967239ffe874be8f,Offline,72:43:c0:87:9c:b1,2026-03-30 18:06:00,768.54,Android,060_Felidia-AP1,normal,50.0
+01aac3d4ae48da59,Offline,Galaxy-A02,2026-03-30 17:59:00,0.0947265625,"Samsung Galaxy A02, Android 11",060_Felidia-AP1,normal,100.0
+abdb15e52bae2000,Offline,Android_2PHR06JU,2026-03-30 17:57:00,42.79,Android,060_Felidia-AP1,normal,100.0
+dfb60b6e3603f9c7,Offline,Z2469N,2026-03-30 17:48:00,886.83,Android,060_Felidia-AP1,normal,94.0
+c4285e0351075f7b,Offline,Redmi-Note-11,2026-03-30 17:33:00,0.0048828125,Android,060_Felidia-AP1,normal,100.0
+604002d16442592c,Offline,Redmi-13,2026-03-30 17:17:00,0.005859375,Android,060_Felidia-AP1,normal,33.0
+a81456d3fdded911,Offline,Redmi-Note-12,2026-03-30 17:15:00,54.78,Android,060_Felidia-AP1,normal,100.0
+703db0cc8de09d38,Offline,Android_VIF7PAYS,2026-03-30 17:11:00,98.54,"Samsung Galaxy A16, Android 16",060_Felidia-AP1,normal,92.0
+0604d585a637396b,Offline,Halcon,2026-03-30 17:02:00,1.02,Other,060_Felidia-AP1,normal,74.0
+8a14df1dda6e010e,Offline,HONOR-X7c,2026-03-30 16:52:00,0.0263671875,Other,060_Felidia-AP1,normal,100.0
+5e186fe0ccd2d8a5,Offline,OPPO-A79-5G,2026-03-30 16:41:00,0.0146484375,Android,060_Felidia-AP1,normal,100.0
+f1eda88a72d3f4e3,Offline,Redmi-Note-11S,2026-03-30 16:23:00,30.27,Android,060_Felidia-AP1,normal,100.0
+7cd976e1f1947bf6,Offline,Android,2026-03-30 16:14:00,0.009765625,Android,060_Felidia-AP1,normal,100.0
+0be85a1001aca3e2,Offline,Galaxy-A03,2026-03-30 15:47:00,0.0205078125,"Samsung Galaxy A03, Android 13",060_Felidia-AP1,normal,100.0
+14eb3246c7201ade,Offline,8a:6c:33:db:69:d3,2026-03-30 14:59:00,40.17,Apple iPhone,060_Felidia-AP1,normal,100.0
+4e81afa02f65db43,Offline,TECNO-CAMON-40-Pro,2026-03-30 14:52:00,0.0068359375,Android,060_Felidia-AP1,normal,100.0
+21a8aa116ee90cf4,Offline,Android-2,2026-03-30 14:52:00,0.0322265625,Android,060_Felidia-AP1,normal,100.0
+18d7f1a7ed712baa,Offline,9e:af:81:f6:cf:4b,2026-03-30 14:46:00,0.01171875,Android,060_Felidia-AP1,normal,
+04f013def87ea2b2,Offline,Infinix-SMART-10,2026-03-30 14:46:00,,Other,060_Felidia-AP1,normal,100.0
+506867f7f49189a7,Offline,c2:6d:1d:c2:00:82,2026-03-30 14:36:00,0.0400390625,"Apple iPhone 13 Pro Max, iOS18.5",060_Felidia-AP1,normal,100.0
+4da92152fe441558,Offline,b6:68:04:04:1a:13,2026-03-30 14:33:00,0.0224609375,Other,060_Felidia-AP1,normal,
+b2860ff5b7c22b46,Offline,Redmi-Note-12S,2026-03-30 14:24:00,0.037109375,Android,060_Felidia-AP1,normal,
+a0a41583048c39fc,Offline,Android,2026-03-30 14:24:00,9.39,Android,060_Felidia-AP1,normal,
+35bb2d4b60d4efe2,Offline,c6:0e:a1:31:3e:fd,2026-03-30 14:07:00,47.96,Apple iPhone,060_Felidia-AP1,normal,
+9edeea922f175d60,Offline,V2204,2026-03-30 13:24:00,0.013671875,Other,060_Felidia-AP1,normal,
+8c071e30f34d77e9,Offline,9e:81:cc:09:3c:0c,2026-03-30 13:01:00,3.8,Apple iPhone,060_Felidia-AP1,normal,
+bfeee8233c882917,Offline,V2109,2026-03-30 12:36:00,0.14453125,Android,060_Felidia-AP1,normal,
+3c2e0dea1eb5d1c1,Offline,OPPO-A57,2026-03-30 12:22:00,0.205078125,Android,060_Felidia-AP1,normal,
+d0f3616b9ef0c0f6,Offline,A25-de-Johana,2026-03-30 12:11:00,0.2919921875,"Galaxy A25, Android 14",060_Felidia-AP1,normal,
+233c35e3b146a684,Offline,60:1d:91:2e:2a:74,2026-03-30 11:47:00,0.0341796875,Android,060_Felidia-AP1,normal,
+4ffeeff4467546a3,Offline,Redmi-14C,2026-03-30 11:44:00,184.58,Android,060_Felidia-AP1,normal,
+cf1a9bfbf2035193,Offline,Android,2026-03-30 11:40:00,0.0224609375,Android,060_Felidia-AP1,normal,
+328f0272162f6208,Offline,e2:35:27:dd:dd:fa,2026-03-30 11:11:00,12.15,Other,060_Felidia-AP1,normal,
+ce00a9c26e9ee93d,Offline,Android,2026-03-30 10:53:00,0.0224609375,Android,060_Felidia-AP1,normal,
+023e84c0650515f7,Offline,Xiaomi-12-Pro,2026-03-30 10:02:00,0.005859375,Android,060_Felidia-AP1,normal,
+c4c469fb507008f5,Offline,ZTE-Blade-A34,2026-03-30 09:56:00,0.017578125,Android,060_Felidia-AP1,normal,
+f9e0843ed77617bd,Offline,b2:18:c9:e4:f1:a9,2026-03-30 08:13:00,0.0283203125,Android,060_Felidia-AP1,normal,33.0
+4aedc91d8b471ca9,Offline,moto-e15,2026-03-30 07:26:00,0.00390625,Android,060_Felidia-AP1,normal,
+299fd4031b7491e2,Offline,92:a4:9b:eb:29:38,2026-03-30 07:11:00,0.171875,Apple iPhone,060_Felidia-AP1,normal,
+f56670ef7ee92b2d,Offline,Android,2026-03-30 06:56:00,0.03125,Android,060_Felidia-AP1,normal,
+93c8d4cc10cce783,Offline,Android-4,2026-03-30 06:21:00,0.1337890625,Android,060_Felidia-AP1,normal,
+7bf7d9c632f26cba,Offline,Redmi-Note-14,2026-03-29 22:41:00,7.97,Android,060_Felidia-AP1,normal,29.0
+06d88048a8c27559,Offline,Android_JJSSGNCY,2026-03-29 22:38:00,0.0029296875,Android,060_Felidia-AP1,normal,
+47d0a2ba2ba0f383,Offline,ce:2f:0a:72:53:75,2026-03-29 22:20:00,0.26171875,"Apple iPhone XR, iOS18.7.7",060_Felidia-AP1,normal,
+45d746190a7777ac,Offline,Android_KD3QS0MH,2026-03-29 22:17:00,3.05,"Galaxy A15, Android 14",060_Felidia-AP1,normal,
+4da93ae711041e9c,Offline,26:99:43:7a:1d:64,2026-03-29 22:14:00,188.56,Android,060_Felidia-AP1,normal,
+5c75063a5e64ba0c,Offline,Redmi-15,2026-03-29 22:09:00,0.0068359375,Android,060_Felidia-AP1,normal,
+0733b8ce2b3fa141,Offline,A05-de-Giselle,2026-03-29 21:56:00,6.26,"Galaxy A05, Android 15",060_Felidia-AP1,normal,
+59d2060ba950b63a,Offline,Redmi-Note-11S,2026-03-29 21:41:00,113.66,Android,060_Felidia-AP1,normal,
+3d1b326d519db88f,Offline,HONOR-90-Smart,2026-03-29 21:26:00,0.0146484375,Android,060_Felidia-AP1,normal,
+c7d99539cbcd509f,Offline,Redmi-Note-11S,2026-03-29 21:18:00,131.86,Android,060_Felidia-AP1,normal,
+d640430c1ecd2f2b,Offline,1e:5b:28:9b:76:26,2026-03-29 21:15:00,0.6708984375,Android,060_Felidia-AP1,normal,
+366471dccbbb813b,Offline,Redmi-14C,2026-03-29 21:04:00,1.08,Android,060_Felidia-AP1,normal,
+818206235615a385,Offline,Redmi-Note-11,2026-03-29 21:03:00,0.0830078125,Android,060_Felidia-AP1,normal,
+ce2dec35e6217713,Offline,Android-2,2026-03-29 20:46:00,0.005859375,Android,060_Felidia-AP1,normal,
+783586118880bf1f,Offline,TECNO-SPARK-40-5G,2026-03-29 20:42:00,13.9,Android,060_Felidia-AP1,normal,
+0f37ec847f9176ea,Offline,a2:99:5d:c6:17:4d,2026-03-29 20:34:00,32.53,Android,060_Felidia-AP1,normal,
+87e04f0fab153bfb,Offline,HONOR-200,2026-03-29 20:30:00,0.1142578125,Other,060_Felidia-AP1,normal,
+103f3822d50293a2,Offline,Android-3,2026-03-29 20:29:00,,Android,060_Felidia-AP1,normal,
+7c8100c88e849355,Offline,ca:3a:14:57:df:fc,2026-03-29 20:26:00,40.45,Apple iPhone,060_Felidia-AP1,normal,
+a4b884f72a141841,Offline,Galaxy-A16-5G,2026-03-29 20:26:00,44.22,"Galaxy A16, Android 16",060_Felidia-AP1,normal,
+35154b0e400d306f,Offline,Galaxy-J2,2026-03-29 20:14:00,11.32,Android,060_Felidia-AP1,normal,
+8770ceff13af4e41,Offline,Redmi-A5,2026-03-29 20:06:00,0.0732421875,Android,060_Felidia-AP1,normal,
+1e1c777593b46f52,Offline,Android_DA81K63T,2026-03-29 20:05:00,12.54,"Galaxy A04e, Android 14",060_Felidia-AP1,normal,
+bc1edc93ba11cf76,Offline,Android,2026-03-29 19:56:00,0.2333984375,Android,060_Felidia-AP1,normal,
+7262c985898a4a19,Offline,Android,2026-03-29 19:54:00,0.0068359375,Other,060_Felidia-AP1,normal,
+bf6bfef7effc2a8b,Offline,Redmi-13C,2026-03-29 19:42:00,0.4423828125,Android,060_Felidia-AP1,normal,
+18f3e879c3698d2f,Offline,Redmi-A5,2026-03-29 19:41:00,0.0078125,Other,060_Felidia-AP1,normal,
+c8bcd063d04e2db7,Offline,Redmi-13C,2026-03-29 19:39:00,0.080078125,Android,060_Felidia-AP1,normal,
+4accad430ebc2d95,Offline,Redmi-13C,2026-03-29 19:36:00,,Android,060_Felidia-AP1,normal,
+1f1bc6de5f8b5c6c,Offline,Redmi-A3,2026-03-29 19:24:00,0.0234375,Other,060_Felidia-AP1,normal,
+d24b2435ea02db97,Offline,Android,2026-03-29 19:21:00,0.2412109375,Android,060_Felidia-AP1,normal,
+f9e5e413ac243893,Offline,Galaxy-A32,2026-03-29 18:57:00,0.0322265625,"Galaxy A32, Android 12",060_Felidia-AP1,normal,
+7b70b990020d8003,Offline,Android,2026-03-29 18:43:00,0.1875,Android,060_Felidia-AP1,normal,
+5954982ef9b62f5c,Offline,Redmi-13,2026-03-29 18:42:00,46.72,Android,060_Felidia-AP1,normal,
+6f9ed73d71c4904b,Online,Redmi-14C,2026-03-30 18:33:00,,Android,060_Felidia-AP2,normal,
+bade059d9e1b187e,Online,honor-suite-GFY-LX3,2026-03-30 18:33:00,320.18,Android,060_Felidia-AP2,normal,83.0
+9f78a8dc0878e14f,Online,Android,2026-03-30 18:33:00,167.63,Other,060_Felidia-AP2,normal,100.0
+72289be1f06cdc63,Online,motorola-edge-40-neo,2026-03-30 18:33:00,0.38671875,Other,060_Felidia-AP2,normal,100.0
+e3380a9d204b986d,Online,4e:67:5e:5c:d3:b1,2026-03-30 18:31:00,44.81,Other,060_Felidia-AP2,normal,100.0
+9b20a9051233076a,Online,Redmi-14C,2026-03-30 18:28:00,173.59,Android,060_Felidia-AP2,normal,100.0
+25a2645ad8807eff,Online,motorola-edge-50-fusion,2026-03-30 18:28:00,89.99,Other,060_Felidia-AP2,normal,86.0
+3b3ad87bb0f47f96,Offline,Galaxy-A21s,2026-03-30 18:22:00,89.45,"Samsung Galaxy A21s, Android 12",060_Felidia-AP2,normal,100.0
+9428606a5c0a3b67,Offline,moto-g05,2026-03-30 18:15:00,0.0322265625,Android,060_Felidia-AP2,normal,33.0
+452ea0a337299976,Offline,ZTE-Blade-A35e,2026-03-30 18:12:00,0.052734375,Other,060_Felidia-AP2,normal,67.0
+2aa04c5c72bb3b2a,Offline,realme-Note-50,2026-03-30 18:00:00,0.00390625,Android,060_Felidia-AP2,normal,100.0
+176c2308e60ee96b,Offline,Redmi-Note-12,2026-03-30 18:00:00,0.3779296875,Android,060_Felidia-AP2,normal,33.0
+2ea6a302185cf6d6,Offline,Android,2026-03-30 17:52:00,0.021484375,Android,060_Felidia-AP2,normal,100.0
+71ffe0616acbe610,Offline,OPPO-A38,2026-03-30 17:46:00,2.47,Android,060_Felidia-AP2,normal,68.0
+1561ab0d37016245,Offline,Redmi-Note-10S,2026-03-30 17:40:00,0.0458984375,Android,060_Felidia-AP2,normal,67.0
+dc07ae7162e3bd7e,Offline,a2:43:b9:b1:06:cd,2026-03-30 17:38:00,0.12890625,Android,060_Felidia-AP2,normal,100.0
+653d54bc8588b7bf,Offline,Android,2026-03-30 17:27:00,2.75,Other,060_Felidia-AP2,normal,100.0
+c32a188b19ce2d6c,Offline,moto-g34-5G,2026-03-30 17:07:00,7.14,Android,060_Felidia-AP2,normal,86.0
+bc302f7183ab6d98,Offline,Android,2026-03-30 17:04:00,299.37,Android,060_Felidia-AP2,normal,100.0
+8cb4fa9fda62d71b,Offline,6e:bb:35:09:9c:dd,2026-03-30 16:58:00,0.548828125,Other,060_Felidia-AP2,normal,100.0
+5d6238549a2207f4,Offline,Redmi-Note-13,2026-03-30 16:39:00,1.56,Android,060_Felidia-AP2,normal,100.0
+d1143714ab73c2aa,Offline,REDMI-15C,2026-03-30 16:32:00,0.0634765625,Android,060_Felidia-AP2,normal,100.0
+f9ea230606d4d136,Offline,HONOR-X7d,2026-03-30 16:12:00,0.6396484375,Android,060_Felidia-AP2,normal,100.0
+5af7bd8e57691c5d,Offline,Redmi-Note-12S,2026-03-30 16:00:00,0.0107421875,Android,060_Felidia-AP2,normal,100.0
+abb2f0801d3ddd4b,Offline,OPPO-A17,2026-03-30 15:57:00,0.0048828125,Android,060_Felidia-AP2,normal,
+22204937e236070f,Offline,V2058,2026-03-30 15:52:00,11.58,Android,060_Felidia-AP2,normal,
+c8306daf5356ca87,Offline,HONOR-X7c,2026-03-30 15:34:00,0.0029296875,Other,060_Felidia-AP2,normal,100.0
+cbe720527491e647,Offline,Tikitipati,2026-03-30 15:31:00,9.31,Android,060_Felidia-AP2,normal,100.0
+c69cc46ca6767ad7,Offline,Redmi-Note-12,2026-03-30 14:03:00,0.0126953125,Android,060_Felidia-AP2,normal,
+45619e2e8ccc78b9,Offline,Android,2026-03-30 13:03:00,4.89,Android,060_Felidia-AP2,normal,
+bea2d5cd92aa6299,Offline,DESKTOP-4OE4JAM,2026-03-30 12:06:00,0.0087890625,Windows 10,060_Felidia-AP2,normal,
+c958c30611a27a86,Offline,Android_5E0ULEYL,2026-03-30 11:37:00,1.43,Android,060_Felidia-AP2,normal,
+d5a615729a5b9980,Offline,REDMI-15C,2026-03-30 10:18:00,20.86,Android,060_Felidia-AP2,normal,
+420bcd04750589f0,Offline,Android,2026-03-30 08:19:00,0.0087890625,Android,060_Felidia-AP2,normal,
+11672becc6fbd7d6,Offline,Android,2026-03-30 07:59:00,0.00390625,Android,060_Felidia-AP2,normal,
+386221f6eff7c5f2,Offline,REDMI-15C,2026-03-30 07:26:00,0.0068359375,Android,060_Felidia-AP2,normal,100.0
+37121e60d1c769dc,Offline,DESKTOP-UIRN5OI,2026-03-30 01:34:00,1402.88,Windows 10,060_Felidia-AP2,normal,
+7f50470312ff1331,Offline,Redmi-Note-13,2026-03-29 22:52:00,0.228515625,Android,060_Felidia-AP2,normal,
+16c5396fc6d51209,Offline,Android_M7C3JXB3,2026-03-29 22:34:00,50.56,Android,060_Felidia-AP2,normal,
+4343c1253cc38c49,Offline,Galaxy-A06,2026-03-29 22:29:00,753.71,"Galaxy A06, Android 16",060_Felidia-AP2,normal,
+da2c00822132834a,Offline,1a:57:08:71:ed:c6,2026-03-29 22:26:00,0.0029296875,Android,060_Felidia-AP2,normal,
+ca31f65be54b6d2c,Offline,fe:4b:6b:21:18:c0,2026-03-29 21:34:00,0.3974609375,Apple iPhone,060_Felidia-AP2,normal,
+66450ab858d42ff0,Offline,moto-g84-5G,2026-03-29 21:29:00,0.05859375,Android,060_Felidia-AP2,normal,
+4c7449f53bfab601,Offline,Redmi-Note-12,2026-03-29 21:24:00,0.1142578125,Android,060_Felidia-AP2,normal,
+d9363e95dd1de2ee,Offline,Redmi-Note-12S,2026-03-29 20:53:00,0.064453125,Android,060_Felidia-AP2,normal,
+55810ac10a8d90aa,Offline,Android-5,2026-03-29 20:39:00,0.0419921875,Android,060_Felidia-AP2,normal,
+5f8516b3619dcccc,Offline,TECNO-CAMON-40,2026-03-29 20:30:00,0.0400390625,Android,060_Felidia-AP2,normal,
+695e9f1a7b17aa2e,Offline,Android,2026-03-29 20:07:00,0.091796875,Android,060_Felidia-AP2,normal,
+88c70ba21d2da9d0,Offline,Android,2026-03-29 20:07:00,6.08,"Galaxy A70, Android 11",060_Felidia-AP2,normal,
+f7436c09a899654e,Offline,realme-C53,2026-03-29 19:58:00,0.0009765625,Android,060_Felidia-AP2,normal,
+4cca311f9d6591d2,Offline,Redmi-10C,2026-03-29 19:57:00,0.015625,Android,060_Felidia-AP2,normal,
+75e42065eb560a55,Offline,OPPO-A5m,2026-03-29 19:33:00,0.0029296875,Android,060_Felidia-AP2,normal,
+3b21c1a03de55f02,Offline,26:6f:30:ec:ad:96,2026-03-29 19:29:00,0.21875,Android,060_Felidia-AP2,normal,
+483a10c178de1550,Offline,5e:03:5c:0d:01:e1,2026-03-29 19:16:00,,Android,060_Felidia-AP2,normal,67.0
+e485dcc99c182af9,Offline,Android,2026-03-29 18:54:00,0.3662109375,Other,060_Felidia-AP2,normal,
+01e65078b49d5815,Offline,Infinix-SMART-8,2026-03-29 18:49:00,0.0009765625,Other,060_Felidia-AP2,normal,
+94eb8d4639538670,Offline,Redmi-A5,2026-03-29 18:37:00,26.87,Other,060_Felidia-AP2,normal,
+1a06fb276de2edf2,Online,Android,2026-03-30 18:32:00,187.92,Android,061_La Leonera-AP1,normal,100.0
+018894d7b11fc150,Online,TECNO-SPARK-40,2026-03-30 18:32:00,0.0498046875,Android,061_La Leonera-AP1,normal,67.0
+c39dab473652c3d4,Online,HONOR-X8a,2026-03-30 18:31:00,0.0009765625,Other,061_La Leonera-AP1,normal,100.0
+8c596872dc36984d,Offline,Android_K0P595M9,2026-03-30 18:10:00,28.22,Samsung,061_La Leonera-AP1,normal,78.0
+bed880584f1e63eb,Offline,Redmi-Note-11,2026-03-30 18:05:00,0.001953125,Android,061_La Leonera-AP1,normal,57.0
+5f92a86b26d5de25,Offline,OPPO-A38,2026-03-30 16:35:00,2.58,Android,061_La Leonera-AP1,normal,57.0
+9fa47d609d7ac9b4,Offline,66:64:74:a3:fe:64,2026-03-30 15:41:00,11.37,Android,061_La Leonera-AP1,normal,75.0
+4099ae7c056d690e,Offline,POCO-X7-Pro,2026-03-30 14:44:00,0.0234375,Android,061_La Leonera-AP1,normal,100.0
+90c07bf66c0d1977,Offline,Redmi-Note-8-2021,2026-03-30 12:14:00,346.5,Android,061_La Leonera-AP1,normal,
+6bce8a1ba5b7e6dc,Offline,Android,2026-03-30 12:12:00,0.0595703125,Android,061_La Leonera-AP1,normal,
+5aa7f8fa11c4631d,Offline,Android,2026-03-30 08:54:00,0.0009765625,Android,061_La Leonera-AP1,normal,
+b6f9a64c53dce62f,Offline,Android,2026-03-30 00:10:00,26.08,Android,061_La Leonera-AP1,normal,
+e9a68d28c960d55f,Offline,REDMI-15C,2026-03-29 22:33:00,0.0400390625,Android,061_La Leonera-AP1,normal,
+8e3842563a1c5168,Offline,Redmi-Note-10-Pro,2026-03-29 22:12:00,0.2490234375,Android,061_La Leonera-AP1,normal,
+d1ad87a61eab1095,Offline,Android-2,2026-03-29 21:39:00,0.1083984375,"Motorola Mobility LLC, A...",061_La Leonera-AP1,normal,
+3630234de0c526fe,Offline,Redmi-Note-10-Pro,2026-03-29 20:52:00,0.017578125,Android,061_La Leonera-AP1,normal,
+9171a0d9225212f9,Offline,Android-2,2026-03-29 20:33:00,,Android,061_La Leonera-AP1,normal,
+4449bae50d0d5e1d,Offline,Android,2026-03-29 20:31:00,0.0185546875,Android,061_La Leonera-AP1,normal,
+da01e3be254aecb5,Offline,Android,2026-03-29 20:09:00,2.65,Android,061_La Leonera-AP1,normal,
+bd335543771ed2a7,Offline,Black-G3,2026-03-29 18:49:00,2.73,Other,061_La Leonera-AP1,normal,
+ccd4ca151ec5102c,Offline,Redmi-A5,2026-03-29 18:37:00,0.0029296875,Other,061_La Leonera-AP1,normal,
+d895580cac2424dd,Offline,Z2356,2026-03-29 18:37:00,0.005859375,Android,061_La Leonera-AP1,normal,
+87ca2ada17882cdf,Offline,HONOR-X6c,2026-03-30 17:18:00,0.09375,Other,061_La Leonera-AP2,normal,100.0
+c2d162708f4ecfe8,Offline,Redmi-10C,2026-03-30 16:34:00,0.3046875,Android,061_La Leonera-AP2,normal,100.0
+63ff2fe24695379f,Offline,realme-C75-5G,2026-03-30 15:14:00,0.044921875,Android,061_La Leonera-AP2,normal,100.0
+494d3ba37b076f0a,Offline,Android-2,2026-03-30 14:47:00,0.005859375,Android,061_La Leonera-AP2,normal,100.0
+5a4fbd32009104ed,Offline,Redmi-13C,2026-03-30 12:35:00,0.0078125,Android,061_La Leonera-AP2,normal,
+5b05c8c1f631ff8b,Offline,realme-C55,2026-03-29 21:05:00,54.56,Android,061_La Leonera-AP2,normal,
+00723e4cf334f7c1,Offline,Redmi-14C,2026-03-29 18:45:00,2.18,Android,061_La Leonera-AP2,normal,
+f019050246297687,Offline,OPPO-Reno6-Lite,2026-03-30 18:04:00,4.43,Android,062_Pichinde-AP1,normal,86.0
+b2fd99e7bcc41d96,Offline,Android,2026-03-30 14:47:00,0.0009765625,"Motorola Mobility LLC, A...",062_Pichinde-AP1,normal,
+bd52acbf3afd65d2,Offline,56:01:c4:a3:df:51,2026-03-30 14:29:00,0.009765625,Apple iPhone,062_Pichinde-AP1,normal,
+7765cfdc519c77cf,Offline,8e:8b:6b:5e:04:61,2026-03-29 19:46:00,0.001953125,Other,062_Pichinde-AP1,normal,
+73ccba85fd64698c,Offline,8a:01:46:69:11:f2,2026-03-29 18:49:00,0.0009765625,Other,062_Pichinde-AP1,normal,
+ab01d7f3ca69b234,Offline,72:f4:a1:d2:db:48,2026-03-29 18:41:00,0.130859375,"Apple iPhone 13, iOS18.6.2",062_Pichinde-AP1,normal,
+90651b0af75ced09,Offline,e2:42:05:2d:12:cf,2026-03-30 18:27:00,0.3251953125,Android,062_Pichinde-AP2,normal,100.0
+4c1e151f4e77a1ad,Offline,realme-C67,2026-03-30 18:10:00,0.0048828125,Android,062_Pichinde-AP2,normal,50.0
+164d25fc7decebce,Offline,Redmi-Note-12-Pro-5G,2026-03-30 16:31:00,0.2041015625,Android,062_Pichinde-AP2,normal,100.0
+0fa455e76d4b35aa,Offline,realme-C75-5G,2026-03-30 16:15:00,0.005859375,Android,062_Pichinde-AP2,normal,33.0
+eef008ac06509057,Offline,HONOR-X5b,2026-03-30 15:05:00,0.0048828125,Android,062_Pichinde-AP2,normal,100.0
+9f27f88880f7ed49,Offline,DANIELR,2026-03-30 14:48:00,3.4,Windows 10,062_Pichinde-AP2,normal,100.0
+7cc114ecae4433fd,Offline,moto-g15-DiegoH,2026-03-30 11:59:00,0.0791015625,Other,062_Pichinde-AP2,normal,
+64dc472a0f9b5b73,Offline,HONOR-X7b,2026-03-30 09:14:00,0.0009765625,Android,062_Pichinde-AP2,normal,
+49d1960c3184887d,Offline,Android_3S0VWLOQ,2026-03-30 09:10:00,1.53,Android,062_Pichinde-AP2,normal,
+c750ac42c6de6bab,Offline,moto-g75-5G,2026-03-30 08:30:00,0.001953125,Other,062_Pichinde-AP2,normal,
+e81c0095c77cad76,Offline,OPPO-A5,2026-03-30 08:05:00,0.0009765625,Android,062_Pichinde-AP2,normal,
+a9c1632231286867,Offline,OPPO-A5-5G,2026-03-29 19:48:00,0.037109375,Android,062_Pichinde-AP2,normal,
+10b09136587bad82,Offline,HONOR-MAGI6-LITE-0,2026-03-29 19:38:00,17.14,Android,062_Pichinde-AP2,normal,
+83fe8bdb9a527d42,Offline,Android-5,2026-03-29 19:18:00,0.0302734375,Android,062_Pichinde-AP2,normal,
+6777a010fc3466d5,Offline,Redmi-13C,2026-03-29 18:53:00,,Android,062_Pichinde-AP2,normal,100.0
+e929618915ff82c7,Online,motorola-edge-50-ultra,2026-03-30 18:32:00,789.24,Android,063_Los Andes-AP1,normal,100.0
+4eab80a0973d6227,Online,V2418,2026-03-30 18:32:00,,Android,063_Los Andes-AP1,normal,50.0
+dca0097c4490dc59,Offline,Redmi-A5,2026-03-30 18:11:00,0.0048828125,Other,063_Los Andes-AP1,normal,100.0
+baddbbb3927e6a43,Offline,Xiaomi-11T-Pro,2026-03-30 18:03:00,4.25,Android,063_Los Andes-AP1,normal,80.0
+d222fb3e9f7634aa,Offline,Galaxy-A56-5G,2026-03-30 15:14:00,7.86,"Samsung Galaxy A56, Android 16",063_Los Andes-AP1,normal,100.0
+afe99168c66f6de7,Offline,Android_XZUEAIIO,2026-03-30 14:45:00,,Android,063_Los Andes-AP1,normal,
+5c25d4b19f544da9,Offline,Redmi-13C,2026-03-30 14:45:00,,Android,063_Los Andes-AP1,normal,
+bd26a3378821d179,Offline,Infinix-SMART-8,2026-03-30 14:45:00,,Android,063_Los Andes-AP1,normal,
+7eab0d71746ef2ea,Offline,android-615b6623092986c8,2026-03-30 13:46:00,0.1806640625,Other,063_Los Andes-AP1,normal,
+e8bd3daf6511a844,Offline,MSCCULTURABP,2026-03-30 10:33:00,2928.64,Windows 10,063_Los Andes-AP1,normal,
+63b27cb0492b7cd9,Offline,66:9f:76:c4:d1:50,2026-03-30 09:45:00,0.03125,Other,063_Los Andes-AP1,normal,
+a1111451a7418821,Offline,Redmi-Note-12,2026-03-29 19:03:00,0.01171875,Android,063_Los Andes-AP1,normal,
+973d41fac3ae98f5,Offline,Android_C95CGOX7,2026-03-30 18:21:00,3.63,Other,063_Los Andes-AP2,normal,100.0
+dd96453c0396ef2d,Offline,Redmi-Note-14-Pro,2026-03-30 18:21:00,31.3,Other,063_Los Andes-AP2,normal,100.0
+e439d875d1f5646f,Offline,ZTE-Blade-A35e,2026-03-30 17:51:00,0.0146484375,Other,063_Los Andes-AP2,normal,100.0
+5af2a49422747d6e,Offline,HONOR-400-Smart,2026-03-30 17:18:00,0.09375,Other,063_Los Andes-AP2,normal,100.0
+9344f8bbf26ebb90,Offline,Redmi-Note-11,2026-03-30 17:03:00,511.44,Android,063_Los Andes-AP2,normal,50.0
+7965541cce0ef229,Offline,Android,2026-03-30 16:58:00,400.36,Samsung,063_Los Andes-AP2,normal,100.0
+503a1088f137ad27,Offline,moto-g14,2026-03-30 16:34:00,0.01171875,Android,063_Los Andes-AP2,normal,100.0
+02686f65cbd7e268,Offline,realme-C21-Y,2026-03-30 16:19:00,0.0224609375,Android,063_Los Andes-AP2,normal,100.0
+d39851707c363cac,Offline,TECNO-SPARK-Go-2024,2026-03-30 15:09:00,2.5,Android,063_Los Andes-AP2,normal,100.0
+dea8c7e38ba83695,Offline,Android_7LI8455B,2026-03-30 14:46:00,,Android,063_Los Andes-AP2,normal,
+baf0ab5ed227b0fd,Offline,motorola-edge-60-fusion,2026-03-30 14:46:00,,Android,063_Los Andes-AP2,normal,
+e8d13ddc8ec8a446,Offline,d6:a3:bb:46:07:4e,2026-03-30 14:46:00,,Android,063_Los Andes-AP2,normal,
+166607cb00cd4434,Offline,Redmi-Note-13,2026-03-30 14:46:00,,Android,063_Los Andes-AP2,normal,
+d755bc3f5d89a6bf,Offline,Redmi-14C,2026-03-30 14:46:00,,Android,063_Los Andes-AP2,normal,
+936bef1c089b06ec,Offline,HONOR-Magic7-Lite,2026-03-30 13:58:00,0.0048828125,Other,063_Los Andes-AP2,normal,
+86b5c06cdbf0abad,Offline,Galaxy-A02s,2026-03-30 13:55:00,6.39,Android,063_Los Andes-AP2,normal,
+32611f8fba9e8e7b,Offline,Android_4UHW8BN5,2026-03-30 08:55:00,0.0068359375,Other,063_Los Andes-AP2,normal,
+8be9d96057c8bd31,Offline,OPPO-A80-5G,2026-03-30 07:50:00,0.005859375,Android,063_Los Andes-AP2,normal,
+ad759a71bafe9974,Offline,be:55:87:62:07:19,2026-03-30 07:00:00,0.0625,Other,063_Los Andes-AP2,normal,
+9b4749c91e5b66fc,Offline,HONOR-X8c,2026-03-29 22:44:00,173.12,Other,063_Los Andes-AP2,normal,
+e1b4a57372b5d647,Offline,Redmi-12,2026-03-29 22:35:00,9.77,Android,063_Los Andes-AP2,normal,
+d10e02632aded9f6,Offline,16:fc:22:ce:04:7b,2026-03-29 20:53:00,0.125,"Apple iPhone 11, iOS18.6.2",063_Los Andes-AP2,normal,
+67358c7a3c61d89f,Offline,ce:c7:7b:23:0c:f9,2026-03-29 20:51:00,0.18359375,Apple iPhone,063_Los Andes-AP2,normal,
+19c6bbd42f025ecd,Offline,Redmi-Note-12,2026-03-29 20:41:00,8.24,Android,063_Los Andes-AP2,normal,
+c3cdcb8d9c14876f,Offline,A-35-de-calvitolindo,2026-03-29 19:28:00,19.43,"Galaxy A35, Android 16",063_Los Andes-AP2,normal,
+6313201f5c3be7fe,Offline,Redmi-Note-11S,2026-03-29 19:01:00,0.00390625,Android,063_Los Andes-AP2,normal,
+cd66809f63289828,Online,Android,2026-03-30 18:33:00,0.076171875,Android,063_Los Andes-AP3,normal,71.0
+d3454c8f0fe07716,Offline,Android,2026-03-30 18:27:00,129.19,Xiaomi Communications,063_Los Andes-AP3,normal,100.0
+dc51469721155734,Offline,Galaxy-A06,2026-03-30 18:13:00,271.88,Samsung,063_Los Andes-AP3,normal,100.0
+234563465baae913,Offline,HONOR-X5c-Plus,2026-03-30 18:10:00,0.0830078125,Other,063_Los Andes-AP3,normal,100.0
+aed86b10beba13a7,Offline,9e:1c:b3:75:6a:4a,2026-03-30 16:58:00,0.060546875,Apple iPhone,063_Los Andes-AP3,normal,100.0
+47bdea6f5c57bd10,Offline,HONOR-400-Smart,2026-03-30 16:44:00,0.1767578125,Other,063_Los Andes-AP3,normal,100.0
+ae83e143942b14e8,Offline,Android-4,2026-03-30 16:43:00,0.001953125,Xiaomi Communications,063_Los Andes-AP3,normal,100.0
+e12deae58f389301,Offline,Android,2026-03-30 16:35:00,0.0546875,Android,063_Los Andes-AP3,normal,100.0
+11357ddf72ddae34,Offline,0e:0a:30:50:77:b7,2026-03-30 14:45:00,,Other,063_Los Andes-AP3,normal,
+6a12437e974025fb,Offline,OPPO-A20,2026-03-30 11:59:00,0.0009765625,Android,063_Los Andes-AP3,normal,
+2f6a38490680a8bd,Offline,A36-de-FERNANDO,2026-03-30 11:22:00,0.005859375,Samsung,063_Los Andes-AP3,normal,
+5537e4e0a8897e44,Offline,realme-C71,2026-03-30 07:07:00,0.1611328125,Other,063_Los Andes-AP3,normal,
+6bd3e7ba1efd311e,Offline,Android-2,2026-03-30 05:06:00,0.00390625,Android,063_Los Andes-AP3,normal,
+1b310208424ed85b,Offline,Android,2026-03-29 21:27:00,74.52,Android,063_Los Andes-AP3,normal,
+f98bcad89767e3e2,Offline,96:f6:1c:7e:b6:4a,2026-03-29 21:02:00,7.76,Android,063_Los Andes-AP3,normal,
+68c2869bdbde1d4b,Offline,Redmi-14C-de-jancy,2026-03-29 18:35:00,0.091796875,Android,063_Los Andes-AP3,normal,
+f5e3b4a85487b4aa,Online,iPad,2026-03-30 18:33:00,276.59,Apple iPad,066_Pance-AP1,normal,100.0
+d68658ce203c7531,Online,1e:ab:15:cf:4a:c2,2026-03-30 18:33:00,499.04,"Apple iPhone SE 2, iOS18.6.2",066_Pance-AP1,normal,100.0
+02e2680322030a4a,Online,Redmi-14C,2026-03-30 18:33:00,65.62,Android,066_Pance-AP1,normal,85.0
+97d53c81a249b865,Offline,Redmi-Note-14-5G,2026-03-30 18:25:00,0.021484375,Android,066_Pance-AP1,normal,100.0
+a6765547856629a0,Offline,Android-8,2026-03-30 18:24:00,0.0263671875,Android,066_Pance-AP1,normal,100.0
+aacd3def914040f3,Offline,HONOR-X5c-Plus,2026-03-30 18:12:00,0.2548828125,Android,066_Pance-AP1,normal,100.0
+55963435016fa6ee,Offline,6a:fb:ad:c5:82:3a,2026-03-30 18:00:00,0.0556640625,Android,066_Pance-AP1,normal,60.0
+e0df2220690b1e05,Offline,Redmi-Note-12S,2026-03-30 17:59:00,0.078125,Android,066_Pance-AP1,normal,75.0
+64f84b4ea4165cb0,Offline,1e:3d:1c:98:27:9e,2026-03-30 17:57:00,392.84,"Apple iPhone 11, iOS18.6.2",066_Pance-AP1,normal,85.0
+fa3e0e1cfd8e7b5f,Offline,Redmi-A5,2026-03-30 17:51:00,0.1552734375,Android,066_Pance-AP1,normal,100.0
+5898646fc8901621,Offline,Android_YWZPNOF5,2026-03-30 17:42:00,775.55,Android,066_Pance-AP1,normal,80.0
+0f0d515809ab516c,Offline,Redmi-A5,2026-03-30 17:33:00,9.59,Android,066_Pance-AP1,normal,100.0
+555fba9ea820a5e2,Offline,HONOR-400-Smart,2026-03-30 17:28:00,0.505859375,Android,066_Pance-AP1,normal,100.0
+88d6d7fbe734896d,Offline,Redmi-Note-11,2026-03-30 16:30:00,64.89,Android,066_Pance-AP1,normal,100.0
+8e88e10dcdf22a33,Offline,Android,2026-03-30 16:16:00,0.099609375,Other,066_Pance-AP1,normal,100.0
+1b02a58a769ceba4,Offline,Redmi-Note-14,2026-03-30 15:37:00,0.015625,Android,066_Pance-AP1,normal,100.0
+901504c38fe9c912,Offline,Android_2TTNVF33,2026-03-30 15:30:00,0.013671875,"Samsung Galaxy A34, Android 14",066_Pance-AP1,normal,100.0
+65c8396de424bcc3,Offline,Redmi-Note-14-Pro,2026-03-30 15:13:00,83.05,Android,066_Pance-AP1,normal,100.0
+86af9553b779bddc,Offline,motorola-edge-40-neo,2026-03-30 15:13:00,178.38,Android,066_Pance-AP1,normal,33.0
+44ed358119952493,Offline,1a:eb:f1:8d:76:42,2026-03-30 15:13:00,83.5,Android,066_Pance-AP1,normal,100.0
+0a3b7eae9189a013,Offline,OPPO-A5,2026-03-30 15:13:00,825.55,Android,066_Pance-AP1,normal,67.0
+9d0965e4f1c126d2,Offline,Galaxy-A32,2026-03-30 14:49:00,0.0029296875,Samsung,066_Pance-AP1,normal,100.0
+7e351da7d034cdb6,Offline,OPPO-A5,2026-03-30 14:49:00,0.353515625,Android,066_Pance-AP1,normal,100.0
+5228259740cc64af,Offline,ZTE-Blade-A35e,2026-03-30 14:45:00,0.0146484375,Other,066_Pance-AP1,normal,
+32dea9456be70b9f,Offline,REDMI-15C,2026-03-30 14:29:00,0.0703125,Android,066_Pance-AP1,normal,
+1008eddbfb33363b,Offline,Android-2,2026-03-30 14:20:00,0.0048828125,Android,066_Pance-AP1,normal,
+7514c63661ed94bf,Offline,Android,2026-03-30 14:07:00,0.0029296875,Android,066_Pance-AP1,normal,
+c73e33d2b4e90fd6,Offline,de:f1:62:0f:d3:f7,2026-03-30 13:58:00,4505.6,Apple iPhone,066_Pance-AP1,normal,
+a7c5d405c471b3a8,Offline,Android,2026-03-30 13:58:00,30.07,"Galaxy A02, Android 11",066_Pance-AP1,normal,
+c38b782e56cad60b,Offline,A35-de-Valeria,2026-03-30 13:58:00,3778.56,"Galaxy A35, Android 16",066_Pance-AP1,normal,
+59bdcaf9c8c2fefb,Offline,Redmi-13,2026-03-30 13:48:00,299.93,Android,066_Pance-AP1,normal,
+37fc2fffd9fd41f8,Offline,aa:09:eb:97:5e:6d,2026-03-30 13:46:00,326.31,"Apple iPhone 11, iOS18.7.1",066_Pance-AP1,normal,
+a190022b7af1ac8a,Offline,Manuelas-IPhone,2026-03-30 13:45:00,1075.2,Apple iPhone,066_Pance-AP1,normal,
+55097de88fbf7b4f,Offline,V2109,2026-03-30 13:39:00,366.92,Android,066_Pance-AP1,normal,
+cbf63f8b565f5177,Offline,de:ac:fd:c8:70:04,2026-03-30 13:30:00,0.3681640625,Apple iPhone,066_Pance-AP1,normal,
+a241bbe35a5feda5,Offline,fa:63:61:e9:9d:11,2026-03-30 13:24:00,47.71,Apple iPhone,066_Pance-AP1,normal,
+4c93d2b10ff4b4fe,Offline,A05s,2026-03-30 13:21:00,11.99,"Galaxy A05s, Android 14",066_Pance-AP1,normal,
+abc07d9c4b74d510,Offline,82:d5:3f:d3:97:a0,2026-03-30 13:13:00,0.0419921875,Apple iPhone,066_Pance-AP1,normal,
+c5bbad7e1341d4ce,Offline,92:22:5b:e7:9b:2e,2026-03-30 13:01:00,0.55078125,Android,066_Pance-AP1,normal,
+baf9c7f6ec8c6add,Offline,1e:14:9b:0c:53:86,2026-03-30 13:00:00,57.13,Apple iPhone,066_Pance-AP1,normal,
+41c43e90b1d25c7f,Offline,HONOR,2026-03-30 12:53:00,0.1337890625,Other,066_Pance-AP1,normal,
+063a8859ef649d55,Offline,A05s-de-Basilisco,2026-03-30 12:27:00,8.55,"Galaxy A05s, Android 15",066_Pance-AP1,normal,
+4f89d588a339b085,Offline,REDMI-15C,2026-03-30 12:19:00,0.1796875,Android,066_Pance-AP1,normal,
+5d79090c65f000d7,Offline,Android,2026-03-30 12:19:00,0.001953125,"Samsung Galaxy A53, Android 14",066_Pance-AP1,normal,
+1fc9bef355bafce2,Offline,Android_H2NGMVCQ,2026-03-30 12:18:00,87.34,"Galaxy S23, Android 16",066_Pance-AP1,normal,
+625445d330c2d828,Offline,Android,2026-03-30 12:09:00,0.10546875,Other,066_Pance-AP1,normal,
+77407e0bccbad55d,Offline,OPPO-A58,2026-03-30 12:06:00,67.27,Android,066_Pance-AP1,normal,
+34be28a31a989f2e,Offline,DESKTOP-T3VH29S,2026-03-30 12:03:00,418.26,Windows 10,066_Pance-AP1,normal,
+955465c9d8566946,Offline,Android,2026-03-30 11:49:00,0.0732421875,Android,066_Pance-AP1,normal,
+0c869d5ecd781555,Offline,Redmi-12,2026-03-30 11:24:00,0.0029296875,Android,066_Pance-AP1,normal,
+f6a9caf4e604f5d3,Offline,Ortega,2026-03-30 11:24:00,0.00390625,Android,066_Pance-AP1,normal,
+e93f0c5a2b826730,Offline,Redmi-Note-11,2026-03-30 11:22:00,0.083984375,Android,066_Pance-AP1,normal,
+5bbd4fd85a33016a,Offline,OPPO-A5x,2026-03-30 11:16:00,0.09765625,Android,066_Pance-AP1,normal,
+2c22f80ff69d1c2d,Offline,Redmi-Note-13-Pro,2026-03-30 11:09:00,0.091796875,Android,066_Pance-AP1,normal,
+4086d2e3632cb4d8,Offline,POCO-C71,2026-03-30 10:39:00,0.005859375,Other,066_Pance-AP1,normal,
+f2abee4bd3507a5d,Offline,Redmi-Note-10S,2026-03-30 10:37:00,0.181640625,Android,066_Pance-AP1,normal,
+16e16d15be5faee5,Offline,M2101K7BL,2026-03-30 10:32:00,3.8,Android,066_Pance-AP1,normal,
+1c571593966d295f,Offline,V2110,2026-03-30 10:17:00,0.1064453125,Android,066_Pance-AP1,normal,
+e7fbccd2f6f01f47,Offline,Android-4,2026-03-30 09:34:00,0.0166015625,Android,066_Pance-AP1,normal,
+ecb6f712c4ffbca5,Offline,Android-2,2026-03-30 09:24:00,0.0126953125,Other,066_Pance-AP1,normal,
+0315674fd8c733f5,Offline,5a:44:da:0e:cd:94,2026-03-30 09:20:00,52.19,Apple iPhone,066_Pance-AP1,normal,
+e526f7857e88ba1d,Offline,5e:8b:5a:99:5a:00,2026-03-30 08:23:00,0.00390625,Other,066_Pance-AP1,normal,
+3fffe641fe9b4949,Offline,OPPO-A79-5G,2026-03-30 05:49:00,0.001953125,Android,066_Pance-AP1,normal,
+47e1986abde5d18a,Offline,A13-de-Stiven,2026-03-30 03:02:00,55.66,"Galaxy A13, Android 14",066_Pance-AP1,normal,
+c218987d8c300a98,Offline,Redmi-Note-11,2026-03-30 00:03:00,0.65625,Android,066_Pance-AP1,normal,
+79b0083c53cf2521,Offline,a2:3f:b8:6d:de:e5,2026-03-30 00:03:00,214.41,Apple iPhone,066_Pance-AP1,normal,
+537aea631bd7e8ec,Offline,Redmi-Note-10S,2026-03-29 23:59:00,26.33,Android,066_Pance-AP1,normal,
+8b02b267cdc39a6a,Offline,Redmi-Note-12S,2026-03-29 23:24:00,0.064453125,Android,066_Pance-AP1,normal,
+a5eb27d6461c9e39,Offline,Redmi-A5,2026-03-29 23:04:00,0.2548828125,Other,066_Pance-AP1,normal,100.0
+03a45d0eda4e24b9,Offline,Redmi-Note-13-Pro,2026-03-29 22:57:00,0.0029296875,Android,066_Pance-AP1,normal,
+f84cbc59dcbf30bb,Offline,9a:03:d1:35:03:a2,2026-03-29 21:05:00,39.76,"Apple iPhone 11, iOS18.6.2",066_Pance-AP1,normal,
+c31f51a17e3deda3,Offline,32:60:11:59:14:be,2026-03-29 21:04:00,36.09,Apple iPhone,066_Pance-AP1,normal,
+4ba82bbedfe6f302,Offline,Guacheta,2026-03-29 21:01:00,0.044921875,Other,066_Pance-AP1,normal,
+ff37a3e200037886,Offline,Redmi-Note-13,2026-03-29 20:42:00,0.0185546875,Android,066_Pance-AP1,normal,
+eaf1c562a1a148aa,Offline,OPPO-A58,2026-03-29 20:28:00,0.0087890625,Android,066_Pance-AP1,normal,
+93493b4a21e3bb4e,Offline,06:bf:4d:c3:f7:7e,2026-03-29 20:21:00,0.0751953125,Android,066_Pance-AP1,normal,
+429ad2b805cf1b6c,Offline,16:0d:cc:97:30:dc,2026-03-29 20:11:00,0.1787109375,Apple iPhone,066_Pance-AP1,normal,
+a82b1fc7a9ec25bd,Offline,Redmi-14C,2026-03-29 20:08:00,0.005859375,Android,066_Pance-AP1,normal,
+6816b627f6ea2f66,Offline,moto-g15,2026-03-29 20:08:00,0.0009765625,Android,066_Pance-AP1,normal,
+32b0a9c6d2c3b8e4,Offline,Redmi-14C,2026-03-29 19:27:00,0.0078125,Android,066_Pance-AP1,normal,
+f1b334e43f1b3a87,Offline,Redmi-Note-14-Pro-5G,2026-03-29 19:23:00,0.009765625,Android,066_Pance-AP1,normal,
+fd92d45dfc0d88ae,Offline,iPhone-de-Juan,2026-03-29 19:23:00,0.154296875,Apple iPhone,066_Pance-AP1,normal,
+3e0d284ff4f7042a,Offline,Redmi-Note-14,2026-03-29 18:33:00,0.0380859375,Android,066_Pance-AP1,normal,
+d06a2ef1125ce4c2,Offline,ce:83:e7:41:75:c4,2026-03-30 15:31:00,0.2001953125,Apple iPhone,067_Montebello-AP1,normal,100.0
+c347ba28103b6c7a,Offline,Redmi-A5,2026-03-30 15:11:00,0.1552734375,Other,067_Montebello-AP1,normal,
+587ac4aecbad5639,Offline,Android,2026-03-30 15:10:00,0.265625,Samsung,067_Montebello-AP1,normal,100.0
+439d90898241f9c8,Offline,moto-g05,2026-03-30 15:08:00,0.0185546875,Other,067_Montebello-AP1,normal,100.0
+7fc58d6e295847d1,Offline,Redmi-12,2026-03-30 14:59:00,3.06,Android,067_Montebello-AP1,normal,100.0
+2ab0e76c98b1db02,Offline,Redmi-Note-13,2026-03-30 14:59:00,25.41,Android,067_Montebello-AP1,normal,100.0
+c7ef4a82b8edebae,Offline,Infinix-SMART-10,2026-03-30 14:56:00,0.0048828125,Android,067_Montebello-AP1,normal,100.0
+7166f8bfe5c2fac2,Offline,Android,2026-03-30 14:52:00,,Android,067_Montebello-AP1,normal,
+eadf9709a53f9e55,Offline,Infinix-SMART-10,2026-03-30 14:46:00,,Other,067_Montebello-AP1,normal,
+607a16c1fe44a751,Offline,Android,2026-03-30 14:46:00,,Android,067_Montebello-AP1,normal,
+2d78f22003e7b848,Offline,moto-g34-5G,2026-03-30 14:46:00,,Android,067_Montebello-AP1,normal,
+5d2bddc95564d1f8,Offline,Yuliana,2026-03-30 14:46:00,,Android,067_Montebello-AP1,normal,
+ebb12c141065636f,Offline,HUAWEI_P40_lite-d984b77e5,2026-03-30 14:46:00,,Other,067_Montebello-AP1,normal,
+4687afc8d84e363f,Offline,moto-g35-5G,2026-03-30 14:46:00,,Other,067_Montebello-AP1,normal,
+eaf7e3ded9635aad,Offline,Android,2026-03-30 14:46:00,,Android,067_Montebello-AP1,normal,100.0
+6554ab649a1bd75c,Offline,moto-g23,2026-03-30 13:59:00,0.001953125,Other,067_Montebello-AP1,normal,
+bb3c3d4b5a49b0c4,Offline,Android-4,2026-03-30 13:41:00,0.1142578125,Other,067_Montebello-AP1,normal,
+eb502488b702e1ad,Offline,Android_23e2b5ce5d7c49cf8bc07fd66c5f0917,2026-03-30 13:18:00,0.080078125,Qingdao...,067_Montebello-AP1,normal,
+dcb868d7365302bc,Offline,Redmi-Note-10S,2026-03-30 13:02:00,0.30078125,Android,067_Montebello-AP1,normal,
+e3180a4571d2bc5e,Offline,TECNO-SPARK-Go-2,2026-03-30 11:12:00,0.0009765625,Android,067_Montebello-AP1,normal,
+6023385abdb07bff,Offline,Redmi-A2,2026-03-30 11:05:00,0.001953125,Android,067_Montebello-AP1,normal,
+5ba5b72128b3c0b0,Offline,Redmi-Note-10S,2026-03-30 10:38:00,0.0341796875,Android,067_Montebello-AP1,normal,
+5befa5bce8642617,Offline,MARULANDA,2026-03-30 10:10:00,96.56,"Galaxy A05s, Android 15",067_Montebello-AP1,normal,
+73ec1a8c4ddec354,Offline,Redmi-14C,2026-03-30 10:10:00,0.00390625,Android,067_Montebello-AP1,normal,
+a378c4f548c9f012,Offline,c6:14:86:f8:0a:b1,2026-03-30 10:01:00,29.99,Apple iPhone,067_Montebello-AP1,normal,
+d347e0582d9ad38a,Offline,HONOR-X5b-Plus,2026-03-30 10:01:00,0.1845703125,Other,067_Montebello-AP1,normal,
+10d87c0cfaa9cb80,Offline,Android,2026-03-30 09:59:00,0.1962890625,Other,067_Montebello-AP1,normal,
+5208fc6b2abf5105,Offline,HONOR-400-Smart,2026-03-30 09:54:00,67.36,Android,067_Montebello-AP1,normal,
+911ff15c2d003fd3,Offline,Android_143a7fd70a9b4f18b548e422e1b46842,2026-03-30 09:51:00,0.3330078125,Android,067_Montebello-AP1,normal,
+d95625140dca2bed,Offline,Redmi-Note-13,2026-03-30 09:40:00,0.1611328125,Android,067_Montebello-AP1,normal,
+71b19ff239a55dde,Offline,fe:a8:a9:a6:3a:c4,2026-03-30 09:14:00,0.126953125,Apple iPhone,067_Montebello-AP1,normal,
+f6e02ed540ff7bae,Offline,Galaxy-A10s,2026-03-30 08:56:00,0.16015625,"Galaxy A10s, Android 11",067_Montebello-AP1,normal,
+c4757d4e90dba248,Offline,TECNO-SPARK-Go-1,2026-03-30 08:16:00,0.0029296875,Android,067_Montebello-AP1,normal,
+c24d9a171ff7c027,Offline,A15-de-luis,2026-03-30 07:52:00,0.0029296875,"Galaxy A15, Android 16",067_Montebello-AP1,normal,
+06fa84ddabd9e77f,Offline,A21s-de-Mayra,2026-03-30 07:18:00,2283.52,"Galaxy A21s, Android 12",067_Montebello-AP1,normal,
+621ddec600337146,Offline,android-33c29c807908ec59,2026-03-30 07:13:00,0.0869140625,Android,067_Montebello-AP1,normal,
+e66e5d14ec9fe1e5,Offline,Android,2026-03-30 06:44:00,189.59,"Galaxy A10s, Android 11",067_Montebello-AP1,normal,
+d9d04c8e4624435f,Offline,cc:0d:f2:b2:31:af,2026-03-30 06:23:00,13.08,Android,067_Montebello-AP1,normal,
+c4415300eef6ad87,Offline,d6:a3:d3:ea:6a:b5,2026-03-30 00:04:00,0.0263671875,Other,067_Montebello-AP1,normal,
+4d9830d50d507fcf,Offline,ce:9c:a1:e2:8e:46,2026-03-29 23:49:00,0.126953125,Other,067_Montebello-AP1,normal,
+697a55f40d32edf9,Offline,motorola-edge-50-fusion,2026-03-29 23:29:00,780.15,Android,067_Montebello-AP1,normal,
+04e3a13a1d5881ca,Offline,7e:5d:36:00:55:c0,2026-03-29 23:20:00,0.0400390625,Apple iPhone,067_Montebello-AP1,normal,100.0
+ea73e74786e25762,Offline,HONOR-Magic5-Lite-5G,2026-03-29 21:55:00,0.275390625,Other,067_Montebello-AP1,normal,
+c0ccff30fe85cb78,Offline,HONOR-X5b,2026-03-29 21:44:00,0.001953125,Android,067_Montebello-AP1,normal,
+197dfb986c4f3d10,Offline,TECNO-CAMON-40-Pro-5G,2026-03-29 21:40:00,0.001953125,Android,067_Montebello-AP1,normal,
+04082a0850791d1c,Offline,Android-3,2026-03-29 21:25:00,35.13,Android,067_Montebello-AP1,normal,
+a5bbbfd12c4633f0,Offline,Redmi-13C,2026-03-29 20:52:00,18.78,Android,067_Montebello-AP1,normal,
+7ba8b85c2fe9d7be,Offline,b6:0a:82:46:ff:09,2026-03-29 20:37:00,0.361328125,"Apple iPhone XR, iOS18.1.1",067_Montebello-AP1,normal,
+16f4266c0d655b97,Offline,Android-2,2026-03-29 20:28:00,27.19,Android,067_Montebello-AP1,normal,
+514a7896283323aa,Offline,Android-3,2026-03-29 20:26:00,0.0302734375,"Galaxy A30s, Android 11",067_Montebello-AP1,normal,
+9125e1925022eede,Offline,Redmi-A2,2026-03-29 20:22:00,284.88,Other,067_Montebello-AP1,normal,
+5210ee92c6ff4751,Offline,A56-de-Gervial,2026-03-29 20:20:00,0.0009765625,"Galaxy A56, Android 16",067_Montebello-AP1,normal,
+19345c856dfbed72,Offline,Android-2,2026-03-29 19:49:00,0.1552734375,Android,067_Montebello-AP1,normal,
+6b124278fcc8b0ef,Offline,Android,2026-03-29 19:35:00,6.76,Other,067_Montebello-AP1,normal,
+137454e589f4d009,Offline,8e:81:7c:b8:80:0d,2026-03-29 19:29:00,0.1484375,Android,067_Montebello-AP1,normal,
+370f192a9ae4a302,Offline,moto-g22,2026-03-29 19:22:00,0.0078125,Android,067_Montebello-AP1,normal,
+6d365bce3a6d818e,Offline,06:c9:c3:ff:1a:e1,2026-03-29 19:17:00,0.1240234375,Other,067_Montebello-AP1,normal,
+783d27fab3c68f8b,Offline,REDMI-15C,2026-03-29 19:14:00,0.2119140625,Android,067_Montebello-AP1,normal,
+cad6e0031f9826d1,Offline,HONOR-X7b,2026-03-29 19:10:00,0.8388671875,Other,067_Montebello-AP1,normal,
+ff33f8972080e8fa,Offline,Infinix-SMART-10,2026-03-29 18:52:00,,Other,067_Montebello-AP1,normal,
+739d285369d41ec0,Offline,moto-g34-5G,2026-03-30 14:57:00,0.013671875,Other,068_Golondrinas-AP1,normal,
+a3334f5ba32fa052,Offline,Android,2026-03-30 14:57:00,0.33203125,Android,068_Golondrinas-AP1,normal,100.0
+99f6dbc29e6d6270,Offline,Redmi-Note-13,2026-03-30 14:46:00,,Android,068_Golondrinas-AP1,normal,
+a91ac2f8ca7b1e49,Offline,d2:2c:61:bb:1d:ae,2026-03-30 14:46:00,,Android,068_Golondrinas-AP1,normal,
+c784d040ec594e05,Offline,HONOR-X5c,2026-03-30 12:50:00,0.046875,Other,068_Golondrinas-AP1,normal,
+d79bbd54ab4964ed,Offline,Galaxy-A220n,2026-03-30 12:24:00,1.62,"Galaxy A22, Android 13",068_Golondrinas-AP1,normal,
+602764c4f60ca77c,Offline,Redmi-13C,2026-03-30 12:21:00,1.77,Android,068_Golondrinas-AP1,normal,
+281a4911c11d64ca,Offline,Z2352N,2026-03-29 22:29:00,0.005859375,Android,068_Golondrinas-AP1,normal,
+821eca92a359c44c,Offline,V2310,2026-03-29 21:10:00,0.0634765625,Android,068_Golondrinas-AP1,normal,
+894e3fc9089b57c3,Offline,Android,2026-03-29 21:10:00,16.83,Other,068_Golondrinas-AP1,normal,
+e56a677259299cb5,Offline,realme-C75,2026-03-29 20:19:00,33.0,Android,068_Golondrinas-AP1,normal,
+58edaba365dbe70e,Offline,motorola-edge-60-fusion,2026-03-30 14:46:00,,Other,069_La Paz-AP1,normal,
+b8641c88e54942ee,Offline,06:fc:6e:fa:0f:01,2026-03-30 13:43:00,19.67,Android,069_La Paz-AP1,normal,
+45d2abb7436c335e,Offline,Android,2026-03-30 12:42:00,0.11328125,Android,069_La Paz-AP1,normal,
+9a04424aafb4a15d,Offline,Jeniffer,2026-03-30 09:39:00,0.1513671875,Other,069_La Paz-AP1,normal,
+53753100bfeedd25,Offline,Redmi-Note-15-t-pro-ultra,2026-03-30 09:38:00,18.42,Other,069_La Paz-AP1,normal,
+e446c6f7df666d8a,Offline,Android_GUQDFM3P,2026-03-30 09:20:00,0.0947265625,"Galaxy A55, Android 14",069_La Paz-AP1,normal,
+79fe3428f284bf07,Offline,Redmi-A5,2026-03-30 08:59:00,0.0654296875,Other,069_La Paz-AP1,normal,
+59edd21b817e162f,Offline,02:70:54:a6:0d:78,2026-03-29 20:22:00,0.1162109375,Android,069_La Paz-AP1,normal,
+354d64643496aa72,Online,moto-g75-5G,2026-03-30 18:33:00,401.65,Android,072_Hormiguero_AP1,normal,79.0
+6c1c622587ab9e59,Online,32:9b:25:60:4c:8b,2026-03-30 18:33:00,,Apple iPhone,072_Hormiguero_AP1,normal,50.0
+faa4b8f933909cc4,Online,M2006C3LG-Redmi9A,2026-03-30 18:33:00,0.400390625,Android,072_Hormiguero_AP1,normal,100.0
+2c8164b0c2ae3fa4,Offline,Android-5,2026-03-30 18:28:00,347.75,Android,072_Hormiguero_AP1,normal,75.0
+962735c1b73f8662,Offline,Android_I59I12JB,2026-03-30 18:22:00,21.37,Samsung,072_Hormiguero_AP1,normal,74.0
+e1d0080c4ee6906f,Offline,d2:08:37:53:32:93,2026-03-30 18:19:00,0.609375,Apple iPhone,072_Hormiguero_AP1,normal,100.0
+7d38118c915f6769,Offline,A13-de-robinson,2026-03-30 18:12:00,0.0537109375,Samsung,072_Hormiguero_AP1,normal,100.0
+080d91fd6db22f70,Offline,Android-5,2026-03-30 18:07:00,0.0498046875,Android,072_Hormiguero_AP1,normal,67.0
+11e04eeb66aa4be5,Offline,Redmi-Note-13-Pro,2026-03-30 18:00:00,0.017578125,Android,072_Hormiguero_AP1,normal,100.0
+5f0805d1751c0546,Offline,34:f1:50:17:2d:ea,2026-03-30 17:52:00,0.0009765625,Generic Linux,072_Hormiguero_AP1,normal,100.0
+8533109fe3c5f7ba,Offline,Redmi-14C,2026-03-30 17:47:00,20.25,Android,072_Hormiguero_AP1,normal,100.0
+0055aa9f420f87c1,Offline,Redmi-Note-11,2026-03-30 17:40:00,0.00390625,Other,072_Hormiguero_AP1,normal,100.0
+6fb38c7461ce9d6c,Offline,Redmi-Note-13-Pro,2026-03-30 17:21:00,0.001953125,Android,072_Hormiguero_AP1,normal,75.0
+ba35ff6be1c20842,Offline,V2332,2026-03-30 16:37:00,16.48,Android,072_Hormiguero_AP1,normal,100.0
+d48530f952a13353,Offline,2a:2c:e9:c5:88:94,2026-03-30 16:20:00,44.35,"Apple iPhone 11, iOS18.6.2",072_Hormiguero_AP1,normal,100.0
+a4eb66e9c9e5f31b,Offline,ba:2f:77:3f:8c:4d,2026-03-30 16:05:00,52.23,"Apple iPhone 11, iOS18.4.1",072_Hormiguero_AP1,normal,100.0
+65c51b458762dfbc,Offline,c6:e7:ce:6a:bd:bc,2026-03-30 15:35:00,17.39,Apple iPhone,072_Hormiguero_AP1,normal,100.0
+2eaca1722e98d75b,Offline,OPPO-A58,2026-03-30 15:22:00,0.4228515625,Android,072_Hormiguero_AP1,normal,100.0
+150a200cb34fba0a,Offline,Android_UVRQPUTB,2026-03-30 15:04:00,2.32,"Samsung Galaxy A04e, Android 14",072_Hormiguero_AP1,normal,100.0
+9baa8fb82b7091fd,Offline,Z2474,2026-03-30 14:49:00,1.88,Other,072_Hormiguero_AP1,normal,100.0
+ec23b558345331c4,Offline,4e:01:e4:1b:37:d4,2026-03-30 13:36:00,51.51,Apple iPhone,072_Hormiguero_AP1,normal,
+261af5ee9a342cb2,Offline,M2103K19G,2026-03-30 13:10:00,0.1787109375,Android,072_Hormiguero_AP1,normal,
+11138d27bb3ce410,Offline,1e:f5:78:71:3d:1a,2026-03-30 13:01:00,0.0068359375,Android,072_Hormiguero_AP1,normal,
+6ffb1618ef88368d,Offline,ZTE-Blade-A34,2026-03-30 12:55:00,0.0224609375,Other,072_Hormiguero_AP1,normal,
+591e139ee50d4e9d,Offline,V2333,2026-03-30 12:44:00,0.025390625,Other,072_Hormiguero_AP1,normal,
+99ab0c32e60edad8,Offline,realme-C51,2026-03-30 12:06:00,33.83,Android,072_Hormiguero_AP1,normal,
+8556044dc17b18f0,Offline,Infinix-SMART-8,2026-03-30 12:05:00,0.1298828125,Android,072_Hormiguero_AP1,normal,
+a2450cd792102820,Offline,92:16:80:e5:b8:1d,2026-03-30 11:21:00,369.99,"Apple iPhone 11, iOS18.4.1",072_Hormiguero_AP1,normal,
+8e93cad6641d8ef6,Offline,Android_4MTZGKSA,2026-03-30 08:58:00,0.001953125,Android,072_Hormiguero_AP1,normal,
+4e98a786fd2c1b44,Offline,22:0a:24:32:70:ff,2026-03-30 00:01:00,0.0009765625,Apple iPhone,072_Hormiguero_AP1,normal,
+886bf7858060edef,Offline,Redmi-Note-13,2026-03-29 23:49:00,0.0107421875,Android,072_Hormiguero_AP1,normal,
+469f5fa2ea2fa976,Offline,1e:d5:a7:18:f0:46,2026-03-29 23:31:00,21.67,"Apple iPhone 12, iOS18.6.2",072_Hormiguero_AP1,normal,
+7599226fd3de36e7,Offline,96:de:ae:fc:81:7e,2026-03-29 22:17:00,2.81,"Apple iPhone XR, iOS18.7.7",072_Hormiguero_AP1,normal,
+dac3379b22172257,Offline,Redmi-A5,2026-03-29 21:41:00,0.001953125,Other,072_Hormiguero_AP1,normal,
+a9996e969c81acab,Offline,Redmi-Note-11,2026-03-29 21:35:00,0.001953125,Android,072_Hormiguero_AP1,normal,
+5609edd068613d44,Offline,OPPO-A5-Pro-5G,2026-03-29 20:54:00,0.009765625,Android,072_Hormiguero_AP1,normal,
+9a963c77ef85cae9,Offline,Android-2,2026-03-29 20:46:00,0.0009765625,Android,072_Hormiguero_AP1,normal,
+c563dd5077bad1b8,Offline,Android_NCT320EP,2026-03-29 20:46:00,0.0712890625,"Galaxy A05s, Android 15",072_Hormiguero_AP1,normal,
+1571b1956ccbd8cc,Offline,aa:2e:f5:4b:19:a2,2026-03-29 20:17:00,0.009765625,Android,072_Hormiguero_AP1,normal,
+ae498fbd3abb92cb,Offline,HONOR-X8b,2026-03-29 19:08:00,0.0009765625,Other,072_Hormiguero_AP1,normal,
+a623036d43593eb5,Offline,Android,2026-03-29 18:53:00,0.0146484375,Other,072_Hormiguero_AP1,normal,
+ad2715189d7a5b8a,Offline,Redmi-A5,2026-03-29 18:50:00,0.001953125,Other,072_Hormiguero_AP1,normal,
+17172c963a0c2dd4,Offline,Android,2026-03-30 15:19:00,0.10546875,Android,073_Navarro-AP1,normal,100.0
+f253b2064ab140a8,Offline,NCO-LX3,2026-03-30 14:46:00,,Other,073_Navarro-AP1,normal,
+01841ca099d6b685,Offline,Android,2026-03-30 14:46:00,,Android,073_Navarro-AP1,normal,
+e2711282c7af926b,Offline,42:1c:5f:26:c1:06,2026-03-30 05:22:00,553.24,Android,073_Navarro-AP1,normal,
+313952f6b18f1481,Offline,V2205,2026-03-30 01:14:00,0.0009765625,Android,073_Navarro-AP1,normal,
+6fda28e8f37034b8,Offline,4e:6b:dc:82:d4:dd,2026-03-29 22:52:00,166.29,Android,073_Navarro-AP1,normal,
+635d8b173cdc5862,Offline,Redmi-Note-11,2026-03-29 22:43:00,157.91,Android,073_Navarro-AP1,normal,
+d1cada97e271c31b,Offline,Z2467,2026-03-29 21:45:00,0.00390625,Other,073_Navarro-AP1,normal,
+9100eeeb2af03e94,Offline,22:3d:01:18:15:e4,2026-03-29 20:56:00,0.072265625,Other,073_Navarro-AP1,normal,
+103b57311357be50,Offline,Android,2026-03-29 20:50:00,1.26,Android,073_Navarro-AP1,normal,
+00a7d9bd5a82327c,Offline,Redmi-Note-14,2026-03-29 20:47:00,0.0712890625,Android,073_Navarro-AP1,normal,
+2c06e9ed384a54ab,Offline,Android,2026-03-30 17:26:00,0.041015625,Android,079_ZW La Voragine-AP1,normal,100.0
+398b53e094e93691,Offline,a90ef5b5-9165-42f5-9040-d295c02fc3fd,2026-03-30 17:11:00,63.88,Apple iPhone,079_ZW La Voragine-AP1,normal,100.0
+e184b82b84e18fee,Offline,e6:94:d5:8f:35:ef,2026-03-30 16:13:00,0.0126953125,Other,079_ZW La Voragine-AP1,normal,100.0
+5f1e5c1698bff9cc,Offline,Redmi-13,2026-03-30 16:04:00,0.0146484375,Android,079_ZW La Voragine-AP1,normal,100.0
+102bbaf542f6c66f,Offline,76:ea:b0:47:f9:fb,2026-03-30 15:13:00,0.1953125,Other,079_ZW La Voragine-AP1,normal,100.0
+156f20e2de406832,Offline,TECNO-SPARK-40-Pro,2026-03-30 14:46:00,,Android,079_ZW La Voragine-AP1,normal,
+84cc6ad1911c912d,Offline,7a:cb:ca:15:06:d2,2026-03-30 14:46:00,,Other,079_ZW La Voragine-AP1,normal,
+23d21c84844c64ce,Offline,Redmi-13C,2026-03-30 14:46:00,0.294921875,Android,079_ZW La Voragine-AP1,normal,
+81715931a47aa9a6,Offline,OPPO-A5m,2026-03-30 14:17:00,505.35,Android,079_ZW La Voragine-AP1,normal,
+aec2761462d18b0f,Offline,Redmi-Note-14,2026-03-30 14:17:00,469.98,Android,079_ZW La Voragine-AP1,normal,
+3654dbe9a51cb004,Offline,Android,2026-03-30 12:48:00,0.00390625,Android,079_ZW La Voragine-AP1,normal,
+8114a21e009dfcf9,Offline,OPPO-A60,2026-03-30 12:47:00,0.1494140625,Android,079_ZW La Voragine-AP1,normal,
+0a3ec08a43038d2c,Offline,V2204,2026-03-30 09:43:00,0.1142578125,Android,079_ZW La Voragine-AP1,normal,
+ef6dc379b5c956e9,Offline,Xiaomi-11T-Pro,2026-03-30 08:05:00,0.0078125,Android,079_ZW La Voragine-AP1,normal,
+513fb17e842a43c0,Offline,26:37:91:28:ed:99,2026-03-30 02:06:00,42.39,Android,079_ZW La Voragine-AP1,normal,
+fd4808a2defc62d1,Offline,Galaxy-J5-Prime,2026-03-30 02:04:00,799.12,Android,079_ZW La Voragine-AP1,normal,
+de346495d4b41b23,Offline,ce:de:44:6c:7e:2e,2026-03-30 02:04:00,76.5,Android,079_ZW La Voragine-AP1,normal,
